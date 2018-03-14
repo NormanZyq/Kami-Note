@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/note_title"
+        android:layout_gravity="end"
+        android:gravity="start"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/note_content"
+        android:layout_gravity="end"
+        android:gravity="start"
+        android:layout_width="370dp"
+        android:layout_height="45dp"
+        android:maxLines="2"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/note_edited_date"
+        android:layout_gravity="end"
+        android:gravity="start"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:textSize="12sp" />
+
+
+</LinearLayout>
