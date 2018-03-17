@@ -7,16 +7,28 @@
         android:title="删除全部"
         app:showAsAction="always"/>
 
-    <!--<item-->
-        <!--android:id="@+id/note_menu"-->
-        <!--android:icon="@drawable/ic_menu"-->
-        <!--android:title="菜单"-->
-        <!--app:showAsAction="always"/>-->
 
-    <item
-        android:id="@+id/add"
-        android:icon="@drawable/ic_add"
-        android:title="@string/add"
-        app:showAsAction="ifRoom"/>
+    <group>
+        <item
+            android:id="@+id/add_note"
+            android:title="添加笔记"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/add_label"
+            android:title="添加标签"
+            app:showAsAction="never"/>
+
+
+    </group>
+    <!--<item-->
+    <!--android:id="@+id/add"-->
+    <!--android:title="@string/add"-->
+    <!--app:showAsAction="ifRoom"/>-->
+    <!--android:icon="@drawable/ic_add"-->
+
+
+
+
 
 </menu>

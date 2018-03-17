@@ -22,7 +22,7 @@ enum NoteUtils {
      * 编辑日期另外添加
      */
     public void saveNote(String title, String content, String identifier, MyDate createdDate) {
-        MyNote note = new MyNote(title, content, identifier, createdDate.toString());
+        MyNote note = new MyNote(title, content, identifier, createdDate.toString(), null);
         note.setLastEdited(createdDate.toString());
         note.setLastEdited(createdDate.toString());
         MainActivity.mNote.add(note);

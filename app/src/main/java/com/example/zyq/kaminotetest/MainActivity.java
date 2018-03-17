@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -30,6 +29,7 @@ import java.util.List;
  * Created by zyq on 2018/3/6.
  * 项目名称：Kami Note
  * MainActivity
+ * Updated on 2018/3/17.
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -47,26 +47,26 @@ public class MainActivity extends AppCompatActivity {
     public RecyclerView noteListView;   //RecyclerView 的note 列表
     public static int longClickPosition = 0;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-//                    noteListView.setVisibility(View.INVISIBLE);
-//                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_dashboard:
-//                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-//                    noteListView.setVisibility(View.VISIBLE);
-//                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
-            }
-            return false;
-        }
-    };
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.navigation_home:
+////                    noteListView.setVisibility(View.INVISIBLE);
+////                    mTextMessage.setText(R.string.title_home);
+//                    return true;
+//                case R.id.navigation_dashboard:
+////                    mTextMessage.setText(R.string.title_dashboard);
+//                    return true;
+//                case R.id.navigation_notifications:
+////                    noteListView.setVisibility(View.VISIBLE);
+////                    mTextMessage.setText(R.string.title_notifications);
+//                    return true;
+//            }
+//            return false;
+//        }
+//    };
 
     //当App启动
     @Override
@@ -166,11 +166,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete_all:   //点击了垃圾桶时
-                //AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-                //如果笔记条数已经为0，则提示没有笔记
                 if (mNote.size() == 0) {
-//                    dialog.setTitle("提示");
-//                    dialog.setMessage("已经没有笔记了，如果列表没有刷新，请重启程序。");
                     AlertDialog.Builder dialog = buildAlertDialog(MainActivity.this,
                             "提示",
                             "已经没有笔记了，如果列表没有刷新，请重启程序。");
@@ -185,10 +181,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     AlertDialog.Builder dialog = buildAlertDialog(MainActivity.this,
                             "提示", "这是一项测试功能，是否删除全部内容？");
-                    //如果笔记条数不为0，询问是否清空
-//                    dialog.setTitle("提示");
-//                    dialog.setMessage("这是一项测试功能，是否删除全部内容？");
-//                    dialog.setCancelable(true);
                     dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -202,10 +194,17 @@ public class MainActivity extends AppCompatActivity {
                     dialog.show();  //显示dialog
                 }
                 break;
-            case R.id.add:    //点击了添加
+
+            case R.id.add_note:    //点击了添加
                 Intent jumpToCreateNote = new Intent(MainActivity.this, CreateNote.class);
                 startActivity(jumpToCreateNote);
                 break;
+            case R.id.add_label:
+                MyToast.makeText(MainActivity.this, "添加标签", Toast.LENGTH_SHORT).show();
+                //添加标签的逻辑
+                //TODO
+                break;
+
             case android.R.id.home: //点击左上角菜单键来启动滑动菜单
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
@@ -281,5 +280,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onContextItemSelected(item);
     }
+
 }
 

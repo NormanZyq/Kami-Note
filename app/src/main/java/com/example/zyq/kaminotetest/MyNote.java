@@ -4,6 +4,8 @@ import org.litepal.crud.DataSupport;
 /**
  * Created by zyq on 2018/2/3.
  * note类
+ * Updated on 2018/3/17
+ * 添加了extras成员，包含紧急程度和标签
  */
 
 public class MyNote extends DataSupport {
@@ -17,12 +19,15 @@ public class MyNote extends DataSupport {
 
     private String lastEdited;  //最后编辑的日期
 
+    private Extras extras;
+
     //构造方法，传入标题、内容、标识、创建日期。（最后编辑的日期另外设置）
-    MyNote(String title, String content, String identifier, String createdDate) {
+    MyNote(String title, String content, String identifier, String createdDate, Extras extras) {
         this.title = title;
         this.content = content;
         this.identifier = identifier;
         this.createdDate = createdDate;
+        this.extras = extras;
     }
 
     /*------get set 方法------------*/
@@ -56,5 +61,13 @@ public class MyNote extends DataSupport {
 
     public void setLastEdited(String lastEdited) {
         this.lastEdited = lastEdited;
+    }
+
+    public Extras getExtras() {
+        return extras;
+    }
+
+    public void setExtras(Extras extras) {
+        this.extras = extras;
     }
 }
