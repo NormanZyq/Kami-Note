@@ -8,8 +8,10 @@
   4. 为了方便测试而添加的删除所有笔记
   
 已知的问题：
-  1. 编辑已有笔记时作出修改后点击左上角的返回按钮会导致变更丢失
-  2. 左侧滑动菜单没有任何卵用
+  1. 左侧滑动菜单没有任何卵用
+  2. ButtomNavigationView不工作或引起崩溃
+  3. DrawerLayout嵌套ListView或RecyclerView时不显示，
+      直接添加到activity_main.xml后会引起崩溃
 
 
 希望实现的功能：
