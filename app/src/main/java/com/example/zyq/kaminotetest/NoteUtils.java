@@ -21,13 +21,20 @@ enum NoteUtils {
      * @param createdDate   笔记的创建日期
      * 编辑日期另外添加
      */
-    public void saveNote(String title, String content, String identifier, MyDate createdDate) {
-        MyNote note = new MyNote(title, content, identifier, createdDate.toString(), null);
-        note.setLastEdited(createdDate.toString());
+    public void saveNote(String title, String content, String identifier, MyDate createdDate, Extras extras) {
+        MyNote note = new MyNote(title, content, identifier, createdDate.toString(), extras);
         note.setLastEdited(createdDate.toString());
         MainActivity.mNote.add(note);
         note.save();
     }
+
+    public void saveNote(String title, String content, String identifier, MyDate createdDate) {
+        MyNote note = new MyNote(title, content, identifier, createdDate.toString());
+        note.setLastEdited(createdDate.toString());
+        MainActivity.mNote.add(note);
+        note.save();
+    }
+
     //更新note的方法
     public void updateNote(MyNote note, String title, String content, MyDate editedDate) {
         note.setTitle(title);

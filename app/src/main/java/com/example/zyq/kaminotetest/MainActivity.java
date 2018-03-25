@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +18,15 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
@@ -34,18 +43,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String ACTIVITY_TAG = "MainActivity";  //打印日志的TAG
-    List<MyNote> mNoteTemp = new ArrayList<>();
 
     //private:
-    private DrawerLayout mDrawerLayout; //滑动菜单
-    private TextView tv_noMore;  //没有更多内容的文本
-    private long mExitTime = 0; //记录点击返回按钮的时间
+    private DrawerLayout mDrawerLayout;         //滑动菜单
+    private TextView tv_noMore;                 //没有更多内容的文本
+    private long mExitTime = 0;                 //记录点击返回按钮的时间
+    private LinearLayout mainView;
+//    private ArrayAdapter<Label> labelArrayAdapter;
+    private Menu labelMenu;
 
     //public:
-    public static List<MyNote> mNote;   //保存note的列表
-    public static int notePosition; //记录笔记位置
-    public RecyclerView noteListView;   //RecyclerView 的note 列表
-    public static int longClickPosition = 0;
+    public static List<MyNote> mNote;           //保存note的列表
+    public static List<Label> mLabel;           //
+    public static int notePosition;             //记录笔记位置
+    public RecyclerView noteListView;           //RecyclerView 的note 列表
+    public ListView labelListView;
+    public static int longClickPosition = 0;    //
 
 //    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 //            = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -73,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        List<MyNote> mNoteTemp;
+//        getMenuInflater().inflate(R.menu.main,menu);
+        getMenuInflater().inflate(R.menu.nav_menu, labelMenu);
+
+        mainView = findViewById(R.id.main_linear_layout);
 
         //设置toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -81,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         tv_noMore = findViewById(R.id.no_more); //没有更多内容
         mDrawerLayout = findViewById(R.id.drawer_layout);   //滑动菜单
         noteListView = findViewById(R.id.note_list);    //note列表
+        labelListView = findViewById(R.id.label_list);
 
         //设置toolbar的左侧菜单为显示状态
         ActionBar actionBar = getSupportActionBar();
@@ -89,20 +108,31 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
 
+        mLabel = DataSupport.findAll(Label.class);
+
         //从数据库中读取存在的笔记，临时保存
-        mNoteTemp = DataSupport.findAll(MyNote.class);
+//        mNoteTemp = DataSupport.findAll(MyNote.class);
+        mNote = DataSupport.findAll(MyNote.class);
+        mLabel = DataSupport.findAll(Label.class);
         //判断是否读取到了数据
-        if (mNoteTemp.size() != 0) {
-            //如果成功读取了数据，则以mNote正式保存下来
-            mNote = mNoteTemp;
+        if (mNote.size() != 0) {
             refreshNoteListView(noteListView);  //刷新
         } else {
-            //如果没有读取到，就将mNote设置为新的List，以备保存
+            //如果读取到的内容为空，就将mNote设置为新的List，以备保存
             mNote = new ArrayList<>();
             //将"没有更多内容"从布局显示
             tv_noMore.setVisibility(View.VISIBLE);
         }
-        mNoteTemp = null;   //将temp指向设为空
+        if (mLabel.size() != 0) {
+            refreshLabelListView(labelListView);
+        } else {
+            mLabel = new ArrayList<>();
+        }
+
+        for (Label label : mLabel) {
+            System.out.println(">>>>>>" + label.getLabelName());
+        }
+
     }
 
     //回到MainActivity时刷新RecyclerView
@@ -130,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
             layoutManager.setStackFromEnd(true);//列表再底部开始展示，反转后由上面开始展示
             layoutManager.setReverseLayout(true);//列表翻转
             recyclerView.setLayoutManager(layoutManager);
-            NoteAdapter2 adapter = new NoteAdapter2(mNote, MainActivity.this);
-            recyclerView.setAdapter(adapter);
+            NoteAdapter2 noteAdapter2 = new NoteAdapter2(mNote, MainActivity.this);
+            recyclerView.setAdapter(noteAdapter2);
             noteListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -152,6 +182,23 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.d(ACTIVITY_TAG, "refreshNoteListView: 传入了空的recyclerView参数");
             MyToast.makeText(this, "发生错误", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void refreshLabelListView(ListView listView) {
+        if (listView != null) {
+            ArrayAdapter<Label> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.label_item, mLabel);
+            listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+            listView.setAdapter(adapter);
+        }
+    }
+
+    public void refreshLabelListView(RecyclerView recyclerView) {
+        if (recyclerView != null) {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(layoutManager);
+            LabelAdapter labelAdapter = new LabelAdapter(mLabel, MainActivity.this);
+            recyclerView.setAdapter(labelAdapter);
         }
     }
 
@@ -180,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                     dialog.show();
                 } else {
                     AlertDialog.Builder dialog = buildAlertDialog(MainActivity.this,
-                            "提示", "这是一项测试功能，是否删除全部内容？");
+                            "提示", "这个功能仅供开发者测试\n是否删除所有内容？");
                     dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -200,7 +247,32 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(jumpToCreateNote);
                 break;
             case R.id.add_label:
-                MyToast.makeText(MainActivity.this, "添加标签", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("请输入标签");    //设置对话框标题
+
+                final EditText addLabel = new EditText(MainActivity.this);
+
+                builder.setView(addLabel);
+                builder.setCancelable(true);
+                builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String labelName = addLabel.getText().toString();
+                        if (labelName.length() > 10) {
+                            MyToast.makeText(MainActivity.this, "标签过长", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Label label = new Label(labelName);
+                            mLabel.add(label);
+                            label.save();
+                            MyToast.makeText(MainActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                        }
+                        //TODO
+                        refreshLabelListView(labelListView);
+                    }
+                });
+                builder.setNegativeButton("取消", null);
+                builder.show();
+
                 //添加标签的逻辑
                 //TODO
                 break;
@@ -215,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.nav_call:
+//            case R.id.nav_call:
 //                if (mNote.size() != 0) {
 //                    Collections.sort(mNote, new Comparator<MyNote>() {
 //                        @Override
@@ -229,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
 //                    });
 //                    refreshNoteListView(noteListView);
 //                }
-                break;
+//                break;
 
         }
         return true;
@@ -259,7 +331,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
     public static AlertDialog.Builder buildAlertDialog(Context context, String alertTitle,
                                                 String alertMessage) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
@@ -273,9 +344,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 666:   //点击了长按后出现的删除键时
+                final MyNote myNoteTemp = mNote.get(longClickPosition);
                 mNote.get(longClickPosition).delete();
                 mNote.remove(longClickPosition);
                 refreshNoteListView(noteListView);
+                Snackbar.make(mainView, "删除成功", Snackbar.LENGTH_SHORT)
+                        .setAction("撤销", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mNote.add(myNoteTemp);
+                                myNoteTemp.save();
+                                refreshNoteListView(noteListView);
+                            }
+                        }).show();
                 break;
         }
         return super.onContextItemSelected(item);

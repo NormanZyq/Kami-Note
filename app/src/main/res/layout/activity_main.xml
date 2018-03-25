@@ -11,7 +11,18 @@
     android:focusable="true"
     android:orientation="vertical">
 
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/nav_menu"
+        app:headerLayout="@layout/nav_header">
+    </android.support.design.widget.NavigationView>
+
+
     <LinearLayout
+        android:id="@+id/main_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -36,14 +47,13 @@
             android:layout_gravity="center"
             android:gravity="center"/>
 
-        <!--android:layout_weight="1"-->
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/note_list"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
-        </android.support.v7.widget.RecyclerView>
-
+            <!--android:layout_weight="1"-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/note_list"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp">
+            </android.support.v7.widget.RecyclerView>
 
         <!--<android.support.design.widget.BottomNavigationView-->
             <!--android:id="@+id/navigation"-->
@@ -52,19 +62,9 @@
             <!--android:layout_gravity="bottom"-->
             <!--android:background="?android:attr/windowBackground"-->
             <!--app:menu="@menu/navigation" />-->
-
-
     </LinearLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/nav_menu"
-        app:headerLayout="@layout/nav_heder">
 
-    </android.support.design.widget.NavigationView>
 
 
 

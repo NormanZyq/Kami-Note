@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorFocus">#ff0900</color>
+    <color name="colorFitIn">#f6c050</color>
+    <color name="colorGoals">#70b8d3</color>
+    <color name="colorBackBurner">#62c554</color>
+
+
+
+
 </resources>

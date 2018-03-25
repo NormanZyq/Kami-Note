@@ -30,6 +30,13 @@ public class MyNote extends DataSupport {
         this.extras = extras;
     }
 
+    public MyNote(String title, String content, String identifier, String createdDate) {
+        this.title = title;
+        this.content = content;
+        this.identifier = identifier;
+        this.createdDate = createdDate;
+    }
+
     /*------get set 方法------------*/
     public String getTitle() {
         return title;
