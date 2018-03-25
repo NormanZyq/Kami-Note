@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group>
+        <item
+            android:id="@+id/add_note"
+            android:title="添加笔记"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/add_label"
+            android:title="添加标签"
+            app:showAsAction="never"/>
+    </group>
+
+
+
+</menu>
