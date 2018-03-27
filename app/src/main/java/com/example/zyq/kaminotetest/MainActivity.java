@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.service.autofill.Dataset;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -44,21 +45,19 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final String ACTIVITY_TAG = "MainActivity";  //打印日志的TAG
 
-    //private:
     private DrawerLayout mDrawerLayout;         //滑动菜单
     private TextView tv_noMore;                 //没有更多内容的文本
     private long mExitTime = 0;                 //记录点击返回按钮的时间
     private LinearLayout mainView;
-//    private ArrayAdapter<Label> labelArrayAdapter;
-    private Menu labelMenu;
+    private LabelAdapter labelListAdapter;
 
-    //public:
     public static List<MyNote> mNote;           //保存note的列表
     public static List<Label> mLabel;           //
     public static int notePosition;             //记录笔记位置
     public RecyclerView noteListView;           //RecyclerView 的note 列表
     public ListView labelListView;
     public static int longClickPosition = 0;    //
+//    public RecyclerView labelListView2;
 
 //    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 //            = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -86,9 +85,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        List<MyNote> mNoteTemp;
-//        getMenuInflater().inflate(R.menu.main,menu);
-        getMenuInflater().inflate(R.menu.nav_menu, labelMenu);
 
         mainView = findViewById(R.id.main_linear_layout);
 
@@ -99,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         tv_noMore = findViewById(R.id.no_more); //没有更多内容
         mDrawerLayout = findViewById(R.id.drawer_layout);   //滑动菜单
         noteListView = findViewById(R.id.note_list);    //note列表
-        labelListView = findViewById(R.id.label_list);
+        labelListView = findViewById(R.id.label_list2);
 
         //设置toolbar的左侧菜单为显示状态
         ActionBar actionBar = getSupportActionBar();
@@ -110,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         mLabel = DataSupport.findAll(Label.class);
 
-        //从数据库中读取存在的笔记，临时保存
+        //从数据库中读取存在的笔记
 //        mNoteTemp = DataSupport.findAll(MyNote.class);
         mNote = DataSupport.findAll(MyNote.class);
         mLabel = DataSupport.findAll(Label.class);
@@ -124,13 +120,14 @@ public class MainActivity extends AppCompatActivity {
             tv_noMore.setVisibility(View.VISIBLE);
         }
         if (mLabel.size() != 0) {
+//            refreshLabelListView(labelListView2);   //刷新
             refreshLabelListView(labelListView);
         } else {
             mLabel = new ArrayList<>();
         }
 
         for (Label label : mLabel) {
-            System.out.println(">>>>>>" + label.getLabelName());
+            System.out.println(">>>>>" + label.getLabelName());
         }
 
     }
@@ -185,22 +182,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void refreshLabelListView(ArrayAdapter<Label> labelListAdapter, ListView labelList) {
+        if (labelList != null) {
+            labelListAdapter = new ArrayAdapter<>(MainActivity.this, R.layout.label_item, mLabel);
+            labelList.setAdapter(labelListAdapter);
+        }
+    }
+
     public void refreshLabelListView(ListView listView) {
         if (listView != null) {
-            ArrayAdapter<Label> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.label_item, mLabel);
+//            ArrayAdapter<Label> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.label_item, mLabel);
+            LabelAdapter adapter = new LabelAdapter(this, R.layout.label_item, mLabel);
             listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
             listView.setAdapter(adapter);
         }
     }
 
-    public void refreshLabelListView(RecyclerView recyclerView) {
-        if (recyclerView != null) {
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(layoutManager);
-            LabelAdapter labelAdapter = new LabelAdapter(mLabel, MainActivity.this);
-            recyclerView.setAdapter(labelAdapter);
-        }
-    }
 
     //应用toolbar
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -213,10 +210,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete_all:   //点击了垃圾桶时
-                if (mNote.size() == 0) {
+                if (mNote.size() == 0 && mLabel.size() == 0) {
                     AlertDialog.Builder dialog = buildAlertDialog(MainActivity.this,
                             "提示",
-                            "已经没有笔记了，如果列表没有刷新，请重启程序。");
+                            "已经没有笔记和标签了，如果列表没有刷新，请重启程序。");
                     dialog.setPositiveButton("重启", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -227,13 +224,16 @@ public class MainActivity extends AppCompatActivity {
                     dialog.show();
                 } else {
                     AlertDialog.Builder dialog = buildAlertDialog(MainActivity.this,
-                            "提示", "这个功能仅供开发者测试\n是否删除所有内容？");
+                            "提示", "这个功能仅供开发者测试\n是否删除所有内容（包括标签）？");
                     dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             DataSupport.deleteAll(MyNote.class);    //删除所有note
+                            DataSupport.deleteAll(Label.class);     //删除所有标签
                             mNote = DataSupport.findAll(MyNote.class);  //重置mNote（可能可以省略）
+                            mLabel = DataSupport.findAll(Label.class);
                             refreshNoteListView(noteListView);
+                            refreshLabelListView(labelListView);
                             MyToast.makeText(MainActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -272,9 +272,6 @@ public class MainActivity extends AppCompatActivity {
                 });
                 builder.setNegativeButton("取消", null);
                 builder.show();
-
-                //添加标签的逻辑
-                //TODO
                 break;
 
             case android.R.id.home: //点击左上角菜单键来启动滑动菜单
@@ -282,10 +279,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
 //            以下注释的代码尚未完成
-            case R.id.user_name:
-            case R.id.useLogo:
-
-                break;
+//            case R.id.user_name:
+//            case R.id.useLogo:
+//
+//                break;
 
 //            case R.id.nav_call:
 //                if (mNote.size() != 0) {
