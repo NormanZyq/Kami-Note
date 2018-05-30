@@ -1,6 +1,5 @@
 package fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -116,7 +114,8 @@ public class HomeFragment extends Fragment {
         }
         if (mLabel.size() != 0) {
 //            refreshLabelListView(labelListView2);   //刷新
-            refreshLabelListView(labelListView);
+            MainActivity.mainActivity.refreshLabelListView(MainActivity.mainActivity.labelListView);
+
         } else {
             mLabel = new ArrayList<>();
         }
@@ -249,7 +248,8 @@ public class HomeFragment extends Fragment {
                             mNote = DataSupport.findAll(MyNote.class);  //重置mNote（可能可以省略）
                             mLabel = DataSupport.findAll(Label.class);
                             //refreshNoteListView(noteListView);
-                            refreshLabelListView(labelListView);
+                            MainActivity.mainActivity.refreshLabelListView(MainActivity.mainActivity.labelListView);
+                            refreshNoteListView(noteListView);
                             MyToast.makeText(getActivity(), "删除成功", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -283,7 +283,9 @@ public class HomeFragment extends Fragment {
                             MyToast.makeText(getActivity(), "保存成功", Toast.LENGTH_SHORT).show();
                         }
                         //TODO
-                        refreshLabelListView(labelListView);
+//                        refreshLabelListView(labelListView);
+
+                        MainActivity.mainActivity.refreshLabelListView(MainActivity.mainActivity.labelListView);
                     }
                 });
                 builder.setNegativeButton("取消", null);

@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import fragment.HomeFragment;
+
 /**
  * 编辑界面
  * 点击note的时候跳转到此Activity
@@ -49,7 +51,7 @@ public class EditNote extends AppCompatActivity {
             直接从MainActivity中获得位置而没有传值
             可以优化，使用intent携带
              */
-            myNote = MainActivity.mNote.get(notePosition);
+            myNote = HomeFragment.mNote.get(notePosition);
 
             noteTitle = findViewById(R.id.title_editor);    //笔记标题输入框
             noteContent = findViewById(R.id.content_editor);    //笔记内容输入框
@@ -131,7 +133,7 @@ public class EditNote extends AppCompatActivity {
         //从NoteAdapter中获得传输的intent并获取note的position
         Intent intent = getIntent();
         int notePosition = intent.getIntExtra("note_position", -1);
-        myNote = MainActivity.mNote.get(notePosition);
+        myNote = HomeFragment.mNote.get(notePosition);
 
         noteTitle = findViewById(R.id.title_editor);    //笔记标题
         noteContent = findViewById(R.id.content_editor);    //笔记内容
