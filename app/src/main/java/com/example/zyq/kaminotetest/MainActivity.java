@@ -160,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*//回到MainActivity时刷新RecyclerView
-    @Override
+    //回到MainActivity时刷新RecyclerView
+    /*@Override
     protected void onResume() {
         super.onResume();
         if (mNote.size() != 0) {
@@ -193,12 +193,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    /*//应用toolbar
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar, menu);
-        return true;
-    }*/
 
     /*//点击toolbar的内容时启用的操作
     @Override
@@ -268,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 builder.setNegativeButton("取消", null);
                 builder.show();
                 break;*/
-    
+
 
     //点击返回按钮的操作（"再按一次退出程序"）
     @Override

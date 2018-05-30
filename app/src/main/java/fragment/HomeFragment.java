@@ -202,8 +202,8 @@ public class HomeFragment extends Fragment {
             }
 
         } else {
-            //Log.d(ACTIVITY_TAG, "refreshNoteListView: 传入了空的recyclerView参数");
-            //MyToast.makeText(this, "发生错误", Toast.LENGTH_SHORT).show();
+            Log.d(ACTIVITY_TAG, "refreshNoteListView: 传入了空的recyclerView参数");
+            MyToast.makeText(getActivity(), "发生错误", Toast.LENGTH_SHORT).show();
         }
     }
 
