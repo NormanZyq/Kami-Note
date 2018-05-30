@@ -37,6 +37,8 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import fragment.HomeFragment;
+
 /**
  * Created by zyq on 2018/3/6.
  * 项目名称：Kami Note
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     public RecyclerView noteListView;           //RecyclerView 的note 列表
     public ListView labelListView;
     public static int longClickPosition = 0;    //
+    private HomeFragment fragment;
 //    public RecyclerView labelListView2;
 
     //当App启动
@@ -73,12 +76,19 @@ public class MainActivity extends AppCompatActivity {
         mainActivity = this;
         fragments = DataGenerator.getfragments("KamiNote");  //初始化列表
         initview();
+        mDrawerLayout = findViewById(R.id.drawer_layout);   //滑动菜单
 
+/*        fragment = new HomeFragment();
+        fragment.setCallBack(new HomeFragment.CallBack() {
+            @Override
+            public void ShowDrawerlayout() {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });*/
         /*//设置toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
 
-        mDrawerLayout = findViewById(R.id.drawer_layout);   //滑动菜单
         labelListView = findViewById(R.id.label_list2);
 
         //设置toolbar的左侧菜单为显示状态
@@ -257,37 +267,8 @@ public class MainActivity extends AppCompatActivity {
                 });
                 builder.setNegativeButton("取消", null);
                 builder.show();
-                break;
-
-            case android.R.id.home: //点击左上角菜单键来启动滑动菜单
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                break;
-
-//            以下注释的代码尚未完成
-//            case R.id.user_name:
-//            case R.id.useLogo:
-//
-//                break;
-
-//            case R.id.nav_call:
-//                if (mNote.size() != 0) {
-//                    Collections.sort(mNote, new Comparator<MyNote>() {
-//                        @Override
-//                        public int compare(MyNote o1, MyNote o2) {
-//                            int i = o1.getTitle().compareTo(o2.getTitle());
-//                            if (i == 0) {
-//                                return o1.getContent().compareTo(o2.getContent());
-//                            }
-//                            return i;
-//                        }
-//                    });
-//                    refreshNoteListView(noteListView);
-//                }
-//                break;
-
-        }
-        return true;
-    }*/
+                break;*/
+    
 
     //点击返回按钮的操作（"再按一次退出程序"）
     @Override

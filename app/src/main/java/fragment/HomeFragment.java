@@ -12,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +54,8 @@ public class HomeFragment extends Fragment {
     private static final String ACTIVITY_TAG = "MainActivity";  //打印日志的TAG
     private BottomNavigationView bottomNavigationView;            //底部栏引用
     private Fragment[] fragments;                                  //布局管理列表
-    private String mfrom;
+    private String mfrom;                                           //接收跨界面信息
+    //private CallBack callBack;                                      //创建接口实例，准备回调
 
     private DrawerLayout mDrawerLayout;         //滑动菜单
     private TextView tv_noMore;                 //没有更多内容的文本
@@ -85,9 +88,10 @@ public class HomeFragment extends Fragment {
 
         //设置toolbar
         Toolbar toolbar = this.getView().findViewById(R.id.toolbar);
-        MainActivity.mainActivity.setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
 
-        mDrawerLayout = MainActivity.mainActivity.findViewById(R.id.drawer_layout);   //滑动菜单
+        mDrawerLayout = getActivity().findViewById(R.id.drawer_layout);   //滑动菜单
         labelListView = this.getView().findViewById(R.id.label_list2);
 
         //设置toolbar的左侧菜单为显示状态
@@ -162,10 +166,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
+
     //应用toolbar
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MainActivity.mainActivity.getMenuInflater().inflate(R.menu.toolbar, menu);
-        return true;
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.toolbar,menu);
     }
 
     //刷新RecyclerView，有待优化
@@ -286,6 +292,7 @@ public class HomeFragment extends Fragment {
 
             case android.R.id.home: //点击左上角菜单键来启动滑动菜单
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                //this.callBack.ShowDrawerlayout();
                 break;
 
 //            以下注释的代码尚未完成
@@ -321,6 +328,15 @@ public class HomeFragment extends Fragment {
         dialog.setMessage(alertMessage);
         return dialog;
     }
+
+/*    public interface CallBack{
+        void ShowDrawerlayout();
+    }
+
+    public void setCallBack(CallBack callBack){
+        this.callBack = callBack;
+    }*/
 }
+
 
 
