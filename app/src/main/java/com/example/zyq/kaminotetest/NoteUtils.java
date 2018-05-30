@@ -2,6 +2,8 @@ package com.example.zyq.kaminotetest;
 
 import java.util.List;
 
+import fragment.HomeFragment;
+
 /**
  * Created by zyq on 2018/3/2.
  * 使用枚举制作的单例note工具类
@@ -31,7 +33,7 @@ enum NoteUtils {
     public void saveNote(String title, String content, String identifier, MyDate createdDate) {
         MyNote note = new MyNote(title, content, identifier, createdDate.toString());
         note.setLastEdited(createdDate.toString());
-        MainActivity.mNote.add(note);
+        HomeFragment.mNote.add(note);
         note.save();
     }
 
