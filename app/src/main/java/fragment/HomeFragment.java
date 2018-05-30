@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -60,12 +61,12 @@ public class HomeFragment extends Fragment {
     private long mExitTime = 0;                 //记录点击返回按钮的时间
     private LinearLayout mainView;
     private LabelAdapter labelListAdapter;
+    private ImageView settings;
 
     public static List<MyNote> mNote;           //保存note的列表
     public static List<Label> mLabel;           //
     public static int notePosition;             //记录笔记位置
     public RecyclerView noteListView;           //RecyclerView 的note 列表
-    public ListView labelListView;
     public static int longClickPosition = 0;    //
     @Nullable
     @Override
@@ -73,7 +74,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home ,null);
         tv_noMore = view.findViewById(R.id.no_more); //没有更多内容
         noteListView = view.findViewById(R.id.note_list);    //note列表
-        labelListView = view.findViewById(R.id.label_list2);
+        settings = getActivity().findViewById(R.id.image_settings);  //侧边栏设置按钮
         mainView = view.findViewById(R.id.main_linear_layout);
         tv_noMore = view.findViewById(R.id.no_more); //没有更多内容
         noteListView = view.findViewById(R.id.note_list);    //note列表
@@ -90,7 +91,6 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
 
         mDrawerLayout = getActivity().findViewById(R.id.drawer_layout);   //滑动菜单
-        labelListView = this.getView().findViewById(R.id.label_list2);
 
         //设置toolbar的左侧菜单为显示状态
         ActionBar actionBar = MainActivity.mainActivity.getSupportActionBar();
@@ -100,7 +100,6 @@ public class HomeFragment extends Fragment {
         }
 
         //从数据库中读取存在的笔记
-//        mNoteTemp = DataSupport.findAll(MyNote.class);
         mNote = DataSupport.findAll(MyNote.class);
         mLabel = DataSupport.findAll(Label.class);
         //判断是否读取到了数据
@@ -113,7 +112,6 @@ public class HomeFragment extends Fragment {
             tv_noMore.setVisibility(View.VISIBLE);
         }
         if (mLabel.size() != 0) {
-//            refreshLabelListView(labelListView2);   //刷新
             MainActivity.mainActivity.refreshLabelListView(MainActivity.mainActivity.labelListView);
 
         } else {
@@ -126,7 +124,6 @@ public class HomeFragment extends Fragment {
 
 
         //从数据库中读取存在的笔记
-//        mNoteTemp = DataSupport.findAll(MyNote.class);
         mNote = DataSupport.findAll(MyNote.class);
         //判断是否读取到了数据
         if (mNote.size() != 0) {
@@ -137,6 +134,13 @@ public class HomeFragment extends Fragment {
             //将"没有更多内容"从布局显示
             tv_noMore.setVisibility(View.VISIBLE);
         }
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"settings",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     //回到MainActivity时刷新RecyclerView
@@ -158,7 +162,6 @@ public class HomeFragment extends Fragment {
 
     public void refreshLabelListView(ListView listView) {
         if (listView != null) {
-//            ArrayAdapter<Label> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.label_item, mLabel);
             LabelAdapter adapter = new LabelAdapter(getActivity(), R.layout.label_item, mLabel);
             listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
             listView.setAdapter(adapter);
@@ -247,7 +250,7 @@ public class HomeFragment extends Fragment {
                             DataSupport.deleteAll(Label.class);     //删除所有标签
                             mNote = DataSupport.findAll(MyNote.class);  //重置mNote（可能可以省略）
                             mLabel = DataSupport.findAll(Label.class);
-                            //refreshNoteListView(noteListView);
+                            MainActivity.mLabel = mLabel;
                             MainActivity.mainActivity.refreshLabelListView(MainActivity.mainActivity.labelListView);
                             refreshNoteListView(noteListView);
                             MyToast.makeText(getActivity(), "删除成功", Toast.LENGTH_SHORT).show();
@@ -283,9 +286,8 @@ public class HomeFragment extends Fragment {
                             MyToast.makeText(getActivity(), "保存成功", Toast.LENGTH_SHORT).show();
                         }
                         //TODO
-//                        refreshLabelListView(labelListView);
-
-                        MainActivity.mainActivity.refreshLabelListView(MainActivity.mainActivity.labelListView);
+                        MainActivity.mLabel = mLabel;
+                        ((MainActivity)getActivity()).refreshLabelListView(MainActivity.mainActivity.labelListView);
                     }
                 });
                 builder.setNegativeButton("取消", null);
@@ -294,30 +296,7 @@ public class HomeFragment extends Fragment {
 
             case android.R.id.home: //点击左上角菜单键来启动滑动菜单
                 mDrawerLayout.openDrawer(GravityCompat.START);
-                //this.callBack.ShowDrawerlayout();
                 break;
-
-//            以下注释的代码尚未完成
-//            case R.id.user_name:
-//            case R.id.useLogo:
-//
-//                break;
-
-//            case R.id.nav_call:
-//                if (mNote.size() != 0) {
-//                    Collections.sort(mNote, new Comparator<MyNote>() {
-//                        @Override
-//                        public int compare(MyNote o1, MyNote o2) {
-//                            int i = o1.getTitle().compareTo(o2.getTitle());
-//                            if (i == 0) {
-//                                return o1.getContent().compareTo(o2.getContent());
-//                            }
-//                            return i;
-//                        }
-//                    });
-//                    refreshNoteListView(noteListView);
-//                }
-//                break;
 
         }
         return true;
@@ -330,14 +309,6 @@ public class HomeFragment extends Fragment {
         dialog.setMessage(alertMessage);
         return dialog;
     }
-
-/*    public interface CallBack{
-        void ShowDrawerlayout();
-    }
-
-    public void setCallBack(CallBack callBack){
-        this.callBack = callBack;
-    }*/
 }
 
 

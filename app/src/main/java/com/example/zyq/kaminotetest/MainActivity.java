@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
         labelListView = findViewById(R.id.label_list2);
 
+
+
         //设置toolbar的左侧菜单为显示状态
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -160,109 +162,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //回到MainActivity时刷新RecyclerView
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        if (mNote.size() != 0) {
-            //如果已有数据且"没有更多内容"仍为显示状态，就把它隐藏掉
-            tv_noMore = findViewById(R.id.no_more);
-            if (tv_noMore.getVisibility() == View.VISIBLE) {
-                tv_noMore.setVisibility(View.GONE);
-            }
-            noteListView = findViewById(R.id.note_list);
-            refreshNoteListView(noteListView);
-            //滑动到最后编辑的内容（太复杂，需简化）
-            noteListView.scrollToPosition(notePosition == 0 ? mNote.size() : notePosition);
-        }
-    }*/
-
-    /*public void refreshLabelListView(ArrayAdapter<Label> labelListAdapter, ListView labelList) {
-        if (labelList != null) {
-            labelListAdapter = new ArrayAdapter<>(MainActivity.this, R.layout.label_item, mLabel);
-            labelList.setAdapter(labelListAdapter);
-        }
-    }*/
-
     public void refreshLabelListView(ListView listView) {
         if (listView != null) {
-//            ArrayAdapter<Label> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.label_item, mLabel);
             LabelAdapter adapter = new LabelAdapter(this, R.layout.label_item, mLabel);
             listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
             listView.setAdapter(adapter);
         }
     }
-
-
-    /*//点击toolbar的内容时启用的操作
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.delete_all:   //点击了垃圾桶时
-                if (mLabel.size() == 0) {//mNote.size() == 0 &&
-                    AlertDialog.Builder dialog = buildAlertDialog(MainActivity.this,
-                            "提示",
-                            "已经没有笔记和标签了，如果列表没有刷新，请重启程序。");
-                    dialog.setPositiveButton("重启", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    });
-                    dialog.setNegativeButton("取消", null);
-                    dialog.show();
-                } else {
-                    AlertDialog.Builder dialog = buildAlertDialog(MainActivity.this,
-                            "提示", "这个功能仅供开发者测试\n是否删除所有内容（包括标签）？");
-                    dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            DataSupport.deleteAll(MyNote.class);    //删除所有note
-                            DataSupport.deleteAll(Label.class);     //删除所有标签
-                            mNote = DataSupport.findAll(MyNote.class);  //重置mNote（可能可以省略）
-                            mLabel = DataSupport.findAll(Label.class);
-                            //refreshNoteListView(noteListView);
-                            refreshLabelListView(labelListView);
-                            MyToast.makeText(MainActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dialog.setNegativeButton("否", null);
-                    dialog.show();  //显示dialog
-                }
-                break;
-
-            case R.id.add_note:    //点击了添加
-                Intent jumpToCreateNote = new Intent(MainActivity.this, CreateNote.class);
-                startActivity(jumpToCreateNote);
-                break;
-            case R.id.add_label:
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("请输入标签");    //设置对话框标题
-
-                final EditText addLabel = new EditText(MainActivity.this);
-
-                builder.setView(addLabel);
-                builder.setCancelable(true);
-                builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String labelName = addLabel.getText().toString();
-                        if (labelName.length() > 10) {
-                            MyToast.makeText(MainActivity.this, "标签过长", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Label label = new Label(labelName);
-                            mLabel.add(label);
-                            label.save();
-                            MyToast.makeText(MainActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
-                        }
-                        //TODO
-                        refreshLabelListView(labelListView);
-                    }
-                });
-                builder.setNegativeButton("取消", null);
-                builder.show();
-                break;*/
-
 
     //点击返回按钮的操作（"再按一次退出程序"）
     @Override
