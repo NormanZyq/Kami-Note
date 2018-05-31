@@ -1,40 +1,32 @@
-package com.example.zyq.kaminotetest;
+package com.example.zyq.kaminotetest.Activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.service.autofill.Dataset;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v7.widget.Toolbar;
+
+import com.example.zyq.kaminotetest.Utils.DataGenerator;
+import com.example.zyq.kaminotetest.Class.Label;
+import com.example.zyq.kaminotetest.Adapter.LabelAdapter;
+import com.example.zyq.kaminotetest.Class.MyNote;
+import com.example.zyq.kaminotetest.Class.MyToast;
+import com.example.zyq.kaminotetest.R;
+
 import org.litepal.crud.DataSupport;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import fragment.HomeFragment;

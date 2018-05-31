@@ -1,4 +1,5 @@
-package com.example.zyq.kaminotetest;
+package com.example.zyq.kaminotetest.Class;
+
 import org.litepal.crud.DataSupport;
 
 /**
@@ -22,7 +23,7 @@ public class MyNote extends DataSupport {
     private Extras extras;
 
     //构造方法，传入标题、内容、标识、创建日期。（最后编辑的日期另外设置）
-    MyNote(String title, String content, String identifier, String createdDate, Extras extras) {
+    public MyNote(String title, String content, String identifier, String createdDate, Extras extras) {
         this.title = title;
         this.content = content;
         this.identifier = identifier;

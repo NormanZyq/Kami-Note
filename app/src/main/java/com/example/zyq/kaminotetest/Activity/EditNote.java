@@ -1,4 +1,4 @@
-package com.example.zyq.kaminotetest;
+package com.example.zyq.kaminotetest.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.zyq.kaminotetest.Class.MyDate;
+import com.example.zyq.kaminotetest.Class.MyNote;
+import com.example.zyq.kaminotetest.Class.MyToast;
+import com.example.zyq.kaminotetest.Utils.NoteUtils;
+import com.example.zyq.kaminotetest.R;
 
 import fragment.HomeFragment;
 

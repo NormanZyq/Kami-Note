@@ -1,4 +1,9 @@
-package com.example.zyq.kaminotetest;
+package com.example.zyq.kaminotetest.Utils;
+
+import com.example.zyq.kaminotetest.Activity.MainActivity;
+import com.example.zyq.kaminotetest.Class.MyDate;
+import com.example.zyq.kaminotetest.Class.MyNote;
+import com.example.zyq.kaminotetest.Class.Extras;
 
 import java.util.List;
 
@@ -10,7 +15,7 @@ import fragment.HomeFragment;
  * 日后将考虑修改，目前使用范围过于局限
  */
 
-enum NoteUtils {
+public enum NoteUtils {
     INSTANCE;   //单个实例
 
     /*-----------------方法-----------------*/

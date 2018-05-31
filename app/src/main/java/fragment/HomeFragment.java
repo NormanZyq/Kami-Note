@@ -31,13 +31,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zyq.kaminotetest.CreateNote;
-import com.example.zyq.kaminotetest.Label;
-import com.example.zyq.kaminotetest.LabelAdapter;
-import com.example.zyq.kaminotetest.MainActivity;
-import com.example.zyq.kaminotetest.MyNote;
-import com.example.zyq.kaminotetest.MyToast;
-import com.example.zyq.kaminotetest.NoteAdapter2;
+import com.example.zyq.kaminotetest.Activity.CreateNote;
+import com.example.zyq.kaminotetest.Class.Label;
+import com.example.zyq.kaminotetest.Adapter.LabelAdapter;
+import com.example.zyq.kaminotetest.Activity.MainActivity;
+import com.example.zyq.kaminotetest.Class.MyNote;
+import com.example.zyq.kaminotetest.Class.MyToast;
+import com.example.zyq.kaminotetest.Adapter.NoteAdapter2;
 import com.example.zyq.kaminotetest.R;
 
 import org.litepal.crud.DataSupport;

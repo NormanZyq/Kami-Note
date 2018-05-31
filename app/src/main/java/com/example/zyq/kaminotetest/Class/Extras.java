@@ -1,6 +1,4 @@
-package com.example.zyq.kaminotetest;
-
-import org.litepal.crud.DataSupport;
+package com.example.zyq.kaminotetest.Class;
 
 import java.util.List;
 
