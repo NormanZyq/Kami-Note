@@ -66,14 +66,24 @@
                     android:layout_below="@+id/note_content2"
                     android:textSize="12sp" />
 
-                <Button
+                <!--<Button-->
+                    <!--android:id="@+id/select_labels_for_note"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignBottom="@+id/note_edited_date2"-->
+                    <!--android:layout_alignEnd="@+id/note_content2"-->
+                    <!--android:layout_alignRight="@+id/note_content2"-->
+                    <!--android:text="选择标签" />-->
+
+                <ImageButton
                     android:id="@+id/select_labels_for_note"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/note_edited_date2"
-                    android:layout_alignEnd="@+id/note_content2"
-                    android:layout_alignRight="@+id/note_content2"
-                    android:text="Button" />
+                    android:background="#00000000"
+                    android:src="@drawable/ic_settings"
+                    android:layout_alignBottom="@id/note_edited_date2"
+                    android:layout_alignEnd="@id/note_content2"
+                    android:layout_alignRight="@id/note_content2" />
 
 
 

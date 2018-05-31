@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -23,17 +23,17 @@
         android:layout_height="45dp"
         android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
-        android:lines="1"
-        android:inputType="text"
         android:gravity="start"
-        android:hint="@string/please_enter_title" />
+        android:hint="@string/please_enter_title"
+        android:inputType="text"
+        android:lines="1" />
 
     <EditText
         android:id="@+id/content_editor"
         android:layout_width="350dp"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/title_editor"
+        android:layout_centerHorizontal="true"
         android:gravity="start"
         android:hint="@string/please_enter_content" />
 
