@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,7 +51,7 @@ import java.util.List;
  */
 
 public class HomeFragment extends Fragment {
-    private static final String ACTIVITY_TAG = "MainActivity";  //打印日志的TAG
+    public static final String ACTIVITY_TAG = "MainActivity";  //打印日志的TAG
     private BottomNavigationView bottomNavigationView;            //底部栏引用
     private Fragment[] fragments;                                  //布局管理列表
     private String mfrom;                                           //接收跨界面信息
@@ -58,6 +59,7 @@ public class HomeFragment extends Fragment {
 
     private DrawerLayout mDrawerLayout;         //滑动菜单
     private TextView tv_noMore;                 //没有更多内容的文本
+    private ListView labellist;                 //设置DrawerLayout点击事件
     private long mExitTime = 0;                 //记录点击返回按钮的时间
     private LinearLayout mainView;
     private LabelAdapter labelListAdapter;
@@ -91,6 +93,7 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
 
         mDrawerLayout = getActivity().findViewById(R.id.drawer_layout);   //滑动菜单
+        labellist = getActivity().findViewById(R.id.label_list2);          //DrawerLayout的LabelList
 
         //设置toolbar的左侧菜单为显示状态
         ActionBar actionBar = MainActivity.mainActivity.getSupportActionBar();
@@ -140,6 +143,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"settings",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        labellist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             }
         });
     }
