@@ -102,6 +102,7 @@ public class HomeFragment extends Fragment {
         //从数据库中读取存在的笔记
         mNote = DataSupport.findAll(MyNote.class);
         mLabel = DataSupport.findAll(Label.class);
+
         //判断是否读取到了数据
         if (mNote.size() != 0) {
             refreshNoteListView(noteListView);  //刷新

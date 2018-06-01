@@ -16,13 +16,15 @@ import java.util.List;
  * Created by zyq on 2018/3/26.
  */
 
-public class LabelAdapter extends ArrayAdapter<Label> {
+public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickListener {
     private int resourceId;
 
     public LabelAdapter(Context context, int resource, List<Label> mLabel) {
         super(context, resource, mLabel);
         this.resourceId = resource;
     }
+
+
 
     public View getView(int position, View convertView, ViewGroup parent) {
 //        String labelName = getItem(position).getLabelName();
@@ -38,9 +40,22 @@ public class LabelAdapter extends ArrayAdapter<Label> {
             view = convertView;
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.labelName.setText(label.getLabelName());
+        viewHolder.labelName.setText(label.getLabelName());     //设置标签的名字
+//        viewHolder.labelName.setOnClickListener(this);
+
+        view.setTag(position);              //设置标签所在view的tag，以其position作为tag
+        view.setOnClickListener(this);      //设置标签点击事件
 
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int position = (int) v.getTag();
+        System.out.println(">>>>>>>>>>>" + v.getTag());
+//        Intent intent = new Intent(MainActivity.mainActivity, NotesForLabel.class);
+//        intent.putExtra("label_name", getItem(position).getLabelName());
+//        v.getContext().startActivity(intent);
     }
 
     private class ViewHolder {
