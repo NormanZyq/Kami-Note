@@ -1,12 +1,15 @@
 package com.example.zyq.kaminotetest.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.zyq.kaminotetest.Activity.MainActivity;
+import com.example.zyq.kaminotetest.Activity.NotesForLabel;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.R;
 
@@ -52,10 +55,10 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
     @Override
     public void onClick(View v) {
         int position = (int) v.getTag();
-        System.out.println(">>>>>>>>>>>" + v.getTag());
-//        Intent intent = new Intent(MainActivity.mainActivity, NotesForLabel.class);
-//        intent.putExtra("label_name", getItem(position).getLabelName());
-//        v.getContext().startActivity(intent);
+//        System.out.println(">>>>>>>>>>>" + v.getTag());
+        Intent intent = new Intent(MainActivity.mainActivity, NotesForLabel.class);
+        intent.putExtra("label_name", getItem(position).getLabelName());
+        v.getContext().startActivity(intent);
     }
 
     private class ViewHolder {
