@@ -99,4 +99,25 @@ public class NotesForLabel extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar,menu);
         return true;
     }
+
+
+    //回到界面后刷新界面
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println(">>>>>>>>>>>>>" + "onResume");
+        notes = label.getNotes();
+        System.out.println(notes.size());
+        tv_noMore = findViewById(R.id.no_more);
+        noteListView = findViewById(R.id.note_list);
+        if(notes.size() != 0){
+            if(tv_noMore.getVisibility() == View.VISIBLE){
+                tv_noMore.setVisibility(View.INVISIBLE);
+            }
+        }
+        else{
+            tv_noMore.setVisibility(View.VISIBLE);
+        }
+        refreshNoteListView(noteListView);
+    }
 }

@@ -64,6 +64,7 @@ public class LabelSelector extends AppCompatActivity {
                 System.out.println("添加一个");
             }
         }
+        System.out.println(labels.size()+">>>>>>>>>>>>>>");
         NoteUtils.INSTANCE.setLabels(HomeFragment.mNote.get(notePosition), labels);
     }
 
