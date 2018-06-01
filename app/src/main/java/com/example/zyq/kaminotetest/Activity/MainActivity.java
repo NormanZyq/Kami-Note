@@ -83,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
         labelListView = findViewById(R.id.label_list2);
 
-
-
         //设置toolbar的左侧菜单为显示状态
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

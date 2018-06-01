@@ -119,11 +119,6 @@ public class HomeFragment extends Fragment {
             mLabel = new ArrayList<>();
         }
 
-        for (Label label : mLabel) {
-            System.out.println(">>>>>" + label.getLabelName());
-        }
-
-
         //从数据库中读取存在的笔记
         mNote = DataSupport.findAll(MyNote.class);
         //判断是否读取到了数据

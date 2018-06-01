@@ -1,9 +1,10 @@
 package com.example.zyq.kaminotetest.Utils;
 
 import com.example.zyq.kaminotetest.Activity.MainActivity;
+import com.example.zyq.kaminotetest.Class.Extras;
+import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Class.MyNote;
-import com.example.zyq.kaminotetest.Class.Extras;
 
 import java.util.List;
 
@@ -53,5 +54,14 @@ public enum NoteUtils {
     //移除note的方法
     public void removeNote(List<MyNote> mNote, int position) {
         mNote.remove(position);
+    }
+
+    /**
+     * 为笔记添加标签
+     * @param note      待添加标签的笔记
+     * @param labels    待添加的标签列表
+     */
+    public void setLabels(MyNote note, List<Label> labels) {
+        note.setLabels(labels);
     }
 }
