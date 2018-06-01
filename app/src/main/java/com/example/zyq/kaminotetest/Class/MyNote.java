@@ -2,6 +2,9 @@ package com.example.zyq.kaminotetest.Class;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by zyq on 2018/2/3.
  * note类
@@ -21,6 +24,8 @@ public class MyNote extends DataSupport {
     private String lastEdited;  //最后编辑的日期
 
     private Extras extras;
+
+    private List<Label> labels = new ArrayList<>();
 
     //构造方法，传入标题、内容、标识、创建日期。（最后编辑的日期另外设置）
     public MyNote(String title, String content, String identifier, String createdDate, Extras extras) {
@@ -77,5 +82,13 @@ public class MyNote extends DataSupport {
 
     public void setExtras(Extras extras) {
         this.extras = extras;
+    }
+
+    public List<Label> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(List<Label> labels) {
+        this.labels = labels;
     }
 }

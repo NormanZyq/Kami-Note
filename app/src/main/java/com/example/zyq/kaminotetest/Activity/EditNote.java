@@ -121,8 +121,8 @@ public class EditNote extends AppCompatActivity {
                 if (content.trim().equals("")) {
                     content = "";
                 }
-                NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
                 myNote.setLastEdited(date.toString());
+                NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
                 MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
                 finish();
                 break;

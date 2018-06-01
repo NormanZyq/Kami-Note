@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".Activity.CreateNote" />
         <activity android:name=".Activity.EditNote" />
-        <activity android:name=".Activity.NotesForLabel"></activity>
+        <activity android:name=".Activity.NotesForLabel" />
+        <activity android:name=".Activity.LabelSelector"></activity>
     </application>
 
 </manifest>
