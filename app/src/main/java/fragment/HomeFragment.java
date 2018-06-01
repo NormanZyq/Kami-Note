@@ -32,12 +32,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zyq.kaminotetest.Activity.CreateNote;
-import com.example.zyq.kaminotetest.Class.Label;
-import com.example.zyq.kaminotetest.Adapter.LabelAdapter;
 import com.example.zyq.kaminotetest.Activity.MainActivity;
+import com.example.zyq.kaminotetest.Adapter.LabelAdapter;
+import com.example.zyq.kaminotetest.Adapter.NoteAdapter2;
+import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
-import com.example.zyq.kaminotetest.Adapter.NoteAdapter2;
 import com.example.zyq.kaminotetest.R;
 
 import org.litepal.crud.DataSupport;
@@ -143,6 +143,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         if (mNote.size() != 0) {
             //如果已有数据且"没有更多内容"仍为显示状态，就把它隐藏掉
             tv_noMore = getView().findViewById(R.id.no_more);

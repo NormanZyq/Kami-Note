@@ -13,21 +13,6 @@
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="取消"
-            android:background="#00000000"/>
-
-        <Button
-            android:id="@+id/finish"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="完成"
-            android:gravity="end"
-            android:background="#00000000"/>
     </android.support.v7.widget.Toolbar>
 
     <!--android:layout_weight="1"-->

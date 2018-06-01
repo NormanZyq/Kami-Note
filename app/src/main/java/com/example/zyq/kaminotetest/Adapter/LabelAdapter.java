@@ -33,20 +33,26 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
 //        String labelName = getItem(position).getLabelName();
         Label label = getItem(position);
         View view;
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
-            viewHolder = new ViewHolder();
-            viewHolder.labelName = view.findViewById(R.id.label_name);
-            view.setTag(viewHolder);
-        } else {
-            view = convertView;
-            viewHolder = (ViewHolder) view.getTag();
-        }
+        ViewHolder viewHolder = new ViewHolder();
+        view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+        viewHolder.labelName = view.findViewById(R.id.label_name);
         viewHolder.labelName.setText(label.getLabelName());     //设置标签的名字
+
+//
+//        if (convertView == null) {
+//            view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+//            viewHolder = new ViewHolder();
+//            viewHolder.labelName = view.findViewById(R.id.label_name);
+//
+//            Object[] tags = new Object[]{viewHolder, position};
+//            view.setTag(tags);
+//        } else {
+//            view = convertView;
+//            viewHolder = (ViewHolder) ((Object[]) view.getTag())[0];
+//        }
 //        viewHolder.labelName.setOnClickListener(this);
 
-        view.setTag(position);              //设置标签所在view的tag，以其position作为tag
+        view.setTag(position);                  //设置标签所在view的tag，以其position作为tag
         view.setOnClickListener(this);      //设置标签点击事件
 
         return view;
@@ -54,7 +60,7 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        int position = (int) v.getTag();
+        int position = (int) (v.getTag());
 //        System.out.println(">>>>>>>>>>>" + v.getTag());
         Intent intent = new Intent(MainActivity.mainActivity, NotesForLabel.class);
         intent.putExtra("label_name", getItem(position).getLabelName());

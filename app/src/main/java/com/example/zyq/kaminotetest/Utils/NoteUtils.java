@@ -63,5 +63,6 @@ public enum NoteUtils {
      */
     public void setLabels(MyNote note, List<Label> labels) {
         note.setLabels(labels);
+        note.save();
     }
 }
