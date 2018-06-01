@@ -43,6 +43,16 @@ public class MyNote extends DataSupport {
         this.createdDate = createdDate;
     }
 
+    public boolean hasLabel(String labelName) {
+//        System.out.println(labels.size());
+        for (Label label : labels) {
+            if (label.getLabelName().equals(labelName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /*------get set 方法------------*/
     public String getTitle() {
         return title;

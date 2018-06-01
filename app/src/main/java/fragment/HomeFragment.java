@@ -147,6 +147,7 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
     }
 
     //回到MainActivity时刷新RecyclerView

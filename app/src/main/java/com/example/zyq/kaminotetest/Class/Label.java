@@ -5,15 +5,23 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import fragment.HomeFragment;
+
 public class Label extends DataSupport {
     private String labelName;
 
-    public List<MyNote> getNotes() {
-        return notes;
-    }
-
     private List<MyNote> notes = new ArrayList<>();
 
+    public List<MyNote> getNotes() {
+        //todo
+        List<MyNote> gNote = new ArrayList<>();
+        for (MyNote note : HomeFragment.mNote) {
+            if (note.hasLabel(labelName)) {
+                gNote.add(note);
+            }
+        }
+        return gNote;
+    }
     /**
      * 添加传入的所有note到对应的label
      * @param notesToAdd    待添加的note列表

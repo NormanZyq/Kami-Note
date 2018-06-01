@@ -49,7 +49,9 @@ public class NotesForLabel extends AppCompatActivity {
         //获取到对应名称的label对象
         labels = DataSupport.where("labelName = ?",labelname).find(Label.class);
         label = labels.get(0);
+
         notes = label.getNotes();
+
         noteListView = findViewById(R.id.note_list);
         tv_noMore = findViewById(R.id.no_more);
 

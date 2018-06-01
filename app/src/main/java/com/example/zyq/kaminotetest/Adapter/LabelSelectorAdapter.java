@@ -26,28 +26,43 @@ public class LabelSelectorAdapter extends ArrayAdapter<Label> implements View.On
         this.resourceId = resource;
     }
 
+    ViewHolder viewHolder;
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 //        String labelName = getItem(position).getLabelName();
         Label label = getItem(position);
-        View view;
-        ViewHolder viewHolder;
-        //对view循环使用
-        if (convertView == null) {
-            view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
-            viewHolder = new ViewHolder();
-            viewHolder.labelName = view.findViewById(R.id.label_name);
-//            viewHolder.checkBox.setChecked();
-            view.setTag(viewHolder);
-        } else {
-            view = convertView;
-            viewHolder = (ViewHolder) view.getTag();
-        }
+        View view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+
+        viewHolder = new ViewHolder();
+        viewHolder.checkBox = view.findViewById(R.id.label_checkbox);
+
+        viewHolder.labelName = view.findViewById(R.id.label_name);
+
+//        //对view循环使用
+//        if (convertView == null) {
+////            view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+//
+////            viewHolder = new ViewHolder();
+////            viewHolder.checkBox = view.findViewById(R.id.label_checkbox);
+////
+////            viewHolder.labelName = view.findViewById(R.id.label_name);
+////            viewHolder.checkBox.setChecked();
+//            view.setTag(viewHolder);
+//        } else {
+//            view = convertView;
+//            viewHolder.checkBox = view.findViewById(R.id.label_checkbox);
+//
+//            viewHolder = (ViewHolder) view.getTag();
+//        }
         viewHolder.labelName.setText(label.getLabelName());     //设置标签的名字
 //        viewHolder.labelName.setOnClickListener(this);
 
         view.setTag(position);              //设置标签所在view的tag，以其position作为tag
+        viewHolder.checkBox.setTag(position);
+
         view.setOnClickListener(this);      //设置标签点击事件
+        viewHolder.checkBox.setOnClickListener(this);
 
         return view;
     }
@@ -58,13 +73,16 @@ public class LabelSelectorAdapter extends ArrayAdapter<Label> implements View.On
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.checkBox = v.findViewById(R.id.label_checkbox);
 
-        if (viewHolder.checkBox.isChecked()) {
+        if (LabelSelector.checked[(int) v.getTag()]) {
             viewHolder.checkBox.setChecked(false);
             LabelSelector.checked[(int) v.getTag()] = false;
         } else {
             viewHolder.checkBox.setChecked(true);
             LabelSelector.checked[(int) v.getTag()] = true;
         }
+        System.out.println(LabelSelector.checked[0]);
+
+
     }
 
     private class ViewHolder {
