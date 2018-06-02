@@ -47,7 +47,7 @@ public class LabelSelector extends AppCompatActivity {
 
         mLabel = DataSupport.findAll(Label.class);      //从数据库中获得所有标签
 
-        checked = new boolean[mLabel.size()];       //以note数量为大小初始化checked数组
+        checked = new boolean[mLabel.size()];       //以label数量为大小初始化checked数组
 
         //自动标记这条笔记拥有的标签到checked数组，true表示拥有，false表示不拥有
         for (int i = 0, length = checked.length; i < length; i++) {
@@ -55,7 +55,6 @@ public class LabelSelector extends AppCompatActivity {
                 checked[i] = true;
             }
         }
-
 
         //显示标签的列表
         LabelSelectorAdapter adapter = new LabelSelectorAdapter(this, R.layout.label_item_in_selector, mLabel);
@@ -75,14 +74,16 @@ public class LabelSelector extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            List<Label> labels = new ArrayList<>();
+            ArrayList<String> labelNames = new ArrayList<>();
             for (int i = 0, length = checked.length; i < length; i++) {
                 if (checked[i]) {
-                    labels.add(HomeFragment.mLabel.get(i));
+                    labelNames.add(HomeFragment.mLabel.get(i).getLabelName());
                 }
             }
-            System.out.println(labels.size()+">>>>>>>>>>>>>>");
-            NoteUtils.INSTANCE.setLabels(sourceNote, labels);
+//            System.out.println(">>>>>>>>" + labelNames.);
+//            sourceNote.setLabels(new String[labelNames.size()]);
+            String[] array = new String[labelNames.size()];
+            NoteUtils.INSTANCE.setLabels(sourceNote, labelNames.toArray(array));
             finish();
         }
         return true;

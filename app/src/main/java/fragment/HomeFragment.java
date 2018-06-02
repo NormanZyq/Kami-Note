@@ -106,6 +106,12 @@ public class HomeFragment extends Fragment {
         mNote = DataSupport.findAll(MyNote.class);
         mLabel = DataSupport.findAll(Label.class);
 
+//        List<Label> labelsInNote = new ArrayList<>();
+//        for (Label label : mLabel) {
+//            if (label.) {
+//            }
+//        }
+
         //判断是否读取到了数据
         if (mNote.size() != 0) {
             refreshNoteListView(noteListView);  //刷新
@@ -134,6 +140,7 @@ public class HomeFragment extends Fragment {
             tv_noMore.setVisibility(View.VISIBLE);
         }
 
+        //todo: 设置按钮的响应
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,6 +148,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //todo: ?????
         labellist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

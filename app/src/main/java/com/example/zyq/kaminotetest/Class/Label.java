@@ -13,7 +13,6 @@ public class Label extends DataSupport {
     private List<MyNote> notes = new ArrayList<>();
 
     public List<MyNote> getNotes() {
-        //todo
         List<MyNote> gNote = new ArrayList<>();
         for (MyNote note : HomeFragment.mNote) {
             if (note.hasLabel(labelName)) {
