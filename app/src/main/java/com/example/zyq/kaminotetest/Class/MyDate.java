@@ -1,4 +1,4 @@
-package com.example.zyq.kaminotetest;
+package com.example.zyq.kaminotetest.Class;
 
 /**
  * Created by zyq on 2018/2/21.

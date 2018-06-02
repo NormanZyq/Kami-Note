@@ -1,4 +1,4 @@
-package com.example.zyq.kaminotetest;
+package com.example.zyq.kaminotetest.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +12,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.zyq.kaminotetest.Class.MyDate;
+import com.example.zyq.kaminotetest.Class.MyNote;
+import com.example.zyq.kaminotetest.Class.MyToast;
+import com.example.zyq.kaminotetest.Utils.NoteUtils;
+import com.example.zyq.kaminotetest.R;
+
+import fragment.HomeFragment;
 
 /**
  * 编辑界面
@@ -49,7 +57,7 @@ public class EditNote extends AppCompatActivity {
             直接从MainActivity中获得位置而没有传值
             可以优化，使用intent携带
              */
-            myNote = MainActivity.mNote.get(notePosition);
+            myNote = HomeFragment.mNote.get(notePosition);
 
             noteTitle = findViewById(R.id.title_editor);    //笔记标题输入框
             noteContent = findViewById(R.id.content_editor);    //笔记内容输入框
@@ -92,29 +100,31 @@ public class EditNote extends AppCompatActivity {
         final MyDate date = new MyDate();
         switch (item.getItemId()) {
             case R.id.finish:
-                title = noteTitle.getText().toString();
-                content = noteContent.getText().toString();
+                title = noteTitle.getText().toString().trim();
+                content = noteContent.getText().toString().trim();
 
-                if (title.trim().equals("") && content.trim().equals("")) {
-                    MyToast.makeText(EditNote.this, "标题和内容不能为空",
-                            Toast.LENGTH_SHORT).show();
-                    return false;
+                if (title.equals("") && content.equals("")) {
+                    finish();
+                    return true;
                 }
                 //如果没有修改，则直接finish
                 if ((title.equals(myNote.getTitle()) ||
-                        (title.equals("") && myNote.getTitle().equals("无标题"))) &&
+                        (title.equals("") && myNote.getTitle().equals(""))) &&
                         content.equals(myNote.getContent())) {
                     finish();
                     return true;
                 }
-                if (title.trim().equals("")) {
-                    title = "无标题";
+                if (title.equals("")) {
+                    //todo
                 }
-                if (content.trim().equals("")) {
-                    content = "";
-                }
-                NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
+//                if (title.trim().equals("")) {
+//                    title = "";
+//                }
+//                if (content.trim().equals("")) {
+//                    content = "";
+//                }
                 myNote.setLastEdited(date.toString());
+                NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
                 MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
@@ -131,7 +141,7 @@ public class EditNote extends AppCompatActivity {
         //从NoteAdapter中获得传输的intent并获取note的position
         Intent intent = getIntent();
         int notePosition = intent.getIntExtra("note_position", -1);
-        myNote = MainActivity.mNote.get(notePosition);
+        myNote = HomeFragment.mNote.get(notePosition);
 
         noteTitle = findViewById(R.id.title_editor);    //笔记标题
         noteContent = findViewById(R.id.content_editor);    //笔记内容
@@ -163,13 +173,13 @@ public class EditNote extends AppCompatActivity {
                     if (title.equals(myNote.getTitle()) && content.equals(myNote.getContent())) {
                         finish();
                     }
-                    if (title.trim().equals("")) {
-                        title = "无标题";
-                    }
-                    if (content.trim().equals("")){
-                        content = "";
-                    }
-                    NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
+//                    if (title.trim().equals("")) {
+//                        title = "";
+//                    }
+//                    if (content.trim().equals("")){
+//                        content = "";
+//                    }
+                    NoteUtils.INSTANCE.updateNote(myNote, title.trim(), content.trim(), date);
                     MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
                     finish();
                 }

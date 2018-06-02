@@ -1,16 +1,21 @@
-package com.example.zyq.kaminotetest;
+package com.example.zyq.kaminotetest.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.zyq.kaminotetest.Activity.EditNote;
+import com.example.zyq.kaminotetest.Activity.LabelSelector;
+import com.example.zyq.kaminotetest.Activity.MainActivity;
+import com.example.zyq.kaminotetest.Class.MyNote;
+import com.example.zyq.kaminotetest.R;
 
 import java.util.List;
 
@@ -36,6 +41,7 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
         TextView noteTitle;
         TextView noteContent;
         TextView editedDate;
+        ImageButton selectLabels;
 
         public NotesViewHolder(View itemView) {
             super(itemView);
@@ -43,6 +49,8 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
             noteTitle = itemView.findViewById(R.id.note_title2);
             noteContent = itemView.findViewById(R.id.note_content2);
             editedDate = itemView.findViewById(R.id.note_edited_date2);
+            selectLabels = itemView.findViewById(R.id.select_labels_for_note);
+
             noteTitle.setBackgroundColor(Color.argb(20, 0, 0, 0));
             noteTitle.setBackgroundResource(R.drawable.corner_view);
         }
@@ -67,6 +75,17 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
             }
         });
 
+        notesViewHolder.selectLabels.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = notesViewHolder.getAdapterPosition();    //获得点击的笔记位置
+                //点击书签按钮时跳转到标签选择页
+                Intent intent = new Intent(view.getContext(), LabelSelector.class);
+                intent.putExtra("note_position", position);
+                view.getContext().startActivity(intent);
+            }
+        });
+
         //创建长按事件
         notesViewHolder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -83,8 +102,8 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
     @Override
     public void onBindViewHolder(NotesViewHolder holder, int position) {
         MyNote note = myNotes.get(position);
-        holder.noteTitle.setText(note.getTitle());
-        holder.noteContent.setText(note.getContent());
+        holder.noteTitle.setText(note.getTitle().equals("") ? "无标题" : note.getTitle());
+        holder.noteContent.setText(note.getContent().equals("") ? "无附加内容" : note.getContent());
         holder.editedDate.setText(note.getLastEdited());
     }
 

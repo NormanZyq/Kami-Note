@@ -1,10 +1,12 @@
-package com.example.zyq.kaminotetest;
+package com.example.zyq.kaminotetest.Class;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.zyq.kaminotetest.R;
 
 /**
  * Created by zyq on 2018/2/24.

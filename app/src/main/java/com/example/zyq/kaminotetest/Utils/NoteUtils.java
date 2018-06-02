@@ -1,6 +1,14 @@
-package com.example.zyq.kaminotetest;
+package com.example.zyq.kaminotetest.Utils;
+
+import com.example.zyq.kaminotetest.Activity.MainActivity;
+import com.example.zyq.kaminotetest.Class.Extras;
+import com.example.zyq.kaminotetest.Class.Label;
+import com.example.zyq.kaminotetest.Class.MyDate;
+import com.example.zyq.kaminotetest.Class.MyNote;
 
 import java.util.List;
+
+import fragment.HomeFragment;
 
 /**
  * Created by zyq on 2018/3/2.
@@ -8,18 +16,19 @@ import java.util.List;
  * 日后将考虑修改，目前使用范围过于局限
  */
 
-enum NoteUtils {
+public enum NoteUtils {
     INSTANCE;   //单个实例
 
     /*-----------------方法-----------------*/
 
     /**
      * 保存note的方法
-     * @param title 笔记的标题
-     * @param content   笔记的详细内容
-     * @param identifier    笔记的标识，UUID
-     * @param createdDate   笔记的创建日期
-     * 编辑日期另外添加
+     *
+     * @param title       笔记的标题
+     * @param content     笔记的详细内容
+     * @param identifier  笔记的标识，UUID
+     * @param createdDate 笔记的创建日期
+     *                    编辑日期另外添加
      */
     public void saveNote(String title, String content, String identifier, MyDate createdDate, Extras extras) {
         MyNote note = new MyNote(title, content, identifier, createdDate.toString(), extras);
@@ -31,7 +40,8 @@ enum NoteUtils {
     public void saveNote(String title, String content, String identifier, MyDate createdDate) {
         MyNote note = new MyNote(title, content, identifier, createdDate.toString());
         note.setLastEdited(createdDate.toString());
-        MainActivity.mNote.add(note);
+//        note.setLabels(new String[]{});
+        HomeFragment.mNote.add(note);
         note.save();
     }
 
@@ -46,5 +56,21 @@ enum NoteUtils {
     //移除note的方法
     public void removeNote(List<MyNote> mNote, int position) {
         mNote.remove(position);
+    }
+
+    /**
+     * 为笔记添加标签
+     *
+     * @param note   待添加标签的笔记
+     * @param labels 待添加的标签列表
+     */
+    public void setLabels(MyNote note, List<Label> labels) {
+//        note.setLabels(labels);
+        note.save();
+    }
+
+    public void setLabels(MyNote note, String[] labels) {
+        note.setLabels(labels);
+        note.save();
     }
 }

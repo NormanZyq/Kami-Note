@@ -1,4 +1,5 @@
-package com.example.zyq.kaminotetest;
+package com.example.zyq.kaminotetest.Class;
+
 import org.litepal.crud.DataSupport;
 
 /**
@@ -21,8 +22,12 @@ public class MyNote extends DataSupport {
 
     private Extras extras;
 
+//    private List<Label> labels = new ArrayList<>();
+
+    private String[] labels = new String[]{};
+
     //构造方法，传入标题、内容、标识、创建日期。（最后编辑的日期另外设置）
-    MyNote(String title, String content, String identifier, String createdDate, Extras extras) {
+    public MyNote(String title, String content, String identifier, String createdDate, Extras extras) {
         this.title = title;
         this.content = content;
         this.identifier = identifier;
@@ -35,6 +40,25 @@ public class MyNote extends DataSupport {
         this.content = content;
         this.identifier = identifier;
         this.createdDate = createdDate;
+    }
+
+    public MyNote(String title, String content, String identifier, String createdDate, String lastEdited, String[] labels) {
+        this.title = title;
+        this.content = content;
+        this.identifier = identifier;
+        this.createdDate = createdDate;
+        this.lastEdited = lastEdited;
+        this.labels = labels;
+    }
+
+    public boolean hasLabel(String labelNameToSearch) {
+//        System.out.println(labels.size());
+        for (String labelName : labels) {
+            if (labelName.equals(labelNameToSearch)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /*------get set 方法------------*/
@@ -76,5 +100,22 @@ public class MyNote extends DataSupport {
 
     public void setExtras(Extras extras) {
         this.extras = extras;
+    }
+
+//    public List<Label> getLabels() {
+//        return labels;
+//    }
+//
+//    public void setLabels(List<Label> labels) {
+//        this.labels = labels;
+//    }
+
+
+    public String[] getLabels() {
+        return labels;
+    }
+
+    public void setLabels(String[] labels) {
+        this.labels = labels;
     }
 }
