@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -163,6 +164,11 @@ public class MainActivity extends AppCompatActivity {
     //点击返回按钮的操作（"再按一次退出程序"）
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return false;
+        }
+
         //判断用户是否点击了“返回键”
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             //与上次点击返回键时刻作差

@@ -3,18 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="165dp"
     android:padding="5dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="8dp"
-        android:focusable="true">
+        android:focusable="true"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp">
         <!--copy过来的是8dp-->
 
         <RelativeLayout
@@ -40,22 +41,23 @@
                     android:id="@+id/note_title2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:maxLines="1"
                     android:padding="5dp"
                     android:background="@drawable/rc_edit_text"
                     android:textColor="#75000000"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/note_content2"
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
+                    android:layout_height="18dp"
                     android:layout_below="@+id/note_title2"
                     android:layout_margin="20dp"
-                    android:maxLines="2"
-                    android:textSize="17sp" />
+                    android:maxLines="1"
+                    android:textSize="15sp" />
 
 
                 <TextView
@@ -77,6 +79,7 @@
 
                 <ImageButton
                     android:id="@+id/select_labels_for_note"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#00000000"

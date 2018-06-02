@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.example.zyq.kaminotetest.Adapter.LabelSelectorAdapter;
 import com.example.zyq.kaminotetest.Class.Label;
+import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.NoteUtils;
 
@@ -25,6 +26,7 @@ public class LabelSelector extends AppCompatActivity {
 
     private List<Label> mLabel = new ArrayList<>();
     private ListView labelList;
+    private MyNote sourceNote;
     public static boolean[] checked;
     int notePosition;
 
@@ -33,7 +35,6 @@ public class LabelSelector extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_label_selector);
 
-
         //设置toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,11 +42,20 @@ public class LabelSelector extends AppCompatActivity {
         labelList = findViewById(R.id.label_list_in_selector);  //获得用以显示的ListView
 
         Intent intent = getIntent();    //获得intent
-        notePosition = intent.getIntExtra("note_position", 0);
+        notePosition = intent.getIntExtra("note_position", 0);  //传入note的位置
+        sourceNote = HomeFragment.mNote.get(notePosition);      //获取来源笔记
 
         mLabel = DataSupport.findAll(Label.class);      //从数据库中获得所有标签
 
-        checked = new boolean[mLabel.size()];       //初始化checked数组，表示是否选中勾选框
+        checked = new boolean[mLabel.size()];       //以note数量为大小初始化checked数组
+
+        //自动标记这条笔记拥有的标签到checked数组，true表示拥有，false表示不拥有
+        for (int i = 0, length = checked.length; i < length; i++) {
+            if (sourceNote.hasLabel(mLabel.get(i).getLabelName())) {
+                checked[i] = true;
+            }
+        }
+
 
         //显示标签的列表
         LabelSelectorAdapter adapter = new LabelSelectorAdapter(this, R.layout.label_item_in_selector, mLabel);
@@ -72,7 +82,7 @@ public class LabelSelector extends AppCompatActivity {
                 }
             }
             System.out.println(labels.size()+">>>>>>>>>>>>>>");
-            NoteUtils.INSTANCE.setLabels(HomeFragment.mNote.get(notePosition), labels);
+            NoteUtils.INSTANCE.setLabels(sourceNote, labels);
             finish();
         }
         return true;

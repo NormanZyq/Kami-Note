@@ -39,22 +39,6 @@ public class LabelSelectorAdapter extends ArrayAdapter<Label> implements View.On
 
         viewHolder.labelName = view.findViewById(R.id.label_name);
 
-//        //对view循环使用
-//        if (convertView == null) {
-////            view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
-//
-////            viewHolder = new ViewHolder();
-////            viewHolder.checkBox = view.findViewById(R.id.label_checkbox);
-////
-////            viewHolder.labelName = view.findViewById(R.id.label_name);
-////            viewHolder.checkBox.setChecked();
-//            view.setTag(viewHolder);
-//        } else {
-//            view = convertView;
-//            viewHolder.checkBox = view.findViewById(R.id.label_checkbox);
-//
-//            viewHolder = (ViewHolder) view.getTag();
-//        }
         viewHolder.labelName.setText(label.getLabelName());     //设置标签的名字
 //        viewHolder.labelName.setOnClickListener(this);
 
@@ -63,6 +47,11 @@ public class LabelSelectorAdapter extends ArrayAdapter<Label> implements View.On
 
         view.setOnClickListener(this);      //设置标签点击事件
         viewHolder.checkBox.setOnClickListener(this);
+
+        //自动勾选这条笔记拥有的标签
+        if (LabelSelector.checked[position]) {
+            viewHolder.checkBox.setChecked(true);
+        }
 
         return view;
     }

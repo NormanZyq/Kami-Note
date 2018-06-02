@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -52,8 +51,6 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
     public static final String ACTIVITY_TAG = "MainActivity";  //打印日志的TAG
-    private BottomNavigationView bottomNavigationView;            //底部栏引用
-    private Fragment[] fragments;                                  //布局管理列表
     private String mfrom;                                           //接收跨界面信息
     //private CallBack callBack;                                      //创建接口实例，准备回调
 
@@ -65,6 +62,7 @@ public class HomeFragment extends Fragment {
     private LabelAdapter labelListAdapter;
     private ImageView settings;
 
+    public static HomeFragment homeFragment;
     public static List<MyNote> mNote;           //保存note的列表
     public static List<Label> mLabel;           //
     public static int notePosition;             //记录笔记位置
@@ -73,6 +71,8 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        homeFragment = this;
+
         View view = inflater.inflate(R.layout.fragment_home ,null);
         tv_noMore = view.findViewById(R.id.no_more); //没有更多内容
         noteListView = view.findViewById(R.id.note_list);    //note列表
@@ -317,6 +317,7 @@ public class HomeFragment extends Fragment {
         dialog.setMessage(alertMessage);
         return dialog;
     }
+
 }
 
 

@@ -86,22 +86,13 @@ public class CreateNote extends AppCompatActivity {
 
     public boolean save() {
         createdDate = new MyDate();
-        title = noteTitle.getText().toString();
-        content = noteContent.getText().toString();
-
+        title = noteTitle.getText().toString().trim();
+        content = noteContent.getText().toString().trim();
         //去掉空格如果内容为空则进行提示
-        if (title.trim().equals("") && content.trim().equals("")) {
+        if (title.equals("") && content.equals("")) {
             finish();
             return false;
         } else {
-            //如果没有标题则补全为"无标题"
-            if (title.trim().equals("")) {
-                title = "无标题";
-            }
-            //如果没有内容则设置为空
-            if (content.trim().equals("")){
-                content = "";
-            }
             identifier = UUID.randomUUID().toString();  //设置UUID
             NoteUtils.INSTANCE.saveNote(title, content, identifier, createdDate);  //保存到数据库
             MyToast.makeText(CreateNote.this, "保存成功", Toast.LENGTH_SHORT).show();
@@ -112,20 +103,20 @@ public class CreateNote extends AppCompatActivity {
     }
 
     public void Confirmation() {
-        if ( !(noteTitle.getText().toString().trim().equals("") &&
-                noteContent.getText().toString().equals("")) ) {
+        if ( !noteTitle.getText().toString().trim().equals("") ||
+                !noteContent.getText().toString().equals("") ) {
             //有输入时就发起提醒
             AlertDialog.Builder backConfirmation = MainActivity.buildAlertDialog(CreateNote.this,
                     "是否保存？", null);
             backConfirmation.setPositiveButton("保存并返回", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    noteTitle = findViewById(R.id.title_editor);
-                    noteContent = findViewById(R.id.content_editor);
+//                    noteTitle = findViewById(R.id.title_editor);
+//                    noteContent = findViewById(R.id.content_editor);
                     createdDate = new MyDate();
                     identifier = UUID.randomUUID().toString();  //设置UUID
-                    title = noteTitle.getText().toString().equals("") ? "无标题" : noteTitle.getText().toString();
-                    content = noteContent.getText().toString();
+                    title = noteTitle.getText().toString();     //设置标题
+                    content = noteContent.getText().toString(); //设置内容
                     NoteUtils.INSTANCE.saveNote(title, content, identifier, createdDate);
                     finish();
                 }
