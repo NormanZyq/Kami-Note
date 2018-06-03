@@ -1,11 +1,11 @@
 package com.example.zyq.kaminotetest.Class;
 
+import com.example.zyq.kaminotetest.Data.DataClass;
+
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import fragment.HomeFragment;
 
 public class Label extends DataSupport {
     private String labelName;
@@ -16,7 +16,7 @@ public class Label extends DataSupport {
 
     public List<MyNote> getNotes() {
         List<MyNote> gNote = new ArrayList<>();
-        for (MyNote note : HomeFragment.mNote) {
+        for (MyNote note : DataClass.mNote) {
             if (note.hasLabel(labelName)) {
                 gNote.add(note);
                 count++;
@@ -27,7 +27,7 @@ public class Label extends DataSupport {
 
     public int calculateCount() {
         int count = 0;
-        for (MyNote note : HomeFragment.mNote) {
+        for (MyNote note : DataClass.mNote) {
             if (note.hasLabel(labelName)) {
                 count++;
             }

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.example.zyq.kaminotetest.Adapter.LabelSelectorAdapter;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
+import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.NoteUtils;
 
@@ -20,8 +21,6 @@ import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import fragment.HomeFragment;
 
 public class LabelSelector extends AppCompatActivity {
 
@@ -50,7 +49,7 @@ public class LabelSelector extends AppCompatActivity {
         if (intent.getIntExtra("note_position2", -1) != -1) {
             sourceNote = NotesForLabel.notes.get(intent.getIntExtra("note_position2", -1));
         } else {
-            sourceNote = HomeFragment.mNote.get(intent.getIntExtra("note_position", -1));
+            sourceNote = DataClass.mNote.get(intent.getIntExtra("note_position", -1));
         }
 
 //        sourceNote = HomeFragment.mNote.get(notePosition);      //获取来源笔记
@@ -105,7 +104,7 @@ public class LabelSelector extends AppCompatActivity {
         ArrayList<String> labelNames = new ArrayList<>();
         for (int i = 0, length = checked.length; i < length; i++) {
             if (checked[i]) {
-                labelNames.add(HomeFragment.mLabel.get(i).getLabelName());
+                labelNames.add(DataClass.mLabel.get(i).getLabelName());
             }
         }
         String[] array = new String[labelNames.size()];

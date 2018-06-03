@@ -2,10 +2,10 @@ package com.example.zyq.kaminotetest.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -16,10 +16,9 @@ import android.widget.Toast;
 import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
-import com.example.zyq.kaminotetest.Utils.NoteUtils;
+import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
-
-import fragment.HomeFragment;
+import com.example.zyq.kaminotetest.Utils.NoteUtils;
 
 /**
  * 编辑界面
@@ -58,7 +57,7 @@ public class EditNote extends AppCompatActivity {
         if (intent.getIntExtra("note_position2", -1) != -1) {
             myNote = NotesForLabel.notes.get(intent.getIntExtra("note_position2", -1));
         } else {
-            myNote = HomeFragment.mNote.get(intent.getIntExtra("note_position", -1));
+            myNote = DataClass.mNote.get(intent.getIntExtra("note_position", -1));
         }
 
         noteTitle = findViewById(R.id.title_editor);    //笔记标题输入框

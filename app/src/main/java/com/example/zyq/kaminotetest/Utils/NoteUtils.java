@@ -1,14 +1,12 @@
 package com.example.zyq.kaminotetest.Utils;
 
-import com.example.zyq.kaminotetest.Activity.MainActivity;
 import com.example.zyq.kaminotetest.Class.Extras;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Class.MyNote;
+import com.example.zyq.kaminotetest.Data.DataClass;
 
 import java.util.List;
-
-import fragment.HomeFragment;
 
 /**
  * Created by zyq on 2018/3/2.
@@ -33,7 +31,7 @@ public enum NoteUtils {
     public void saveNote(String title, String content, String identifier, MyDate createdDate, Extras extras) {
         MyNote note = new MyNote(title, content, identifier, createdDate.toString(), extras);
         note.setLastEdited(createdDate.toString());
-        MainActivity.mNote.add(note);
+        DataClass.mNote.add(note);
         note.save();
     }
 
@@ -41,7 +39,7 @@ public enum NoteUtils {
         MyNote note = new MyNote(title, content, identifier, createdDate.toString());
         note.setLastEdited(createdDate.toString());
 //        note.setLabels(new String[]{});
-        HomeFragment.mNote.add(note);
+        DataClass.mNote.add(note);
         note.save();
     }
 

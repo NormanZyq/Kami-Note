@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.zyq.kaminotetest.Activity.MainActivity;
 import com.example.zyq.kaminotetest.Activity.NotesForLabel;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.R;
@@ -64,7 +63,7 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
     public void onClick(View v) {
         int position = (int) (v.getTag());
 //        System.out.println(">>>>>>>>>>>" + v.getTag());
-        Intent intent = new Intent(MainActivity.mainActivity, NotesForLabel.class);
+        Intent intent = new Intent(getContext(), NotesForLabel.class);
         intent.putExtra("label_name", getItem(position).getLabelName());
         v.getContext().startActivity(intent);
     }
