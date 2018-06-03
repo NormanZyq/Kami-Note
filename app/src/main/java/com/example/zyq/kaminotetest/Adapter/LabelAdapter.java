@@ -36,7 +36,9 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
         ViewHolder viewHolder = new ViewHolder();
         view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
         viewHolder.labelName = view.findViewById(R.id.label_name);
+        viewHolder.count = view.findViewById(R.id.text_count);
         viewHolder.labelName.setText(label.getLabelName());     //设置标签的名字
+        viewHolder.count.setText(label.getCount() + "个项目");
 
 //
 //        if (convertView == null) {
@@ -69,5 +71,6 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
 
     private class ViewHolder {
         TextView labelName;
+        TextView count;
     }
 }

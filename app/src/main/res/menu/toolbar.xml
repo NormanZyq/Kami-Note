@@ -4,31 +4,15 @@
     <item
         android:id="@+id/delete_all"
         android:icon="@drawable/ic_delete"
-        android:title="删除全部"
-        app:showAsAction="always"/>
+        android:title="删除"
+        app:showAsAction="always" />
 
 
-    <group>
-        <item
-            android:id="@+id/add_note"
-            android:title="添加笔记"
-            app:showAsAction="never"/>
-
-        <item
-            android:id="@+id/add_label"
-            android:title="添加标签"
-            app:showAsAction="never"/>
-
-
-    </group>
-    <!--<item-->
-    <!--android:id="@+id/add"-->
-    <!--android:title="@string/add"-->
-    <!--app:showAsAction="ifRoom"/>-->
-    <!--android:icon="@drawable/ic_add"-->
-
-
-
+    <item
+        android:id="@+id/add_note"
+        android:icon="@drawable/ic_add"
+        android:title="@string/add"
+        app:showAsAction="always" />
 
 
 </menu>

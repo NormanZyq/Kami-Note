@@ -24,8 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -60,7 +58,7 @@ public class HomeFragment extends Fragment {
     private long mExitTime = 0;                 //记录点击返回按钮的时间
     private LinearLayout mainView;
     private LabelAdapter labelListAdapter;
-    private ImageView settings;
+//    private ImageView addLabel;
 
     public static HomeFragment homeFragment;
     public static List<MyNote> mNote;           //保存note的列表
@@ -76,7 +74,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home ,null);
         tv_noMore = view.findViewById(R.id.no_more); //没有更多内容
         noteListView = view.findViewById(R.id.note_list);    //note列表
-        settings = getActivity().findViewById(R.id.image_settings);  //侧边栏设置按钮
+//        addLabel = getActivity().findViewById(R.id.image_add_label);  //侧边栏添加标签按钮
         mainView = view.findViewById(R.id.main_linear_layout);
         tv_noMore = view.findViewById(R.id.no_more); //没有更多内容
         noteListView = view.findViewById(R.id.note_list);    //note列表
@@ -140,13 +138,38 @@ public class HomeFragment extends Fragment {
             tv_noMore.setVisibility(View.VISIBLE);
         }
 
-        //todo: 设置按钮的响应
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(),"settings",Toast.LENGTH_SHORT).show();
-            }
-        });
+//        //todo: 设置按钮的响应
+//        addLabel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                builder.setTitle("请输入标签");    //设置对话框标题
+//
+//                final EditText addLabel = new EditText(getActivity());
+//
+//                builder.setView(addLabel);
+//                builder.setCancelable(true);
+//                builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String labelName = addLabel.getText().toString();
+//                        if (labelName.length() > 10) {
+//                            MyToast.makeText(getActivity(), "标签过长", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            Label label = new Label(labelName);
+//                            mLabel.add(label);
+//                            label.save();
+//                            MyToast.makeText(getActivity(), "保存成功", Toast.LENGTH_SHORT).show();
+//                        }
+//                        //TODO
+//                        MainActivity.mLabel = mLabel;
+//                        ((MainActivity)getActivity()).refreshLabelListView(MainActivity.mainActivity.labelListView);
+//                    }
+//                });
+//                builder.setNegativeButton("取消", null);
+//                builder.show();
+//            }
+//        });
 
         //todo: ?????
         labellist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -280,34 +303,6 @@ public class HomeFragment extends Fragment {
             case R.id.add_note:    //点击了添加
                 Intent jumpToCreateNote = new Intent(getActivity(), CreateNote.class);
                 startActivity(jumpToCreateNote);
-                break;
-            case R.id.add_label:
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("请输入标签");    //设置对话框标题
-
-                final EditText addLabel = new EditText(getActivity());
-
-                builder.setView(addLabel);
-                builder.setCancelable(true);
-                builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String labelName = addLabel.getText().toString();
-                        if (labelName.length() > 10) {
-                            MyToast.makeText(getActivity(), "标签过长", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Label label = new Label(labelName);
-                            mLabel.add(label);
-                            label.save();
-                            MyToast.makeText(getActivity(), "保存成功", Toast.LENGTH_SHORT).show();
-                        }
-                        //TODO
-                        MainActivity.mLabel = mLabel;
-                        ((MainActivity)getActivity()).refreshLabelListView(MainActivity.mainActivity.labelListView);
-                    }
-                });
-                builder.setNegativeButton("取消", null);
-                builder.show();
                 break;
 
             case android.R.id.home: //点击左上角菜单键来启动滑动菜单

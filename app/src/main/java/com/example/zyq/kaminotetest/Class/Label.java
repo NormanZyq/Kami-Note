@@ -12,11 +12,14 @@ public class Label extends DataSupport {
 
     private List<MyNote> notes = new ArrayList<>();
 
+    private int count = 0;
+
     public List<MyNote> getNotes() {
         List<MyNote> gNote = new ArrayList<>();
         for (MyNote note : HomeFragment.mNote) {
             if (note.hasLabel(labelName)) {
                 gNote.add(note);
+                count++;
             }
         }
         return gNote;
@@ -47,5 +50,9 @@ public class Label extends DataSupport {
 
     public void setLabelName(String labelName) {
         this.labelName = labelName;
+    }
+
+    public int getCount() {
+        return count;
     }
 }

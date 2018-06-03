@@ -43,6 +43,12 @@ public class NotesForLabel extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         this.setSupportActionBar(toolbar);
 
+        try {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
+
         //获取到用户点击的label名
         Intent intent = getIntent();
         labelname = intent.getStringExtra("label_name");
@@ -105,7 +111,6 @@ public class NotesForLabel extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println(">>>>>>>>>>>>>" + "onResume");
         notes = label.getNotes();
         System.out.println(notes.size());
         tv_noMore = findViewById(R.id.no_more);
@@ -120,4 +125,6 @@ public class NotesForLabel extends AppCompatActivity {
         }
         refreshNoteListView(noteListView);
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.zyq.kaminotetest.Activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,18 +14,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zyq.kaminotetest.Utils.DataGenerator;
-import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Adapter.LabelAdapter;
+import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.DataGenerator;
 
 import org.litepal.crud.DataSupport;
 
@@ -39,7 +43,7 @@ import fragment.HomeFragment;
  * Updated on 2018/3/17.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String ACTIVITY_TAG = "MainActivity";  //打印日志的TAG
     private BottomNavigationView bottomNavigationView;            //底部栏引用
     private Fragment[] fragments;                                  //布局管理列表
@@ -49,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_noMore;                 //没有更多内容的文本
     private long mExitTime = 0;                 //记录点击返回按钮的时间
     private LinearLayout mainView;
-    private LabelAdapter labelListAdapter;
+    private TextView textAddLabel;
+    private ImageView imageAddLabel;
 
     public static List<MyNote> mNote;           //保存note的列表
     public static List<Label> mLabel;           //
@@ -116,6 +121,13 @@ public class MainActivity extends AppCompatActivity {
         for (Label label : mLabel) {
             System.out.println(">>>>>" + label.getLabelName());
         }*/
+
+        textAddLabel = findViewById(R.id.text_add_label);
+        imageAddLabel = findViewById(R.id.image_add_label);
+
+        imageAddLabel.setOnClickListener(this);
+        textAddLabel.setOnClickListener(this);
+
 
     }
 
@@ -197,6 +209,37 @@ public class MainActivity extends AppCompatActivity {
         dialog.setMessage(alertMessage);
         return dialog;
     }
+
+    @Override
+    public void onClick(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("请输入标签");    //设置对话框标题
+
+        final EditText addLabel = new EditText(MainActivity.this);
+
+        builder.setView(addLabel);
+        builder.setCancelable(true);
+        builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String labelName = addLabel.getText().toString();
+                if (labelName.length() > 10) {
+                    MyToast.makeText(MainActivity.this, "标签过长", Toast.LENGTH_SHORT).show();
+                } else {
+                    Label label = new Label(labelName);
+                    mLabel.add(label);
+                    label.save();
+                    MyToast.makeText(MainActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                }
+                //TODO
+//                        MainActivity.mLabel = mLabel;
+                refreshLabelListView(MainActivity.mainActivity.labelListView);
+            }
+        });
+        builder.setNegativeButton("取消", null);
+        builder.show();
+    }
+
 
     /*//当点击长按菜单时要做的东西
     @Override

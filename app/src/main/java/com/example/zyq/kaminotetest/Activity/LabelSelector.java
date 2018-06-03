@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
@@ -38,6 +38,7 @@ public class LabelSelector extends AppCompatActivity {
         //设置toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         labelList = findViewById(R.id.label_list_in_selector);  //获得用以显示的ListView
 
@@ -79,20 +80,26 @@ public class LabelSelector extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            ArrayList<String> labelNames = new ArrayList<>();
-            for (int i = 0, length = checked.length; i < length; i++) {
-                if (checked[i]) {
-                    labelNames.add(HomeFragment.mLabel.get(i).getLabelName());
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cancel:
+                finish();
+                break;
+
+            case R.id.done:
+                ArrayList<String> labelNames = new ArrayList<>();
+                for (int i = 0, length = checked.length; i < length; i++) {
+                    if (checked[i]) {
+                        labelNames.add(HomeFragment.mLabel.get(i).getLabelName());
+                    }
                 }
-            }
-//            System.out.println(">>>>>>>>" + labelNames.);
-//            sourceNote.setLabels(new String[labelNames.size()]);
-            String[] array = new String[labelNames.size()];
-            NoteUtils.INSTANCE.setLabels(sourceNote, labelNames.toArray(array));
-            finish();
+                String[] array = new String[labelNames.size()];
+                NoteUtils.INSTANCE.setLabels(sourceNote, labelNames.toArray(array));
+                finish();
+                break;
+
         }
         return true;
     }
+
 }
