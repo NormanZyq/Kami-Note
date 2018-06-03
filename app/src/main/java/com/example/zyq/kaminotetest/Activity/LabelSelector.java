@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
@@ -72,6 +73,13 @@ public class LabelSelector extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            saveLabel();
+        }
+        return true;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,19 +95,22 @@ public class LabelSelector extends AppCompatActivity {
                 break;
 
             case R.id.done:
-                ArrayList<String> labelNames = new ArrayList<>();
-                for (int i = 0, length = checked.length; i < length; i++) {
-                    if (checked[i]) {
-                        labelNames.add(HomeFragment.mLabel.get(i).getLabelName());
-                    }
-                }
-                String[] array = new String[labelNames.size()];
-                NoteUtils.INSTANCE.setLabels(sourceNote, labelNames.toArray(array));
-                finish();
+                saveLabel();
                 break;
-
         }
         return true;
+    }
+
+    private void saveLabel() {
+        ArrayList<String> labelNames = new ArrayList<>();
+        for (int i = 0, length = checked.length; i < length; i++) {
+            if (checked[i]) {
+                labelNames.add(HomeFragment.mLabel.get(i).getLabelName());
+            }
+        }
+        String[] array = new String[labelNames.size()];
+        NoteUtils.INSTANCE.setLabels(sourceNote, labelNames.toArray(array));
+        finish();
     }
 
 }

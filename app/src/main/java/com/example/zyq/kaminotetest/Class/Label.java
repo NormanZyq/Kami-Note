@@ -24,6 +24,18 @@ public class Label extends DataSupport {
         }
         return gNote;
     }
+
+    public int calculateCount() {
+        int count = 0;
+        for (MyNote note : HomeFragment.mNote) {
+            if (note.hasLabel(labelName)) {
+                count++;
+            }
+        }
+        this.count = count;
+        return count;
+    }
+
     /**
      * 添加传入的所有note到对应的label
      * @param notesToAdd    待添加的note列表

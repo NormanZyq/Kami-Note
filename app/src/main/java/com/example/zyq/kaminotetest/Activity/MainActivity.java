@@ -233,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     MyToast.makeText(MainActivity.this, "标签过长", Toast.LENGTH_SHORT).show();
                 } else {
                     Label label = new Label(labelName);
+                    HomeFragment.mLabel.add(label);
                     mLabel.add(label);
                     label.save();
                     MyToast.makeText(MainActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
