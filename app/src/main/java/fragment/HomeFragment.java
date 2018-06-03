@@ -120,6 +120,12 @@ public class HomeFragment extends Fragment {
             tv_noMore.setVisibility(View.VISIBLE);
         }
         if (mLabel.size() != 0) {
+
+//            for (Label label : mLabel) {
+//                label.getNotes();
+//            }
+
+
             MainActivity.mainActivity.refreshLabelListView(MainActivity.mainActivity.labelListView);
 
         } else {
@@ -185,7 +191,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         if (mNote.size() != 0) {
             //如果已有数据且"没有更多内容"仍为显示状态，就把它隐藏掉
             tv_noMore = getView().findViewById(R.id.no_more);
@@ -197,6 +202,7 @@ public class HomeFragment extends Fragment {
             //滑动到最后编辑的内容（太复杂，需简化）
             noteListView.scrollToPosition(notePosition == 0 ? mNote.size() : notePosition);
         }
+//        refreshLabelListView(MainActivity.mainActivity.labelListView);
     }
 
     public void refreshLabelListView(ListView listView) {

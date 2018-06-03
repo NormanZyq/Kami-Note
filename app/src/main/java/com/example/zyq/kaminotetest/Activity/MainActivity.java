@@ -131,6 +131,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshLabelListView(labelListView);
+    }
+
     //初始化view
     private void initview(){
         bottomNavigationView = findViewById(R.id.navigation_view);
