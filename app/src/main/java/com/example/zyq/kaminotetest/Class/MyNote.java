@@ -42,17 +42,9 @@ public class MyNote extends DataSupport {
         this.createdDate = createdDate;
     }
 
-    public MyNote(String title, String content, String identifier, String createdDate, String lastEdited, String[] labels) {
-        this.title = title;
-        this.content = content;
-        this.identifier = identifier;
-        this.createdDate = createdDate;
-        this.lastEdited = lastEdited;
-        this.labels = labels;
-    }
-
     public boolean hasLabel(String labelNameToSearch) {
 //        System.out.println(labels.size());
+//        String labelNamesString[] = (String[]) labels;
         for (String labelName : labels) {
             if (labelName.equals(labelNameToSearch)) {
                 return true;

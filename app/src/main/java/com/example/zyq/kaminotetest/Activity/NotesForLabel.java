@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zyq.kaminotetest.Adapter.NoteAdapter2;
+import com.example.zyq.kaminotetest.Adapter.NoteAdapter3;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
@@ -31,7 +31,7 @@ public class NotesForLabel extends AppCompatActivity {
     private List<Label> labels = new ArrayList<>();
     private Label label = null;                     //定义标签
     private String labelname = null;               //定义传过来的标签名
-    private List<MyNote> notes = null;
+    public static List<MyNote> notes = null;
     private RecyclerView noteListView;
     private TextView tv_noMore;
     @Override
@@ -69,7 +69,7 @@ public class NotesForLabel extends AppCompatActivity {
             layoutManager.setStackFromEnd(true);//列表再底部开始展示，反转后由上面开始展示
             layoutManager.setReverseLayout(true);//列表翻转
             recyclerView.setLayoutManager(layoutManager);
-            NoteAdapter2 noteAdapter2 = new NoteAdapter2(notes, this);
+            NoteAdapter3 noteAdapter2 = new NoteAdapter3(notes, this);
             recyclerView.setAdapter(noteAdapter2);
             noteListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override

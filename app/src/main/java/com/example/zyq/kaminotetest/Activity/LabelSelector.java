@@ -42,8 +42,16 @@ public class LabelSelector extends AppCompatActivity {
         labelList = findViewById(R.id.label_list_in_selector);  //获得用以显示的ListView
 
         Intent intent = getIntent();    //获得intent
-        notePosition = intent.getIntExtra("note_position", 0);  //传入note的位置
-        sourceNote = HomeFragment.mNote.get(notePosition);      //获取来源笔记
+//        notePosition = intent.getIntExtra("note_position", 0);  //传入note的位置
+
+        //获得来源笔记
+        if (intent.getIntExtra("note_position2", -1) != -1) {
+            sourceNote = NotesForLabel.notes.get(intent.getIntExtra("note_position2", -1));
+        } else {
+            sourceNote = HomeFragment.mNote.get(intent.getIntExtra("note_position", -1));
+        }
+
+//        sourceNote = HomeFragment.mNote.get(notePosition);      //获取来源笔记
 
         mLabel = DataSupport.findAll(Label.class);      //从数据库中获得所有标签
 
@@ -60,7 +68,6 @@ public class LabelSelector extends AppCompatActivity {
         LabelSelectorAdapter adapter = new LabelSelectorAdapter(this, R.layout.label_item_in_selector, mLabel);
         labelList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         labelList.setAdapter(adapter);
-
 
     }
 

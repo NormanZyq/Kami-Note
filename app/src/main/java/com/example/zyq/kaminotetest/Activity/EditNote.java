@@ -34,6 +34,8 @@ public class EditNote extends AppCompatActivity {
     EditText noteContent;
     public MyNote myNote;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,35 +52,59 @@ public class EditNote extends AppCompatActivity {
 
         //从NoteAdapter中获得传输的intent并获取note的position
         Intent intent = getIntent();
-        int notePosition = intent.getIntExtra("note_position", -1);
 
-        if (notePosition != -1) {
-            /*
-            直接从MainActivity中获得位置而没有传值
-            可以优化，使用intent携带
-             */
-            myNote = HomeFragment.mNote.get(notePosition);
+        System.out.println("Editnote 54 " + intent.getIntExtra("note_position2", -1));
 
-            noteTitle = findViewById(R.id.title_editor);    //笔记标题输入框
-            noteContent = findViewById(R.id.content_editor);    //笔记内容输入框
-
-            title = myNote.getTitle();  //笔记标题
-            content = myNote.getContent();  //笔记内容
-
-            //设置标题，如果标题是默认生成的"无标题"，则在编辑时自动去掉
-            if (title.equals("无标题")) {
-                noteTitle.setText("");
-            } else {
-                noteTitle.setText(title);
-            }
-            //设置内容
-            noteContent.setText(myNote.getContent());
-
+        if (intent.getIntExtra("note_position2", -1) != -1) {
+            myNote = NotesForLabel.notes.get(intent.getIntExtra("note_position2", -1));
         } else {
-            //如果position传输错误则进行提示
-            Toast.makeText(EditNote.this, "获取笔记位置失败", Toast.LENGTH_SHORT).show();
-            finish();
+            myNote = HomeFragment.mNote.get(intent.getIntExtra("note_position", -1));
         }
+
+        noteTitle = findViewById(R.id.title_editor);    //笔记标题输入框
+        noteContent = findViewById(R.id.content_editor);    //笔记内容输入框
+
+        title = myNote.getTitle();  //笔记标题
+        content = myNote.getContent();  //笔记内容
+
+        //设置标题，如果标题是默认生成的"无标题"，则在编辑时自动去掉
+        if (title.equals("无标题")) {
+            noteTitle.setText("");
+        } else {
+            noteTitle.setText(title);
+        }
+        //设置内容
+        noteContent.setText(myNote.getContent());
+
+//        int notePosition = intent.getIntExtra("note_position", -1);
+//
+//        if (notePosition != -1) {
+//            /*
+//            直接从MainActivity中获得位置而没有传值
+//            可以优化，使用intent携带
+//             */
+//            myNote = HomeFragment.mNote.get(notePosition);
+//
+//            noteTitle = findViewById(R.id.title_editor);    //笔记标题输入框
+//            noteContent = findViewById(R.id.content_editor);    //笔记内容输入框
+//
+//            title = myNote.getTitle();  //笔记标题
+//            content = myNote.getContent();  //笔记内容
+//
+//            //设置标题，如果标题是默认生成的"无标题"，则在编辑时自动去掉
+//            if (title.equals("无标题")) {
+//                noteTitle.setText("");
+//            } else {
+//                noteTitle.setText(title);
+//            }
+//            //设置内容
+//            noteContent.setText(myNote.getContent());
+//
+//        } else {
+//            //如果position传输错误则进行提示
+//            Toast.makeText(EditNote.this, "获取笔记位置失败", Toast.LENGTH_SHORT).show();
+//            finish();
+//        }
     }
 
     @Override
@@ -114,15 +140,6 @@ public class EditNote extends AppCompatActivity {
                     finish();
                     return true;
                 }
-                if (title.equals("")) {
-                    //todo
-                }
-//                if (title.trim().equals("")) {
-//                    title = "";
-//                }
-//                if (content.trim().equals("")) {
-//                    content = "";
-//                }
                 myNote.setLastEdited(date.toString());
                 NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
                 MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
@@ -139,9 +156,9 @@ public class EditNote extends AppCompatActivity {
 
     public void backConfirmation() {
         //从NoteAdapter中获得传输的intent并获取note的position
-        Intent intent = getIntent();
-        int notePosition = intent.getIntExtra("note_position", -1);
-        myNote = HomeFragment.mNote.get(notePosition);
+//        Intent intent = getIntent();
+//        int notePosition = intent.getIntExtra("note_position", -1);
+//        myNote = HomeFragment.mNote.get(notePosition);
 
         noteTitle = findViewById(R.id.title_editor);    //笔记标题
         noteContent = findViewById(R.id.content_editor);    //笔记内容
