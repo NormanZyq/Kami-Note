@@ -36,7 +36,6 @@ import fragment.HomeFragment;
  * Created by zyq on 2018/3/6.
  * 项目名称：Kami Note
  * MainActivity
- * Updated on 2018/3/17.
  */
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {

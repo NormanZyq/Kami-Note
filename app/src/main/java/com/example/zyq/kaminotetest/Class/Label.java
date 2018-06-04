@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Label extends DataSupport {
-    private String labelName;
+    private String labelName = "";
 
     private List<MyNote> notes = new ArrayList<>();
 

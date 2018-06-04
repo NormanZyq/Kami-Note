@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Created by zyq on 2018/6/3.
+ * 用于存放各种数据例如mNote
  */
 
 public class DataClass {
