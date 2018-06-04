@@ -1,27 +1,41 @@
 package com.example.zyq.kaminotetest.Class;
 
+import com.example.zyq.kaminotetest.Data.DataClass;
+
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fragment.HomeFragment;
-
 public class Label extends DataSupport {
-    private String labelName;
+    private String labelName = "";
 
     private List<MyNote> notes = new ArrayList<>();
 
+    private int count = 0;
+
     public List<MyNote> getNotes() {
-        //todo
         List<MyNote> gNote = new ArrayList<>();
-        for (MyNote note : HomeFragment.mNote) {
+        for (MyNote note : DataClass.mNote) {
             if (note.hasLabel(labelName)) {
                 gNote.add(note);
+                count++;
             }
         }
         return gNote;
     }
+
+    public int calculateCount() {
+        int count = 0;
+        for (MyNote note : DataClass.mNote) {
+            if (note.hasLabel(labelName)) {
+                count++;
+            }
+        }
+        this.count = count;
+        return count;
+    }
+
     /**
      * 添加传入的所有note到对应的label
      * @param notesToAdd    待添加的note列表
@@ -48,5 +62,9 @@ public class Label extends DataSupport {
 
     public void setLabelName(String labelName) {
         this.labelName = labelName;
+    }
+
+    public int getCount() {
+        return count;
     }
 }

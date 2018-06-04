@@ -16,6 +16,8 @@ import java.util.List;
 
 /**
  * Created by zyq on 2018/3/26.
+ * 笔记选择标签界面中的标签适配器
+ * 负责显示标签、实现点击勾选及取消等操作
  */
 
 public class LabelSelectorAdapter extends ArrayAdapter<Label> implements View.OnClickListener {
@@ -39,8 +41,7 @@ public class LabelSelectorAdapter extends ArrayAdapter<Label> implements View.On
 
         viewHolder.labelName = view.findViewById(R.id.label_name);
 
-        viewHolder.labelName.setText(label.getLabelName());     //设置标签的名字
-//        viewHolder.labelName.setOnClickListener(this);
+        viewHolder.labelName.setText(label != null ? label.getLabelName() : "");     //设置标签的名字
 
         view.setTag(position);              //设置标签所在view的tag，以其position作为tag
         viewHolder.checkBox.setTag(position);
@@ -58,10 +59,9 @@ public class LabelSelectorAdapter extends ArrayAdapter<Label> implements View.On
 
     @Override
     public void onClick(View v) {
-//        CheckBox checkBox = LayoutInflater.from(getContext()).inf
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.checkBox = v.findViewById(R.id.label_checkbox);
+        viewHolder.checkBox = v.findViewById(R.id.label_checkbox);      //获得checkBox
 
+        //未选中时点击变为选中，选中时点击变为未选中
         if (LabelSelector.checked[(int) v.getTag()]) {
             viewHolder.checkBox.setChecked(false);
             LabelSelector.checked[(int) v.getTag()] = false;
@@ -69,9 +69,6 @@ public class LabelSelectorAdapter extends ArrayAdapter<Label> implements View.On
             viewHolder.checkBox.setChecked(true);
             LabelSelector.checked[(int) v.getTag()] = true;
         }
-        System.out.println(LabelSelector.checked[0]);
-
-
     }
 
     private class ViewHolder {

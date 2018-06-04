@@ -1,14 +1,12 @@
 package com.example.zyq.kaminotetest.Utils;
 
-import com.example.zyq.kaminotetest.Activity.MainActivity;
 import com.example.zyq.kaminotetest.Class.Extras;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Class.MyNote;
+import com.example.zyq.kaminotetest.Data.DataClass;
 
 import java.util.List;
-
-import fragment.HomeFragment;
 
 /**
  * Created by zyq on 2018/3/2.
@@ -23,23 +21,25 @@ public enum NoteUtils {
 
     /**
      * 保存note的方法
-     * @param title 笔记的标题
-     * @param content   笔记的详细内容
-     * @param identifier    笔记的标识，UUID
-     * @param createdDate   笔记的创建日期
-     * 编辑日期另外添加
+     *
+     * @param title       笔记的标题
+     * @param content     笔记的详细内容
+     * @param identifier  笔记的标识，UUID
+     * @param createdDate 笔记的创建日期
+     *                    编辑日期另外添加
      */
     public void saveNote(String title, String content, String identifier, MyDate createdDate, Extras extras) {
         MyNote note = new MyNote(title, content, identifier, createdDate.toString(), extras);
         note.setLastEdited(createdDate.toString());
-        MainActivity.mNote.add(note);
+        DataClass.mNote.add(note);
         note.save();
     }
 
     public void saveNote(String title, String content, String identifier, MyDate createdDate) {
         MyNote note = new MyNote(title, content, identifier, createdDate.toString());
         note.setLastEdited(createdDate.toString());
-        HomeFragment.mNote.add(note);
+//        note.setLabels(new String[]{});
+        DataClass.mNote.add(note);
         note.save();
     }
 
@@ -58,10 +58,16 @@ public enum NoteUtils {
 
     /**
      * 为笔记添加标签
-     * @param note      待添加标签的笔记
-     * @param labels    待添加的标签列表
+     *
+     * @param note   待添加标签的笔记
+     * @param labels 待添加的标签列表
      */
     public void setLabels(MyNote note, List<Label> labels) {
+//        note.setLabels(labels);
+        note.save();
+    }
+
+    public void setLabels(MyNote note, String[] labels) {
         note.setLabels(labels);
         note.save();
     }

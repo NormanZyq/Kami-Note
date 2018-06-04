@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.zyq.kaminotetest.Activity.MainActivity;
 import com.example.zyq.kaminotetest.Activity.NotesForLabel;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.R;
@@ -36,7 +35,9 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
         ViewHolder viewHolder = new ViewHolder();
         view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
         viewHolder.labelName = view.findViewById(R.id.label_name);
+        viewHolder.count = view.findViewById(R.id.text_count);
         viewHolder.labelName.setText(label.getLabelName());     //设置标签的名字
+        viewHolder.count.setText(label.calculateCount() + "个项目");       //显示当前标签有多少个笔记
 
 //
 //        if (convertView == null) {
@@ -62,12 +63,13 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
     public void onClick(View v) {
         int position = (int) (v.getTag());
 //        System.out.println(">>>>>>>>>>>" + v.getTag());
-        Intent intent = new Intent(MainActivity.mainActivity, NotesForLabel.class);
+        Intent intent = new Intent(getContext(), NotesForLabel.class);
         intent.putExtra("label_name", getItem(position).getLabelName());
         v.getContext().startActivity(intent);
     }
 
     private class ViewHolder {
         TextView labelName;
+        TextView count;
     }
 }

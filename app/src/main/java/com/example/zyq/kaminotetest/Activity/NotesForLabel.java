@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zyq.kaminotetest.Adapter.NoteAdapter2;
+import com.example.zyq.kaminotetest.Adapter.NoteAdapter3;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
@@ -31,7 +31,7 @@ public class NotesForLabel extends AppCompatActivity {
     private List<Label> labels = new ArrayList<>();
     private Label label = null;                     //定义标签
     private String labelname = null;               //定义传过来的标签名
-    private List<MyNote> notes = null;
+    public static List<MyNote> notes = null;
     private RecyclerView noteListView;
     private TextView tv_noMore;
     @Override
@@ -42,6 +42,12 @@ public class NotesForLabel extends AppCompatActivity {
         //设置Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         this.setSupportActionBar(toolbar);
+
+        try {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
 
         //获取到用户点击的label名
         Intent intent = getIntent();
@@ -69,7 +75,7 @@ public class NotesForLabel extends AppCompatActivity {
             layoutManager.setStackFromEnd(true);//列表再底部开始展示，反转后由上面开始展示
             layoutManager.setReverseLayout(true);//列表翻转
             recyclerView.setLayoutManager(layoutManager);
-            NoteAdapter2 noteAdapter2 = new NoteAdapter2(notes, this);
+            NoteAdapter3 noteAdapter2 = new NoteAdapter3(notes, this);
             recyclerView.setAdapter(noteAdapter2);
             noteListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
@@ -105,7 +111,6 @@ public class NotesForLabel extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println(">>>>>>>>>>>>>" + "onResume");
         notes = label.getNotes();
         System.out.println(notes.size());
         tv_noMore = findViewById(R.id.no_more);
@@ -120,4 +125,6 @@ public class NotesForLabel extends AppCompatActivity {
         }
         refreshNoteListView(noteListView);
     }
+
+
 }

@@ -19,19 +19,17 @@ import com.example.zyq.kaminotetest.R;
 
 import java.util.List;
 
-import fragment.HomeFragment;
-
 /**
  * Created by zyq on 2018/3/2.
  * 来源：CSDN，作者信息已忘，向原作者致歉
  */
 
-public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHolder> {
+public class NoteAdapter3 extends RecyclerView.Adapter<NoteAdapter3.NotesViewHolder> {
 
     private List<MyNote> myNotes;
     private Context context;
 
-    public NoteAdapter2(List<MyNote> myNotes, Context context) {
+    public NoteAdapter3(List<MyNote> myNotes, Context context) {
         this.myNotes = myNotes;
         this.context = context;
     }
@@ -72,7 +70,7 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
                 MainActivity.notePosition = position;
                 //在点击项目的时候跳转到编辑页
                 Intent jumpToEditNote = new Intent(view.getContext(), EditNote.class);
-                jumpToEditNote.putExtra("note_position", position);
+                jumpToEditNote.putExtra("note_position2", position);
                 view.getContext().startActivity(jumpToEditNote);
             }
         });
@@ -83,7 +81,7 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
                 int position = notesViewHolder.getAdapterPosition();    //获得点击的笔记位置
                 //点击书签按钮时跳转到标签选择页
                 Intent intent = new Intent(view.getContext(), LabelSelector.class);
-                intent.putExtra("note_position", position);
+                intent.putExtra("note_position2", position);
                 view.getContext().startActivity(intent);
             }
         });
@@ -93,7 +91,7 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
             @Override
             public boolean onLongClick(View v) {
 //                Snackbar.make(view, "长按事件：", Snackbar.LENGTH_SHORT).show();
-                HomeFragment.longClickPosition = notesViewHolder.getAdapterPosition();
+                MainActivity.longClickPosition = notesViewHolder.getAdapterPosition();
                 return false;
             }
         });
