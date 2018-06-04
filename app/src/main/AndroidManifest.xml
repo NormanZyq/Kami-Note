@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.zyq.kaminotetest">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 代表当前应用 -->
     <application
         android:name="org.litepal.LitePalApplication"
@@ -23,8 +24,11 @@
         <activity android:name=".Activity.CreateNote" />
         <activity android:name=".Activity.EditNote" />
         <activity android:name=".Activity.NotesForLabel" />
-        <activity android:name=".Activity.LabelSelector"></activity>
+        <activity android:name=".Activity.LabelSelector" />
+        <activity
+            android:name=".Activity.Skin_Selector"
+            android:label="@string/title_activity_skin__selector"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

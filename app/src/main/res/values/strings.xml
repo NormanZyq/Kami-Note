@@ -10,4 +10,7 @@
     <string name="please_enter_content">请输入内容</string>
     <string name="finish">完成</string>
     <string name="no_more">没有更多内容</string>
+    <string name="clothing">皮肤设置</string>
+    <string name="description">皮肤</string>
+    <string name="title_activity_skin__selector">Skin_Selector</string>
 </resources>
