@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/skin_1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/colorAccent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:contentDescription="@string/description"
+            android:layout_marginStart="@dimen/activity_horizontal_margin" />
+
+        <TextView
+            android:layout_width="280dp"
+            android:text="官方粉"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent" />
+
+        <CheckBox
+            android:id="@+id/checkbox_1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/skin_2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:contentDescription="@string/description"
+            android:layout_marginStart="@dimen/activity_horizontal_margin" />
+
+        <TextView
+            android:layout_width="280dp"
+            android:text="官方蓝"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent" />
+
+        <CheckBox
+            android:id="@+id/checkbox_2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/skin_3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/cardview_dark_background"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:contentDescription="@string/description"
+            android:layout_marginStart="@dimen/activity_horizontal_margin" />
+
+        <TextView
+            android:layout_width="280dp"
+            android:text="官方黑"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent" />
+
+        <CheckBox
+            android:id="@+id/checkbox_3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/skin_4"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:color/holo_orange_light"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:contentDescription="@string/description"
+            android:layout_marginStart="@dimen/activity_horizontal_margin" />
+
+        <TextView
+            android:layout_width="280dp"
+            android:text="官方橘"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent" />
+
+        <CheckBox
+            android:id="@+id/checkbox_4"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/skin_5"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:color/holo_orange_dark"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:contentDescription="@string/description"
+            android:layout_marginStart="@dimen/activity_horizontal_margin" />
+
+        <TextView
+            android:layout_width="280dp"
+            android:text="官方橙"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent" />
+
+        <CheckBox
+            android:id="@+id/checkbox_5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp" />
+
+    </LinearLayout>
+</LinearLayout>
+
+<!--
+<android.support.design.widget.FloatingActionButton
+android:id="@+id/fab"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_gravity="bottom|end"
+android:layout_margin="@dimen/fab_margin"
+app:srcCompat="@android:drawable/ic_dialog_email" />-->
