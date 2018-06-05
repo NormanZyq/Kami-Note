@@ -13,17 +13,17 @@ import com.example.zyq.kaminotetest.R;
  * Created by TALK_SWORD on 2018/3/23.
  */
 
-public class NoteFragment extends Fragment {
+public class DiscoveryFragment extends Fragment {
     private String mfrom;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate( R.layout.fragment_note,null);
+        View view = inflater.inflate( R.layout.fragment_discovery,null);
         return view;
     }
 
-    public static NoteFragment newInstance(String from){
-        NoteFragment fragment = new NoteFragment();
+    public static DiscoveryFragment newInstance(String from){
+        DiscoveryFragment fragment = new DiscoveryFragment();
         Bundle bundle = new Bundle();
         bundle.putString("from",from);
         fragment.setArguments(bundle);

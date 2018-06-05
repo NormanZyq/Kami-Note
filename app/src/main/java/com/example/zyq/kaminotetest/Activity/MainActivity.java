@@ -28,7 +28,6 @@ import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.ActivityController;
 import com.example.zyq.kaminotetest.Utils.DataGenerator;
-import com.example.zyq.kaminotetest.Utils.ToolbarController;
 
 import org.litepal.crud.DataSupport;
 
@@ -158,6 +157,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 刷新侧滑菜单的笔记列表
+     * ！！！一定要优化！！！
+     *
+     * @param listView
+     */
     public void refreshLabelListView(ListView listView) {
         if (listView != null) {
             LabelAdapter adapter = new LabelAdapter(this, R.layout.label_item, DataClass.mLabel);
@@ -209,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setTitle("请输入标签");    //设置对话框标题
 
         final EditText addLabel = new EditText(MainActivity.this);
+        addLabel.setSingleLine(true);
 
         builder.setView(addLabel);
         builder.setCancelable(true);
@@ -216,6 +222,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String labelName = addLabel.getText().toString();
+
+                try {
+                    DataSupport.where("labelName = ?", labelName).find(Label.class).get(0);
+                    MyToast.makeText(MainActivity.this, "该标签已存在", Toast.LENGTH_SHORT).show();
+                    return;
+
+                } catch (Exception ex) {
+                    System.out.println("标签正常");
+                }
+
                 if (labelName.length() > 10) {
                     MyToast.makeText(MainActivity.this, "标签过长", Toast.LENGTH_SHORT).show();
                 } else {

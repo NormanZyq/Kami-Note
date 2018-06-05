@@ -37,7 +37,7 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
         viewHolder.labelName = view.findViewById(R.id.label_name);
         viewHolder.count = view.findViewById(R.id.text_count);
         viewHolder.labelName.setText(label.getLabelName());     //设置标签的名字
-        String count = label.calculateCount() + "个项目";
+        String count = label.getNotes().size() + "个项目";
         viewHolder.count.setText(count);       //显示当前标签有多少个笔记
 
 //
