@@ -1,12 +1,14 @@
 package com.example.zyq.kaminotetest.Class;
 
+import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zyq on 2018/2/3.
  * note类
- * Updated on 2018/3/17
- * 添加了extras成员，包含紧急程度和标签
  */
 
 public class MyNote extends DataSupport {
@@ -14,6 +16,7 @@ public class MyNote extends DataSupport {
 
     private String content; //笔记内容
 
+    @Column(unique = true)
     private final String identifier;  //作为note的标识
 
     private String createdDate; //创建的日期
@@ -22,9 +25,15 @@ public class MyNote extends DataSupport {
 
     private Extras extras;
 
-//    private List<Label> labels = new ArrayList<>();
+//    private list
+    private List<Label> labels = new ArrayList<>();
+//    private Collection<Label> labe
 
-    private String[] labels = new String[]{};
+//    private String[] labels = new String[]{};
+
+//    private Collection<Label> labels;
+
+
 
     //构造方法，传入标题、内容、标识、创建日期。（最后编辑的日期另外设置）
     public MyNote(String title, String content, String identifier, String createdDate, Extras extras) {
@@ -45,8 +54,9 @@ public class MyNote extends DataSupport {
     public boolean hasLabel(String labelNameToSearch) {
 //        System.out.println(labels.size());
 //        String labelNamesString[] = (String[]) labels;
-        for (String labelName : labels) {
-            if (labelName.equals(labelNameToSearch)) {
+//        System.out.println("mynote line 59, " + this.title + "  labelSize = " + labels.size());
+        for (Label label : labels) {
+            if (label.getLabelName().equals(labelNameToSearch)) {
                 return true;
             }
         }
@@ -94,20 +104,13 @@ public class MyNote extends DataSupport {
         this.extras = extras;
     }
 
-//    public List<Label> getLabels() {
-//        return labels;
-//    }
-//
-//    public void setLabels(List<Label> labels) {
-//        this.labels = labels;
-//    }
-
-
-    public String[] getLabels() {
+    public List<Label> getLabels() {
         return labels;
     }
 
-    public void setLabels(String[] labels) {
+    public void setLabels(List<Label> labels) {
         this.labels = labels;
     }
+
+
 }

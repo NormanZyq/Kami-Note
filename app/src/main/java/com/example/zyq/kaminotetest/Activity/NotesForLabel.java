@@ -31,7 +31,7 @@ public class NotesForLabel extends AppCompatActivity {
     private List<Label> labels = new ArrayList<>();
     private Label label = null;                     //定义标签
     private String labelname = null;               //定义传过来的标签名
-    public static List<MyNote> notes = null;
+    public static List<MyNote> notes;
     private RecyclerView noteListView;
     private TextView tv_noMore;
     @Override
@@ -53,7 +53,7 @@ public class NotesForLabel extends AppCompatActivity {
         Intent intent = getIntent();
         labelname = intent.getStringExtra("label_name");
         //获取到对应名称的label对象
-        labels = DataSupport.where("labelName = ?",labelname).find(Label.class);
+        labels = DataSupport.where("labelName = ?",labelname).find(Label.class, true);
         label = labels.get(0);
 
         notes = label.getNotes();
@@ -69,14 +69,14 @@ public class NotesForLabel extends AppCompatActivity {
     }
 
     public void refreshNoteListView(RecyclerView recyclerView) {
-        if (recyclerView != null&&this != null) {
+        if (recyclerView != null) {
 //            recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));  //添加分割线
             LinearLayoutManager layoutManager = new LinearLayoutManager(this); //???
             layoutManager.setStackFromEnd(true);//列表再底部开始展示，反转后由上面开始展示
             layoutManager.setReverseLayout(true);//列表翻转
             recyclerView.setLayoutManager(layoutManager);
-            NoteAdapter3 noteAdapter2 = new NoteAdapter3(notes, this);
-            recyclerView.setAdapter(noteAdapter2);
+            NoteAdapter3 noteAdapter3 = new NoteAdapter3(notes, this);
+            recyclerView.setAdapter(noteAdapter3);
             noteListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -112,10 +112,9 @@ public class NotesForLabel extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         notes = label.getNotes();
-        System.out.println(notes.size());
         tv_noMore = findViewById(R.id.no_more);
         noteListView = findViewById(R.id.note_list);
-        if(notes.size() != 0){
+        if (notes.size() != 0) {
             if(tv_noMore.getVisibility() == View.VISIBLE){
                 tv_noMore.setVisibility(View.INVISIBLE);
             }

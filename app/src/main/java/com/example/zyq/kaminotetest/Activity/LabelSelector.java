@@ -17,8 +17,6 @@ import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.NoteUtils;
 
-import org.litepal.crud.DataSupport;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +26,6 @@ public class LabelSelector extends AppCompatActivity {
     private ListView labelList;
     private MyNote sourceNote;
     public static boolean[] checked;
-    int notePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,21 +49,26 @@ public class LabelSelector extends AppCompatActivity {
             sourceNote = DataClass.mNote.get(intent.getIntExtra("note_position", -1));
         }
 
+//        sourceNote = DataSupport.find(MyNote.class, intent.getIntExtra("note_position", 0));
+//        System.out.println(">>>>>>>>>" + sourceNote == null);
+
+
+
 //        sourceNote = HomeFragment.mNote.get(notePosition);      //获取来源笔记
 
-        mLabel = DataSupport.findAll(Label.class);      //从数据库中获得所有标签
+//        mLabel = DataSupport.findAll(Label.class);      //从数据库中获得所有标签
 
-        checked = new boolean[mLabel.size()];       //以label数量为大小初始化checked数组
+        checked = new boolean[DataClass.mLabel.size()];       //以label数量为大小初始化checked数组
 
         //自动标记这条笔记拥有的标签到checked数组，true表示拥有，false表示不拥有
         for (int i = 0, length = checked.length; i < length; i++) {
-            if (sourceNote.hasLabel(mLabel.get(i).getLabelName())) {
+            if (sourceNote.hasLabel(DataClass.mLabel.get(i).getLabelName())) {
                 checked[i] = true;
             }
         }
 
         //显示标签的列表
-        LabelSelectorAdapter adapter = new LabelSelectorAdapter(this, R.layout.label_item_in_selector, mLabel);
+        LabelSelectorAdapter adapter = new LabelSelectorAdapter(this, R.layout.label_item_in_selector, DataClass.mLabel);
         labelList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         labelList.setAdapter(adapter);
 
@@ -101,14 +103,27 @@ public class LabelSelector extends AppCompatActivity {
     }
 
     private void saveLabel() {
-        ArrayList<String> labelNames = new ArrayList<>();
+        List<Label> labels = new ArrayList<>();
+//        List<MyNote> notes = new ArrayList<>();
         for (int i = 0, length = checked.length; i < length; i++) {
             if (checked[i]) {
-                labelNames.add(DataClass.mLabel.get(i).getLabelName());
+                labels.add(DataClass.mLabel.get(i));
+                if (!DataClass.mLabel.get(i).hasNote(sourceNote.getIdentifier())) {
+                    DataClass.mLabel.get(i).getNotes().add(sourceNote);
+
+                }
+//                notes.add()
+            } else {
+                System.out.println("labelselector line 118 " + DataClass.mLabel.get(i).removeNoteIfExist(sourceNote.getIdentifier()));
             }
+            DataClass.mLabel.get(i).save();
         }
-        String[] array = new String[labelNames.size()];
-        NoteUtils.INSTANCE.setLabels(sourceNote, labelNames.toArray(array));
+
+        NoteUtils.INSTANCE.setLabels(sourceNote, labels);
+//        sourceNote = DataSupport.where("identifier = ?", sourceNote.getIdentifier()).find(MyNote.class).get(0);
+//        sourceNote.setLabels(labels);
+
+//        sourceNote.save();
         finish();
     }
 
