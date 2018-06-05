@@ -3,6 +3,7 @@ package fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -77,6 +78,8 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
         //ToolbarController.addToolbar(toolbar);                 //加入Toolbar管理列表
         //System.out.println("HomeFragment 79"+"onCreateView>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Color_id",Context.MODE_PRIVATE);
+        Color_id = sharedPreferences.getInt("id",0);
         if(Color_id != 0) {
             toolbar.setBackgroundResource(Color_id);
             }

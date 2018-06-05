@@ -2,6 +2,7 @@ package com.example.zyq.kaminotetest.Activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,6 +19,7 @@ import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public BottomNavigationView bottomNavigationView;            //底部栏引用
     private Fragment[] fragments;                                  //布局管理列表
     public static int Color_id;
+    public RelativeLayout relativeLayout_drawerhead;
 
     public static MainActivity mainActivity;
     private DrawerLayout mDrawerLayout;         //滑动菜单
@@ -127,6 +130,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //初始化view
     private void initview(){
         bottomNavigationView = findViewById(R.id.navigation_view);
+        //relativeLayout_drawerhead = findViewById(R.id.drawer_head_relativelayout);
+        SharedPreferences sharedPreferences = getSharedPreferences("Color_id",Context.MODE_PRIVATE);
+        //设置颜色
+        Color_id = sharedPreferences.getInt("id",0);
+        if(Color_id != 0){
+            bottomNavigationView.setItemBackgroundResource(Color_id);
+            //relativeLayout_drawerhead.setBackgroundColor(Color_id);
+        }
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

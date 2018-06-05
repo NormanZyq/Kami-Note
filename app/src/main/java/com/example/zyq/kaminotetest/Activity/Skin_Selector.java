@@ -1,6 +1,8 @@
 package com.example.zyq.kaminotetest.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -62,7 +64,14 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
                 if(ColorSelector.checked_index != -1) {
                    bottomNavigationView.setItemBackgroundResource(colors.get(ColorSelector.checked_index).image_color_id);
                     //System.out.println(ToolbarController.toolbars.size());
+                    //传递颜色数值，方便Toolbar同步颜色
                     HomeFragment.Color_id = colors.get(ColorSelector.checked_index).image_color_id;
+
+                    //保存颜色数值
+                    SharedPreferences sharedPreferences = getSharedPreferences("Color_id", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("id",colors.get(ColorSelector.checked_index).image_color_id);
+                    editor.commit();
                     finish();
                 }
                 break;
