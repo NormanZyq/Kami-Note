@@ -121,28 +121,42 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
         colors.add(colorSelector_5);
         //设置监听
         colorSelector_1.linearLayout.setOnClickListener(this);
+        colorSelector_1.checkBox.setOnClickListener(this);
         colorSelector_2.linearLayout.setOnClickListener(this);
+        colorSelector_2.checkBox.setOnClickListener(this);
+
         colorSelector_3.linearLayout.setOnClickListener(this);
+        colorSelector_3.checkBox.setOnClickListener(this);
+
         colorSelector_4.linearLayout.setOnClickListener(this);
+        colorSelector_4.checkBox.setOnClickListener(this);
+
         colorSelector_5.linearLayout.setOnClickListener(this);
+        colorSelector_5.checkBox.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.skin_1:
+            case R.id.checkbox_1:
                 setchecked(R.id.skin_1);
                 break;
             case R.id.skin_2:
+            case R.id.checkbox_2:
                 setchecked(R.id.skin_2);
                 break;
             case R.id.skin_3:
+            case R.id.checkbox_3:
                 setchecked(R.id.skin_3);
                 break;
             case R.id.skin_4:
+            case R.id.checkbox_4:
                 setchecked(R.id.skin_4);
                 break;
             case R.id.skin_5:
+            case R.id.checkbox_5:
                 setchecked(R.id.skin_5);
                 break;
         }
@@ -153,12 +167,12 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
      * @param id 对应LinearLayout布局id
      */
     public void setchecked(int id){
-        for(int i = 0;i < colors.size();i++){
-            if(id == colors.get(i).linearLayout.getId()){
+        for (int i = 0; i < colors.size(); i++) {
+            if (id == colors.get(i).linearLayout.getId()) {
                 colors.get(i).checkBox.setChecked(true);
                 ColorSelector.checked_index = i;
-            }
-            else {
+                return;
+            } else {
                 colors.get(i).checkBox.setChecked(false);
             }
         }

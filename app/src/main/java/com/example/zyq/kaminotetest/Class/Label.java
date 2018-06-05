@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Label extends DataSupport {
-    private String labelName = "";
+    private String labelName = "";      //标签的名字
 
-    private List<MyNote> notes = new ArrayList<>();
+    private List<MyNote> notes = new ArrayList<>();     //这条标签拥有的笔记
 
-    private int count = 0;
+    private int count = 0;      //拥有标签的数量，可能可以去掉了，因为此count在不出错的情况下应该等于notes.size()
 
     public List<MyNote> getNotes2() {
         List<MyNote> gNote = new ArrayList<>();
@@ -35,6 +35,11 @@ public class Label extends DataSupport {
         return false;
     }
 
+    /**
+     * 判断这个标签是否拥有某条笔记
+     * @param uuid  待检测笔记的uuid
+     * @return  如果在notes列表中找到了对应笔记就返回true，否则为false
+     */
     public boolean hasNote(String uuid) {
         for (MyNote note : notes) {
             if (note.getIdentifier().equals(uuid)) {
@@ -59,6 +64,10 @@ public class Label extends DataSupport {
         return false;
     }
 
+    /**
+     * 计算拥有笔记的数量
+     * @return  返回count的大小（笔记的数量）
+     */
     public int calculateCount() {
         int count = 0;
         for (MyNote note : DataClass.mNote) {
@@ -69,19 +78,6 @@ public class Label extends DataSupport {
         this.count = count;
         return count;
     }
-
-//    /**
-//     * 添加传入的所有note到对应的label
-//     * @param notesToAdd    待添加的note列表
-//     */
-//    public void AddNotes(List<MyNote> notesToAdd) {
-//        notes.addAll(notesToAdd);
-//    }
-//
-//    public void AddNote(MyNote noteToAdd) {
-//        notes.add(noteToAdd);
-//    }
-
 
     public List<MyNote> getNotes() {
         return notes;

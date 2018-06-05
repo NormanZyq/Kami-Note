@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="280dp"
             android:text="官方粉"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center_vertical"
             android:layout_height="match_parent" />
 

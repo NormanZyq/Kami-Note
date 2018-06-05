@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.example.zyq.kaminotetest.R;
 import fragment.SettingsFragment;
 import fragment.HomeFragment;
-import fragment.NoteFragment;
+import fragment.DiscoveryFragment;
 import fragment.ProfileFragment;
 
 public class DataGenerator {
@@ -20,7 +20,7 @@ public class DataGenerator {
     public static Fragment[] getfragments(String from){
         Fragment fragment[] = new Fragment[4];
         fragment[0] = HomeFragment.newInstance(from);
-        fragment[1] = NoteFragment.newInstance(from);
+        fragment[1] = DiscoveryFragment.newInstance(from);
         fragment[2] = SettingsFragment.newInstance(from);
         fragment[3] = ProfileFragment.newInstance(from);
         return fragment;
@@ -28,9 +28,9 @@ public class DataGenerator {
 
     public static View getTabView(Context context, int position){
         View view = LayoutInflater.from(context).inflate(R.layout.home_tab_content,null);
-        ImageView tabIcon = (ImageView) view.findViewById(R.id.tab_content_image);
+        ImageView tabIcon = view.findViewById(R.id.tab_content_image);
         tabIcon.setImageResource(DataGenerator.mTabRes[position]);
-        TextView tabText = (TextView) view.findViewById(R.id.tab_content_text);
+        TextView tabText = view.findViewById(R.id.tab_content_text);
         tabText.setText(mTabTitle[position]);
         return view;
     }
