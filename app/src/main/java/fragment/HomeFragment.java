@@ -91,9 +91,22 @@ public class HomeFragment extends Fragment {
         }
 
         //从数据库中读取存在的标签
-        DataClass.mLabel = DataSupport.findAll(Label.class);
+        DataClass.mLabel = DataSupport.findAll(Label.class, true);
+//        System.out.println("home line 95 " + DataClass.mLabel.get(0).getNotes().size());
+//        DataClass.mLabel = DataSupport.findAll(Label.class, true);
+
         //从数据库中读取存在的笔记
-        DataClass.mNote = DataSupport.findAll(MyNote.class);
+        DataClass.mNote = DataSupport.findAll(MyNote.class, true);
+
+//        for (Label label : DataClass.mLabel) {
+//            label.getNotes2();
+//        }
+
+//        //计算拥有的笔记数量
+//        for (Label label : DataClass.mLabel) {
+//            label.calculateCount();
+//        }
+
 //        DataClass.mNote = mNote;
 //        DataClass.mLabel = mLabel;
 

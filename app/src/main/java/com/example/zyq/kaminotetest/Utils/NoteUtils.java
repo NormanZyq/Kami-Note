@@ -63,12 +63,8 @@ public enum NoteUtils {
      * @param labels 待添加的标签列表
      */
     public void setLabels(MyNote note, List<Label> labels) {
-//        note.setLabels(labels);
-        note.save();
-    }
-
-    public void setLabels(MyNote note, String[] labels) {
         note.setLabels(labels);
         note.save();
     }
+
 }
