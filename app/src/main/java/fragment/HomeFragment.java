@@ -35,6 +35,7 @@ import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.ToolbarController;
 
 import org.litepal.crud.DataSupport;
 
@@ -54,7 +55,9 @@ public class HomeFragment extends Fragment {
     private ListView labellist;                 //设置DrawerLayout点击事件
     private long mExitTime = 0;                 //记录点击返回按钮的时间
     private LinearLayout mainView;
+    private Toolbar toolbar;
 
+    //public static int Color_id = 0;
     public static int notePosition;             //记录笔记位置
     public RecyclerView noteListView;           //RecyclerView 的note 列表
     public static int longClickPosition = 0;    //
@@ -68,17 +71,17 @@ public class HomeFragment extends Fragment {
 //        addLabel = getActivity().findViewById(R.id.image_add_label);  //侧边栏添加标签按钮
         mainView = view.findViewById(R.id.main_linear_layout);
         tv_noMore = view.findViewById(R.id.no_more); //没有更多内容
+        //设置toolbar
+        toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
+        //ToolbarController.addToolbar(toolbar);                 //加入Toolbar管理列表
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        //设置toolbar
-        Toolbar toolbar = this.getView().findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        setHasOptionsMenu(true);
 
         mDrawerLayout = getActivity().findViewById(R.id.drawer_layout);   //滑动菜单
 //        labellist = getActivity().findViewById(R.id.label_list2);          //DrawerLayout的LabelList
@@ -170,6 +173,9 @@ public class HomeFragment extends Fragment {
     //创建Fragment实例
     public static HomeFragment newInstance(String from){
         HomeFragment fragment = new HomeFragment();
+/*        if(Color_id != 0) {
+            fragment.toolbar.setBackgroundResource(Color_id);
+        }*/
         Bundle bundle = new Bundle();
         bundle.putString("from",from);
         fragment.setArguments(bundle);
@@ -220,6 +226,7 @@ public class HomeFragment extends Fragment {
 
             case R.id.add_note:    //点击了添加
                 Intent jumpToCreateNote = new Intent(getActivity(), CreateNote.class);
+                //toolbar.setBackgroundResource(R.color.colorAccent);
                 startActivity(jumpToCreateNote);
                 break;
 

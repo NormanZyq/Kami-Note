@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.zyq.kaminotetest.R;
-import fragment.CalendarFragment;
+import fragment.SettingsFragment;
 import fragment.HomeFragment;
 import fragment.NoteFragment;
 import fragment.ProfileFragment;
@@ -21,7 +21,7 @@ public class DataGenerator {
         Fragment fragment[] = new Fragment[4];
         fragment[0] = HomeFragment.newInstance(from);
         fragment[1] = NoteFragment.newInstance(from);
-        fragment[2] = CalendarFragment.newInstance(from);
+        fragment[2] = SettingsFragment.newInstance(from);
         fragment[3] = ProfileFragment.newInstance(from);
         return fragment;
     }

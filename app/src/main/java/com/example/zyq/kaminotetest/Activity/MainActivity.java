@@ -26,7 +26,9 @@ import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.ActivityController;
 import com.example.zyq.kaminotetest.Utils.DataGenerator;
+import com.example.zyq.kaminotetest.Utils.ToolbarController;
 
 import org.litepal.crud.DataSupport;
 
@@ -40,8 +42,9 @@ import fragment.HomeFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String ACTIVITY_TAG = "MainActivity";  //打印日志的TAG
-    private BottomNavigationView bottomNavigationView;            //底部栏引用
+    public BottomNavigationView bottomNavigationView;            //底部栏引用
     private Fragment[] fragments;                                  //布局管理列表
+    public static int Color_id;
 
     public static MainActivity mainActivity;
     private DrawerLayout mDrawerLayout;         //滑动菜单
@@ -62,20 +65,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //将活动加入管理列表
+        ActivityController.addActivity(this);
+
         fragments = DataGenerator.getfragments("KamiNote");  //初始化列表
         initview();
         mDrawerLayout = findViewById(R.id.drawer_layout);   //滑动菜单
-
-/*        fragment = new HomeFragment();
-        fragment.setCallBack(new HomeFragment.CallBack() {
-            @Override
-            public void ShowDrawerlayout() {
-                mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });*/
-        /*//设置toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
 
         labelListView = findViewById(R.id.label_list2);
 

@@ -1,18 +1,30 @@
 package com.example.zyq.kaminotetest.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.ActivityController;
+import com.example.zyq.kaminotetest.Utils.DataGenerator;
+import com.example.zyq.kaminotetest.Utils.ToolbarController;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fragment.HomeFragment;
+import fragment.SettingsFragment;
 
 public class Skin_Selector extends AppCompatActivity implements View.OnClickListener{
 
@@ -22,7 +34,10 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
     private  ColorSelector colorSelector_4;
     private  ColorSelector colorSelector_5;
 
+/*    public int colorAlpha;*/
+
     public List<ColorSelector> colors;
+    private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +46,39 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        bottomNavigationView = ActivityController.activities.get(0).findViewById(R.id.navigation_view);
         //初始化布局元素
         initLayout();
+    }
+
+    //点击Toolbar后的操作
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.done:
+                //todo
+                if(ColorSelector.checked_index != -1) {
+                   //MainActivity.Color_id = colors.get(ColorSelector.checked_index).image_color_id;
+                   bottomNavigationView.setItemBackgroundResource(colors.get(ColorSelector.checked_index).image_color_id);
+                    System.out.println(ToolbarController.toolbars.size());
+                    //HomeFragment.Color_id = colors.get(ColorSelector.checked_index).image_color_id;
+                    finish();
+                }
+                break;
+            case R.id.cancel:
+                finish();
+                break;
+        }
+        return true;
+    }
+
+    //应用Toolbar并设置菜单
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        return true;
     }
 
     public void initLayout(){
@@ -46,14 +92,19 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
 
         colorSelector_1.linearLayout= findViewById(R.id.skin_1);
         colorSelector_1.checkBox = findViewById(R.id.checkbox_1);
+        colorSelector_1.image_color_id = R.color.colorAccent;
         colorSelector_2.linearLayout = findViewById(R.id.skin_2);
         colorSelector_2.checkBox = findViewById(R.id.checkbox_2);
+        colorSelector_2.image_color_id = R.color.colorPrimary;
         colorSelector_3.linearLayout = findViewById(R.id.skin_3);
         colorSelector_3.checkBox = findViewById(R.id.checkbox_3);
+        colorSelector_3.image_color_id = R.color.cardview_dark_background;
         colorSelector_4.linearLayout = findViewById(R.id.skin_4);
         colorSelector_4.checkBox = findViewById(R.id.checkbox_4);
+        colorSelector_4.image_color_id= R.color.holo_orange_light;
         colorSelector_5.linearLayout = findViewById(R.id.skin_5);
         colorSelector_5.checkBox = findViewById(R.id.checkbox_5);
+        colorSelector_5.image_color_id = R.color.holo_orange_dark;
         //设置按钮集合
         colors.add(colorSelector_1);
         colors.add(colorSelector_2);
@@ -97,8 +148,11 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
         for(int i = 0;i < colors.size();i++){
             if(id == colors.get(i).linearLayout.getId()){
                 colors.get(i).checkBox.setChecked(true);
+                ColorSelector.checked_index = i;
             }
-            else colors.get(i).checkBox.setChecked(false);
+            else {
+                colors.get(i).checkBox.setChecked(false);
+            }
         }
     }
 }
@@ -106,4 +160,6 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
 class ColorSelector{
     public  LinearLayout linearLayout;
     public  CheckBox checkBox;
+    public int image_color_id;
+    public static int checked_index = -1;
 }
