@@ -60,10 +60,9 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
             case R.id.done:
                 //todo
                 if(ColorSelector.checked_index != -1) {
-                   //MainActivity.Color_id = colors.get(ColorSelector.checked_index).image_color_id;
                    bottomNavigationView.setItemBackgroundResource(colors.get(ColorSelector.checked_index).image_color_id);
-                    System.out.println(ToolbarController.toolbars.size());
-                    //HomeFragment.Color_id = colors.get(ColorSelector.checked_index).image_color_id;
+                    //System.out.println(ToolbarController.toolbars.size());
+                    HomeFragment.Color_id = colors.get(ColorSelector.checked_index).image_color_id;
                     finish();
                 }
                 break;

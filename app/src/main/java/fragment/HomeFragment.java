@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout mainView;
     private Toolbar toolbar;
 
-    //public static int Color_id = 0;
+    public static int Color_id = 0;
     public static int notePosition;             //记录笔记位置
     public RecyclerView noteListView;           //RecyclerView 的note 列表
     public static int longClickPosition = 0;    //
@@ -76,6 +76,10 @@ public class HomeFragment extends Fragment {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
         //ToolbarController.addToolbar(toolbar);                 //加入Toolbar管理列表
+        //System.out.println("HomeFragment 79"+"onCreateView>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        if(Color_id != 0) {
+            toolbar.setBackgroundResource(Color_id);
+            }
         return view;
     }
 
@@ -129,6 +133,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        //System.out.println("HomeFragment 133"+"onResume>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         if (DataClass.mNote.size() != 0) {
             //如果已有数据且"没有更多内容"仍为显示状态，就把它隐藏掉
             tv_noMore = getView().findViewById(R.id.no_more);
@@ -140,7 +145,6 @@ public class HomeFragment extends Fragment {
             //滑动到最后编辑的内容（太复杂，需简化）
             noteListView.scrollToPosition(notePosition == 0 ? DataClass.mNote.size() : notePosition);
         }
-//        refreshLabelListView(MainActivity.mainActivity.labelListView);
     }
 
     //应用toolbar
@@ -186,9 +190,7 @@ public class HomeFragment extends Fragment {
     //创建Fragment实例
     public static HomeFragment newInstance(String from){
         HomeFragment fragment = new HomeFragment();
-/*        if(Color_id != 0) {
-            fragment.toolbar.setBackgroundResource(Color_id);
-        }*/
+        //System.out.println("HomeFragment 191"+"newInstance>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         Bundle bundle = new Bundle();
         bundle.putString("from",from);
         fragment.setArguments(bundle);
