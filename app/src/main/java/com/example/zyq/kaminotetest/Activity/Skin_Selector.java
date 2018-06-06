@@ -49,6 +49,7 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
     private NavigationView navigationView;
     private View headerlayout;
     private RelativeLayout relativeLayout_drawerhead;
+    private int Color_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,12 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
         //设置Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences("Color_id",Context.MODE_PRIVATE);
+        Color_id = sharedPreferences.getInt("id",0);
+        if(Color_id != 0) {
+            toolbar.setBackgroundResource(Color_id);
+            StatusBarCompat.setStatusBarColor(this,getResources().getColor(Color_id), true);
+        }
 
         bottomNavigationView = ActivityController.activities.get(0).findViewById(R.id.navigation_view);
         navigationView = ActivityController.activities.get(0).findViewById(R.id.nav_view);
