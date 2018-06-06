@@ -3,9 +3,11 @@ package com.example.zyq.kaminotetest.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,8 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.EditText;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -47,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment[] fragments;                                  //布局管理列表
     public static int Color_id;
     public RelativeLayout relativeLayout_drawerhead;
+    public NavigationView navigationView;
+    public View headerlayout;
 
     public static MainActivity mainActivity;
     private DrawerLayout mDrawerLayout;         //滑动菜单
@@ -129,13 +136,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //初始化view
     private void initview(){
         bottomNavigationView = findViewById(R.id.navigation_view);
-        //relativeLayout_drawerhead = findViewById(R.id.drawer_head_relativelayout);
+        navigationView = findViewById(R.id.nav_view);
+        headerlayout = navigationView.getHeaderView(0);
+        relativeLayout_drawerhead = headerlayout.findViewById(R.id.drawer_head_relativelayout);
+
         SharedPreferences sharedPreferences = getSharedPreferences("Color_id",Context.MODE_PRIVATE);
         //设置颜色
         Color_id = sharedPreferences.getInt("id",0);
         if(Color_id != 0){
+/*            //设置系统状态栏颜色
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//因为不是所有的系统都可以设置颜色的，在4.4以下就不可以。。有的说4.1，所以在设置的时候要检查一下系统版本是否是4.1以上
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color_id);
+            }*/
             bottomNavigationView.setItemBackgroundResource(Color_id);
-            //relativeLayout_drawerhead.setBackgroundColor(Color_id);
+            relativeLayout_drawerhead.setBackgroundResource(Color_id);
         }
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

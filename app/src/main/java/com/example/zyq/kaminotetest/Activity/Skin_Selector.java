@@ -3,9 +3,11 @@ package com.example.zyq.kaminotetest.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.ActivityController;
@@ -40,6 +45,10 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
 
     public List<ColorSelector> colors;
     private BottomNavigationView bottomNavigationView;
+    private NavigationView navigationView;
+    private View headerlayout;
+    private RelativeLayout relativeLayout_drawerhead;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +58,9 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
         setSupportActionBar(toolbar);
 
         bottomNavigationView = ActivityController.activities.get(0).findViewById(R.id.navigation_view);
+        navigationView = ActivityController.activities.get(0).findViewById(R.id.nav_view);
+        headerlayout = navigationView.getHeaderView(0);
+        relativeLayout_drawerhead = headerlayout.findViewById(R.id.drawer_head_relativelayout);
         //初始化布局元素
         initLayout();
     }
@@ -63,10 +75,10 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
                 //todo
                 if(ColorSelector.checked_index != -1) {
                    bottomNavigationView.setItemBackgroundResource(colors.get(ColorSelector.checked_index).image_color_id);
+                   relativeLayout_drawerhead.setBackgroundResource(colors.get(ColorSelector.checked_index).image_color_id);
                     //System.out.println(ToolbarController.toolbars.size());
                     //传递颜色数值，方便Toolbar同步颜色
                     HomeFragment.Color_id = colors.get(ColorSelector.checked_index).image_color_id;
-
                     //保存颜色数值
                     SharedPreferences sharedPreferences = getSharedPreferences("Color_id", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -171,7 +183,6 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
             if (id == colors.get(i).linearLayout.getId()) {
                 colors.get(i).checkBox.setChecked(true);
                 ColorSelector.checked_index = i;
-                return;
             } else {
                 colors.get(i).checkBox.setChecked(false);
             }
