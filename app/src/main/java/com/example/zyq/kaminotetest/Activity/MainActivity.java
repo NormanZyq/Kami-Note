@@ -35,6 +35,7 @@ import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.ActivityController;
 import com.example.zyq.kaminotetest.Utils.DataGenerator;
+import com.githang.statusbar.StatusBarCompat;
 
 import org.litepal.crud.DataSupport;
 
@@ -144,14 +145,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //设置颜色
         Color_id = sharedPreferences.getInt("id",0);
         if(Color_id != 0){
-/*            //设置系统状态栏颜色
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//因为不是所有的系统都可以设置颜色的，在4.4以下就不可以。。有的说4.1，所以在设置的时候要检查一下系统版本是否是4.1以上
-                Window window = getWindow();
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(Color_id);
-            }*/
-            bottomNavigationView.setItemBackgroundResource(Color_id);
-            relativeLayout_drawerhead.setBackgroundResource(Color_id);
+           //设置系统状态栏颜色
+            StatusBarCompat.setStatusBarColor(this,getResources().getColor(Color_id), true);
+            bottomNavigationView.setItemBackgroundResource(Color_id);   //底部栏颜色设置
+            relativeLayout_drawerhead.setBackgroundResource(Color_id);  //drawerlayout头部颜色设置
         }
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

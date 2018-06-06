@@ -1,6 +1,8 @@
 package com.example.zyq.kaminotetest.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +20,8 @@ import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.ActivityController;
+import com.githang.statusbar.StatusBarCompat;
 
 import org.litepal.crud.DataSupport;
 
@@ -34,6 +38,7 @@ public class NotesForLabel extends AppCompatActivity {
     public static List<MyNote> notes;
     private RecyclerView noteListView;
     private TextView tv_noMore;
+    private int Color_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +47,12 @@ public class NotesForLabel extends AppCompatActivity {
         //设置Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         this.setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences("Color_id", Context.MODE_PRIVATE);
+        Color_id = sharedPreferences.getInt("id",0);
+        if(Color_id != 0){
+            toolbar.setBackgroundResource(Color_id);
+            StatusBarCompat.setStatusBarColor(this,getResources().getColor(Color_id), true);
+        }
 
         try {
             getSupportActionBar().setDisplayShowTitleEnabled(false);

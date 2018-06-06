@@ -26,6 +26,7 @@ import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.ActivityController;
 import com.example.zyq.kaminotetest.Utils.DataGenerator;
 import com.example.zyq.kaminotetest.Utils.ToolbarController;
+import com.githang.statusbar.StatusBarCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,7 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
                 if(ColorSelector.checked_index != -1) {
                    bottomNavigationView.setItemBackgroundResource(colors.get(ColorSelector.checked_index).image_color_id);
                    relativeLayout_drawerhead.setBackgroundResource(colors.get(ColorSelector.checked_index).image_color_id);
+                    StatusBarCompat.setStatusBarColor(ActivityController.activities.get(0),getResources().getColor(colors.get(ColorSelector.checked_index).image_color_id), true);
                     //System.out.println(ToolbarController.toolbars.size());
                     //传递颜色数值，方便Toolbar同步颜色
                     HomeFragment.Color_id = colors.get(ColorSelector.checked_index).image_color_id;
