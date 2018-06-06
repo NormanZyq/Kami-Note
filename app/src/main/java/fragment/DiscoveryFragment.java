@@ -1,10 +1,15 @@
 package fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +18,7 @@ import com.example.zyq.kaminotetest.Adapter.MyPagerAdapter;
 import com.example.zyq.kaminotetest.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by TALK_SWORD on 2018/3/23.
@@ -20,6 +26,7 @@ import java.util.ArrayList;
 
 public class DiscoveryFragment extends Fragment {
     private String mfrom;
+    private int Color_id;
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -32,6 +39,15 @@ public class DiscoveryFragment extends Fragment {
         mTabLayout = view.findViewById(R.id.discovery_tab_layout);      //获取tabLayout
         mViewPager = view.findViewById(R.id.discovery_view_pager);      //获取viewPager
 //        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);       //设置tabLayout可以滑动切换
+        //设置Toolbar
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Color_id", Context.MODE_PRIVATE);
+        Color_id = sharedPreferences.getInt("id",0);
+        if(Color_id != 0) {
+            toolbar.setBackgroundResource(Color_id);
+        }
+
         initViewPager();
 
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -102,5 +118,4 @@ public class DiscoveryFragment extends Fragment {
 
 
     }
-
 }
