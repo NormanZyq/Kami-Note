@@ -11,11 +11,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.zyq.kaminotetest.Adapter.MyPagerAdapter;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.MotionAnalyze;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +83,14 @@ public class DiscoveryFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //测试文智api调用是否成功
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                MotionAnalyze.getMotionStatistic("开心");
+            }
+        };
+        new Thread(runnable).start();
         if(getArguments() != null){
             mfrom = getArguments().getString("from");
         }
@@ -115,7 +125,6 @@ public class DiscoveryFragment extends Fragment {
         mTabLayout.getTabAt(0).setText("心情波动");
         mTabLayout.getTabAt(1).setText("原始数据");
         mTabLayout.getTabAt(2).setText("小贴士");
-
-
     }
+
 }
