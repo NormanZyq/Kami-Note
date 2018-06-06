@@ -1,6 +1,8 @@
 package com.example.zyq.kaminotetest.Activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.Utils.NoteUtils;
 import com.example.zyq.kaminotetest.R;
+import com.githang.statusbar.StatusBarCompat;
 
 import org.litepal.crud.DataSupport;
 
@@ -32,6 +35,7 @@ public class CreateNote extends AppCompatActivity {
     private String title;
     private String content;
     private String identifier;
+    private int Color_id;
     public MyDate createdDate;
 
     EditText noteTitle;
@@ -44,6 +48,12 @@ public class CreateNote extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences("Color_id", Context.MODE_PRIVATE);
+        Color_id = sharedPreferences.getInt("id",0);
+        if(Color_id != 0){
+            toolbar.setBackgroundResource(Color_id);
+            StatusBarCompat.setStatusBarColor(this,getResources().getColor(Color_id), true);
+        }
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

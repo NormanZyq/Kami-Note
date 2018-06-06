@@ -1,7 +1,9 @@
 package com.example.zyq.kaminotetest.Activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -19,6 +21,7 @@ import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.NoteUtils;
+import com.githang.statusbar.StatusBarCompat;
 
 /**
  * 编辑界面
@@ -32,7 +35,7 @@ public class EditNote extends AppCompatActivity {
     EditText noteTitle;
     EditText noteContent;
     public MyNote myNote;
-
+    private int Color_id;
 
 
     @Override
@@ -42,7 +45,13 @@ public class EditNote extends AppCompatActivity {
 
         //设置和应用Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        this.setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences("Color_id", Context.MODE_PRIVATE);
+        Color_id = sharedPreferences.getInt("id",0);
+        if(Color_id != 0){
+            toolbar.setBackgroundResource(Color_id);
+            StatusBarCompat.setStatusBarColor(this,getResources().getColor(Color_id), true);
+        }
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
