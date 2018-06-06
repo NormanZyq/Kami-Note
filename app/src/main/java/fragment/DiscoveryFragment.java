@@ -87,14 +87,20 @@ public class DiscoveryFragment extends Fragment {
         myPagerAdapter.setFragments(fragments);
         // 给ViewPager设置适配器
         mViewPager.setAdapter(myPagerAdapter);
-//
-//        mTabLayout.getTabAt(0).setText("心情波动");
-//        mTabLayout.getTabAt(1).setText("原始数据");
-//        mTabLayout.getTabAt(2).setText("小贴士");
-
 
         // 使用 TabLayout 和 ViewPager 相关联
         mTabLayout.setupWithViewPager(mViewPager);
+
+
+//        mTabLayout.addTab(mTabLayout.newTab().setText("心情波动"));
+//        mTabLayout.addTab(mTabLayout.newTab().setText("原始数据"));
+//        mTabLayout.addTab(mTabLayout.newTab().setText("小贴士"));
+//
+        mTabLayout.getTabAt(0).setText("心情波动");
+        mTabLayout.getTabAt(1).setText("原始数据");
+        mTabLayout.getTabAt(2).setText("小贴士");
+
+
     }
 
 }
