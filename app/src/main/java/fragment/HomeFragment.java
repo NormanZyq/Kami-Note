@@ -36,7 +36,6 @@ import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
-import com.example.zyq.kaminotetest.Utils.ToolbarController;
 
 import org.litepal.crud.DataSupport;
 
@@ -107,18 +106,6 @@ public class HomeFragment extends Fragment {
 
         //从数据库中读取存在的笔记
         DataClass.mNote = DataSupport.findAll(MyNote.class, true);
-
-//        for (Label label : DataClass.mLabel) {
-//            label.getNotes2();
-//        }
-
-//        //计算拥有的笔记数量
-//        for (Label label : DataClass.mLabel) {
-//            label.calculateCount();
-//        }
-
-//        DataClass.mNote = mNote;
-//        DataClass.mLabel = mLabel;
 
         //判断是否读取到了笔记数据
         if (DataClass.mNote.size() != 0) {

@@ -11,4 +11,7 @@
     <string name="finish">完成</string>
     <string name="no_more">没有更多内容</string>
     <string name="description">皮肤设置</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

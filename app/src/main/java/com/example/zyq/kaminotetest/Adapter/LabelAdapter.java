@@ -27,20 +27,7 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
     }
 
 
-
-    public View getView(int position, View convertView, ViewGroup parent) {
-//        String labelName = getItem(position).getLabelName();
-        Label label = getItem(position);
-        View view;
-        ViewHolder viewHolder = new ViewHolder();
-        view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
-        viewHolder.labelName = view.findViewById(R.id.label_name);
-        viewHolder.count = view.findViewById(R.id.text_count);
-        viewHolder.labelName.setText(label.getLabelName());     //设置标签的名字
-        String count = label.getNotes().size() + "个项目";
-        viewHolder.count.setText(count);       //显示当前标签有多少个笔记
-
-//
+    //
 //        if (convertView == null) {
 //            view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
 //            viewHolder = new ViewHolder();
@@ -53,7 +40,17 @@ public class LabelAdapter extends ArrayAdapter<Label> implements View.OnClickLis
 //            viewHolder = (ViewHolder) ((Object[]) view.getTag())[0];
 //        }
 //        viewHolder.labelName.setOnClickListener(this);
-
+    public View getView(int position, View convertView, ViewGroup parent) {
+//        String labelName = getItem(position).getLabelName();
+        Label label = getItem(position);
+        View view;
+        ViewHolder viewHolder = new ViewHolder();
+        view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+        viewHolder.labelName = view.findViewById(R.id.label_name);
+        viewHolder.count = view.findViewById(R.id.text_count);
+        viewHolder.labelName.setText(label.getLabelName());     //设置标签的名字
+        String count = label.getNotes().size() + "个项目";
+        viewHolder.count.setText(count);       //显示当前标签有多少个笔记
         view.setTag(position);                  //设置标签所在view的tag，以其position作为tag
         view.setOnClickListener(this);      //设置标签点击事件
 
