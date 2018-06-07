@@ -1,9 +1,11 @@
 package com.example.zyq.kaminotetest.Utils;
 
+import com.example.zyq.kaminotetest.Class.Emotion;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.main.java.com.qcloud.Module.Wenzhi;
 import com.example.zyq.kaminotetest.main.java.com.qcloud.Utilities.Json.JSONObject;
 
+import java.util.Date;
 import java.util.TreeMap;
 
 public class MotionAnalyze {
@@ -29,8 +31,15 @@ public class MotionAnalyze {
         try{
             result = module.call("TextSentiment", params);
             JSONObject json_result = new JSONObject(result);
-            Double positive = json_result.optDouble("positive");
-            Double negative = json_result.optDouble("negative");
+            Double positive = json_result.optDouble("positive");    //positive数据
+            Double negative = json_result.optDouble("negative");    //negative数据
+            Date time = new Date();        //分析时间
+            Emotion emotion = new Emotion(time,positive,negative);      //创建情感数据实例
+            if(positive >= negative){
+                note.setPositive(true);
+            }
+            else note.setPositive(false);
+            note.setNoteEmotion(emotion);   //设置情感数据
         }catch (Exception ex){
             System.out.println("error" + ex.getMessage());
         }
