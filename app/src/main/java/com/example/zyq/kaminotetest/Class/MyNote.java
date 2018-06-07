@@ -27,13 +27,10 @@ public class MyNote extends DataSupport {
 
 //    private list
     private List<Label> labels = new ArrayList<>();
-//    private Collection<Label> labe
 
-//    private String[] labels = new String[]{};
+    private boolean isPositive = false;
 
-//    private Collection<Label> labels;
-
-
+    private Emotion noteEmotion = new Emotion();
 
     //构造方法，传入标题、内容、标识、创建日期。（最后编辑的日期另外设置）
     public MyNote(String title, String content, String identifier, String createdDate, Extras extras) {
@@ -112,5 +109,19 @@ public class MyNote extends DataSupport {
         this.labels = labels;
     }
 
+    public boolean isPositive() {
+        return isPositive;
+    }
 
+    public void setPositive(boolean positive) {
+        isPositive = positive;
+    }
+
+    public Emotion getNoteEmotion() {
+        return noteEmotion;
+    }
+
+    public void setNoteEmotion(Emotion noteEmotion) {
+        this.noteEmotion = noteEmotion;
+    }
 }
