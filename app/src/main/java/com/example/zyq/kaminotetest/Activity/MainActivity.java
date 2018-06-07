@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 写入数据，表示今天不是首次登陆
             SharedPreferences.Editor editor = sharedPreferences.edit();
             // 记录最后启动的日期
-            editor.putString()
+            //editor.putString();
             editor.apply();
         }
         //判断今日是否初次启动程序

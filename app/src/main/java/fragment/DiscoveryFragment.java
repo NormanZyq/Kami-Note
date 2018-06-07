@@ -74,7 +74,7 @@ public class DiscoveryFragment extends Fragment {
         ArrayList<Fragment> fragments = new ArrayList<>();
         // 装填
         fragments.add(new EmotionStatusFragment());
-        fragments.add(new EmotionStatusFragment());
+        fragments.add(new StatisticFragment());
         fragments.add(new EmotionStatusFragment());
 
 //        fragments.add(new TwoFragment());

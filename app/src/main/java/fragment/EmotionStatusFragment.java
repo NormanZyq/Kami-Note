@@ -68,7 +68,7 @@ public class EmotionStatusFragment extends Fragment {
 
 
         // 显示边界
-        mLineChart.setDrawBorders(true);
+        //mLineChart.setDrawBorders(true);
 
         //设置数据，数据来源是DC中的积极指数
         List<Entry> entries = new ArrayList<>();
@@ -82,7 +82,7 @@ public class EmotionStatusFragment extends Fragment {
         //一个LineDataSet就是一条线
         LineDataSet lineDataSet = new LineDataSet(entries, "积极指数");
         LineData data = new LineData(lineDataSet);
-        mLineChart.setData(data);
+        //mLineChart.setData(data);
 
     }
 

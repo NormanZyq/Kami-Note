@@ -124,4 +124,8 @@ public class MyNote extends DataSupport {
     public void setNoteEmotion(Emotion noteEmotion) {
         this.noteEmotion = noteEmotion;
     }
+
+    public double getPositive(){return this.noteEmotion.getPositive();}
+
+    public double getNegative(){return this.noteEmotion.getNegative();}
 }
