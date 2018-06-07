@@ -63,14 +63,6 @@ public class DiscoveryFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //测试文智api调用是否成功
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                MotionAnalyze.getMotionStatistic("开心");
-            }
-        };
-        new Thread(runnable).start();
         if(getArguments() != null){
             mfrom = getArguments().getString("from");
         }

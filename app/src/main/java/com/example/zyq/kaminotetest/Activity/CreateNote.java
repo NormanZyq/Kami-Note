@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
+import com.example.zyq.kaminotetest.Data.DataClass;
+import com.example.zyq.kaminotetest.Utils.MotionAnalyze;
 import com.example.zyq.kaminotetest.Utils.NoteUtils;
 import com.example.zyq.kaminotetest.R;
 import com.githang.statusbar.StatusBarCompat;
@@ -107,6 +109,14 @@ public class CreateNote extends AppCompatActivity {
             NoteUtils.INSTANCE.saveNote(title, content, identifier, createdDate);  //保存到数据库
             MyToast.makeText(CreateNote.this, "保存成功", Toast.LENGTH_SHORT).show();
             MainActivity.notePosition = DataSupport.count(MyNote.class) - 1;
+            //测试文智api调用是否成功
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    MotionAnalyze.getMotionStatistic(DataClass.mNote.get(DataClass.mNote.size()-1));
+                }
+            };
+            new Thread(runnable).start();
             finish();
             return true;
         }
