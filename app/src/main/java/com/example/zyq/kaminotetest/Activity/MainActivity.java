@@ -33,7 +33,6 @@ import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.ActivityController;
 import com.example.zyq.kaminotetest.Utils.DataGenerator;
 import com.githang.statusbar.StatusBarCompat;
-import com.github.mikephil.charting.charts.PieChart;
 
 import org.litepal.crud.DataSupport;
 
@@ -107,19 +106,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // 如果今天首次启动
         if (!launchDate.equals(lastLaunchDate)) {
-            //TODO: 去掉七天以前的用于显示图表的情感数据
-
-            // 写入数据，表示今天不是首次登陆
+            // 去掉七天以前的用于显示图表的情感数据
+            while (DataClass.emotionPositivePerWeek.size() > 7) {
+                DataClass.emotionPositivePerWeek.remove(0);
+            }
+            // 写入今天的日期，表示今天不再是首次登陆
             SharedPreferences.Editor editor = sharedPreferences.edit();
             // 记录最后启动的日期
-            editor.putString()
+            editor.putString("launchDate", new MyDate().getDate());
             editor.apply();
         }
-        //判断今日是否初次启动程序
-//        sharedPreferences = getSharedPreferences("booleans", Context.MODE_PRIVATE);
-
-
-
     }
 
     @Override
