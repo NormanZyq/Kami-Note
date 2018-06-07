@@ -3,7 +3,6 @@ package com.example.zyq.kaminotetest.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,11 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.EditText;
-import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -30,12 +26,14 @@ import android.widget.Toast;
 
 import com.example.zyq.kaminotetest.Adapter.LabelAdapter;
 import com.example.zyq.kaminotetest.Class.Label;
+import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.ActivityController;
 import com.example.zyq.kaminotetest.Utils.DataGenerator;
 import com.githang.statusbar.StatusBarCompat;
+import com.github.mikephil.charting.charts.PieChart;
 
 import org.litepal.crud.DataSupport;
 
@@ -93,30 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         DataClass.mLabel = DataSupport.findAll(Label.class);
 
-/*        //从数据库中读取存在的笔记
-//        mNoteTemp = DataSupport.findAll(MyNote.class);
-        mNote = DataSupport.findAll(MyNote.class);
-        mLabel = DataSupport.findAll(Label.class);
-        //判断是否读取到了数据
-        if (mNote.size() != 0) {
-            refreshNoteListView(noteListView);  //刷新
-        } else {
-            //如果读取到的内容为空，就将mNote设置为新的List，以备保存
-            mNote = new ArrayList<>();
-            //将"没有更多内容"从布局显示
-            tv_noMore.setVisibility(View.VISIBLE);
-        }
-        if (mLabel.size() != 0) {
-//            refreshLabelListView(labelListView2);   //刷新
-            refreshLabelListView(labelListView);
-        } else {
-            mLabel = new ArrayList<>();
-        }
-
-        for (Label label : mLabel) {
-            System.out.println(">>>>>" + label.getLabelName());
-        }*/
-
         textAddLabel = findViewById(R.id.text_add_label);
         imageAddLabel = findViewById(R.id.image_add_label);
 
@@ -124,6 +98,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         imageAddLabel.setOnClickListener(this);
         textAddLabel.setOnClickListener(this);
+
+        // 判断今日是否初次启动程序
+//        boolean isFirstLaunchToday;
+        String launchDate = new MyDate().getDate();
+        SharedPreferences sharedPreferences = getSharedPreferences("launchLog",Context.MODE_PRIVATE);
+        String lastLaunchDate = sharedPreferences.getString("launchDate", "");
+
+        // 如果今天首次启动
+        if (!launchDate.equals(lastLaunchDate)) {
+            //TODO: 去掉七天以前的用于显示图表的情感数据
+
+            // 写入数据，表示今天不是首次登陆
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            // 记录最后启动的日期
+            editor.putString()
+            editor.apply();
+        }
+        //判断今日是否初次启动程序
+//        sharedPreferences = getSharedPreferences("booleans", Context.MODE_PRIVATE);
+
 
 
     }

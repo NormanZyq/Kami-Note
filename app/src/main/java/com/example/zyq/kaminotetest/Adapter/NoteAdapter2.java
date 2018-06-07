@@ -106,7 +106,8 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
         MyNote note = myNotes.get(position);
         holder.noteTitle.setText(note.getTitle().equals("") ? "无标题" : note.getTitle());
         holder.noteContent.setText(note.getContent().equals("") ? "无附加内容" : note.getContent());
-        holder.editedDate.setText(note.getLastEdited());
+        String lastEdited = "最后编辑：" + note.getLastEdited();
+        holder.editedDate.setText(lastEdited);
     }
 
     //获得当前列表笔记数目
