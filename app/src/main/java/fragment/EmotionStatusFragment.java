@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -66,27 +67,50 @@ public class EmotionStatusFragment extends Fragment {
         }
 
 
+        // 显示边界
+        mLineChart.setDrawBorders(true);
+
+        //设置数据，数据来源是DC中的积极指数
+        List<Entry> entries = new ArrayList<>();
+        for (int i = 0, size = DataClass.emotionNegativePerWeek.size(); i < size; i++) {
+            entries.add(new Entry(i, DataClass.emotionPositivePerWeek.get(i).floatValue()));
+        }
+
+//        for (int i = 0; i < 10; i++) {
+//            entries.add(new Entry(i, (float) (Math.random()) * 80));
+//        }
+        //一个LineDataSet就是一条线
+        LineDataSet lineDataSet = new LineDataSet(entries, "积极指数");
+        LineData data = new LineData(lineDataSet);
+        mLineChart.setData(data);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // 获得view
         View view = inflater.inflate( R.layout.fragment_emotion_status,null);
 
+        // 获得图表
         mLineChart = view.findViewById(R.id.emotion_status);
-        //显示边界
-        mLineChart.setDrawBorders(true);
-        //设置数据
-        List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            entries.add(new Entry(i, (float) (Math.random()) * 80));
-        }
-        //一个LineDataSet就是一条线
-        LineDataSet lineDataSet = new LineDataSet(entries, "温度");
-        LineData data = new LineData(lineDataSet);
-        mLineChart.setData(data);
 
+//        // 显示边界
+//        mLineChart.setDrawBorders(true);
+//
+//        //设置数据，数据来源是DC中的积极指数
+//        List<Entry> entries = new ArrayList<>();
+//        for (int i = 0, size = DataClass.emotionNegativePerWeek.size(); i < size; i++) {
+//            entries.add(new Entry(i, DataClass.emotionPositivePerWeek.get(i).floatValue()));
+//        }
+//
+////        for (int i = 0; i < 10; i++) {
+////            entries.add(new Entry(i, (float) (Math.random()) * 80));
+////        }
+//        //一个LineDataSet就是一条线
+//        LineDataSet lineDataSet = new LineDataSet(entries, "积极指数");
+//        LineData data = new LineData(lineDataSet);
+//        mLineChart.setData(data);
 
         return view;
     }

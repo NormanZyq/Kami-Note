@@ -3,6 +3,7 @@ package com.example.zyq.kaminotetest.Data;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,5 +16,10 @@ public class DataClass {
 
     public static List<Label> mLabel;       //标签列表
 
-    public static long longClickPosition = 0;
+    public static long longClickPosition = 0;       //长按note的位置
+
+    public static List<Double> emotionPositivePerWeek = new ArrayList<>();  //每周的积极指数
+
+    public static List<Double> emotionNegativePerWeek = new ArrayList<>();  //每周的消极指数
+
 }
