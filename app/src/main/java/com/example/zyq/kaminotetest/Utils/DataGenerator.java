@@ -15,7 +15,7 @@ import fragment.ProfileFragment;
 public class DataGenerator {
     public static final int []mTabRes = new int[]{R.drawable.tab_home_selector,R.drawable.tab_discovery_selector,R.drawable.tab_attention_selector,R.drawable.tab_profile_selector};
     public static final int []mTabResPressed = new int[]{R.drawable.ic_tab_strip_icon_feed_selected,R.drawable.ic_tab_strip_icon_category_selected,R.drawable.ic_tab_strip_icon_pgc_selected,R.drawable.ic_tab_strip_icon_profile_selected};
-    public static final String []mTabTitle = new String[]{"首页","发现","关注","我的"};
+    public static final String []mTabTitle = new String[]{"笔记","发现","关注","我的"};
 
     public static Fragment[] getfragments(String from){
         Fragment fragment[] = new Fragment[4];

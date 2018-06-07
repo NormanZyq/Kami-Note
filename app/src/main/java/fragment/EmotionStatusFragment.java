@@ -8,6 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.zyq.kaminotetest.R;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,12 +25,12 @@ import com.example.zyq.kaminotetest.R;
  * create an instance of this fragment.
  */
 public class EmotionStatusFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+    private LineChart mLineChart;
+
+
     private String mParam1;
     private String mParam2;
 
@@ -41,7 +48,6 @@ public class EmotionStatusFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment EmotionStatusFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static EmotionStatusFragment newInstance(String param1, String param2) {
         EmotionStatusFragment fragment = new EmotionStatusFragment();
         Bundle args = new Bundle();
@@ -58,13 +64,31 @@ public class EmotionStatusFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_emotion_status, container, false);
+        View view = inflater.inflate( R.layout.fragment_emotion_status,null);
+
+        mLineChart = view.findViewById(R.id.emotion_status);
+        //显示边界
+        mLineChart.setDrawBorders(true);
+        //设置数据
+        List<Entry> entries = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            entries.add(new Entry(i, (float) (Math.random()) * 80));
+        }
+        //一个LineDataSet就是一条线
+        LineDataSet lineDataSet = new LineDataSet(entries, "温度");
+        LineData data = new LineData(lineDataSet);
+        mLineChart.setData(data);
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -80,16 +104,6 @@ public class EmotionStatusFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
