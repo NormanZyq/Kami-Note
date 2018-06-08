@@ -40,6 +40,7 @@ public class MotionAnalyze {
             }
             else note.setPositive(false);
             note.setNoteEmotion(emotion);   //设置情感数据
+            note.save();    //保存笔记
         }catch (Exception ex){
             System.out.println("error" + ex.getMessage());
         }

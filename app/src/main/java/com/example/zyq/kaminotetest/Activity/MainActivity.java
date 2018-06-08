@@ -27,11 +27,14 @@ import android.widget.Toast;
 import com.example.zyq.kaminotetest.Adapter.LabelAdapter;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyDate;
+import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.Data.DataClass;
+import com.example.zyq.kaminotetest.Data.EmotionData;
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.ActivityController;
 import com.example.zyq.kaminotetest.Utils.DataGenerator;
+import com.example.zyq.kaminotetest.Utils.NoteUtils;
 import com.githang.statusbar.StatusBarCompat;
 
 import org.litepal.crud.DataSupport;
@@ -58,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private long mExitTime = 0;                 //记录点击返回按钮的时间
     private TextView textAddLabel;
     private ImageView imageAddLabel;
-    private LabelAdapter labelAdapter;
 
     public static int notePosition;             //记录笔记位置
     public ListView labelListView;
@@ -88,7 +90,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
 
-        DataClass.mLabel = DataSupport.findAll(Label.class);
+        DataClass.mLabel = DataSupport.findAll(Label.class);    //获得标签
+        DataClass.mNote = DataSupport.findAll(MyNote.class, true);    //获得笔记
+        try {
+            DataClass.emotionData = DataSupport.findAll(EmotionData.class, true).get(0);
+            System.out.println("mainac line 97 " + DataClass.emotionData.getEmotionNegativePerWeek().get(0));
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("mainac line 98 gggggggg");
+        }
 
         textAddLabel = findViewById(R.id.text_add_label);
         imageAddLabel = findViewById(R.id.image_add_label);
@@ -103,12 +112,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences sharedPreferences = getSharedPreferences("launchLog",Context.MODE_PRIVATE);
         String lastLaunchDate = sharedPreferences.getString("launchDate", "");
 
+//        System.out.println("mainac line 108" + DataClass.mNote.get(0).getPositive());
+
         // 如果今天首次启动
         if (!launchDate.equals(lastLaunchDate)) {
             // 去掉七天以前的用于显示图表的情感数据
-            while (DataClass.emotionPositivePerWeek.size() > 7) {
-                DataClass.emotionPositivePerWeek.remove(0);
+            while (DataClass.emotionData.getEmotionPositivePerWeek().size() > 7) {
+                DataClass.emotionData.getEmotionPositivePerWeek().remove(0);
+                DataClass.emotionData.getEmotionNegativePerWeek().remove(0);
             }
+            // 计算昨天以前的心情波动
+            NoteUtils.INSTANCE.calculateEmotion();
+            DataClass.emotionData.save();
+
             // 写入今天的日期，表示今天不再是首次登陆
             SharedPreferences.Editor editor = sharedPreferences.edit();
             // 记录最后启动的日期

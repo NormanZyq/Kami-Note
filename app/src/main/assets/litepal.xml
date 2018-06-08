@@ -2,7 +2,7 @@
 <litepal>
     <dbname value="NotesDB" ></dbname>
 
-    <version value="14" ></version>
+    <version value="16" ></version>
 
     <list>
         <mapping class="com.example.zyq.kaminotetest.Class.MyNote"></mapping>
@@ -10,6 +10,8 @@
         <mapping class="com.example.zyq.kaminotetest.Class.Label"></mapping>
 
         <mapping class="com.example.zyq.kaminotetest.Class.Emotion"></mapping>
+
+        <mapping class="com.example.zyq.kaminotetest.Data.EmotionData"></mapping>
     </list>
 
 </litepal>

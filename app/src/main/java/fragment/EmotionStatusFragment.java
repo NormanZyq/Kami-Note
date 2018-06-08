@@ -87,9 +87,9 @@ public class EmotionStatusFragment extends Fragment {
         for (int i = 0; i < 7; i++) {
             float pos = 0;
             try {
-                pos = DataClass.emotionPositivePerWeek.get(i).floatValue();
+                pos = DataClass.emotionData.getEmotionPositivePerWeek().get(i).floatValue();
             } catch (IndexOutOfBoundsException ex) {
-                if (DataClass.emotionPositivePerWeek.size() > i) {
+                if (DataClass.emotionData.getEmotionPositivePerWeek().size() > i) {
                     ex.printStackTrace();
                 }
             }

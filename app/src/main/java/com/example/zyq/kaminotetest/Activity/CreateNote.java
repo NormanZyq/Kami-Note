@@ -104,9 +104,11 @@ public class CreateNote extends AppCompatActivity {
             return false;
         } else {
             identifier = UUID.randomUUID().toString();  //设置UUID
+
             NoteUtils.INSTANCE.saveNote(title, content, identifier, createdDate);  //保存到数据库
             MyToast.makeText(CreateNote.this, "保存成功", Toast.LENGTH_SHORT).show();
 //            MainActivity.notePosition = DataSupport.count(MyNote.class) - 1;
+
             //测试文智api调用是否成功
             Runnable runnable = new Runnable() {
                 @Override
@@ -135,6 +137,9 @@ public class CreateNote extends AppCompatActivity {
                     identifier = UUID.randomUUID().toString();  //设置UUID
                     title = noteTitle.getText().toString();     //设置标题
                     content = noteContent.getText().toString(); //设置内容
+
+
+
                     NoteUtils.INSTANCE.saveNote(title, content, identifier, createdDate);
                     //测试文智api调用是否成功
                     Runnable runnable = new Runnable() {
@@ -144,6 +149,8 @@ public class CreateNote extends AppCompatActivity {
                         }
                     };
                     new Thread(runnable).start();
+
+
                     finish();
                 }
             });
