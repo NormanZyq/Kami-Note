@@ -132,6 +132,7 @@ public class StatisticFragment extends Fragment {
         if(DataClass.mNote.size() != 0){
             if(!launchDate.equals(lastLaunchDate)){
                 if(!MainActivity.isEdit){
+                    //若文本未编辑，则显示平均数据并清空笔记位置缓存
                     data.add(new PieEntry((float)NoteUtils.INSTANCE.predictEmotion(),"Positive"));
                     data.add(new PieEntry((float)(1-NoteUtils.INSTANCE.predictEmotion()),"Negative"));
                     SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("notePosition",Context.MODE_PRIVATE);
@@ -140,6 +141,7 @@ public class StatisticFragment extends Fragment {
                     editor1.commit();
                 }
                 else if(MainActivity.isEdit){
+                    //若笔记被编辑，则显示最新数据，保留笔记位置缓存
                     data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getPositive(),"Positive"));
                     data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getNegative(),"Negative"));
                 }
@@ -151,13 +153,15 @@ public class StatisticFragment extends Fragment {
                 editor.apply();
                 mPieChart.setDrawCenterText(false);
             }
-            else{
+            else{//当日第二次打开程序时执行的操作
                 SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("notePosition",Context.MODE_PRIVATE);
                 MainActivity.notePosition = sharedPreferences1.getInt("position",-1);
                 if(MainActivity.notePosition == -1){
+                    //若第一次使用未编辑数据，则显示平均数据
                     data.add( new PieEntry((float)NoteUtils.INSTANCE.predictEmotion(),"Positive"));
                     data.add(new PieEntry((float)(1-NoteUtils.INSTANCE.predictEmotion()),"Negative"));
                 }else if(MainActivity.notePosition >= 0){
+                    //若第一次编辑了数据，则显示最新数据
                     data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getPositive(),"Positive"));
                     data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getNegative(),"Negative"));
                 /*data.put("data1", (float)DataClass.mNote.get(MainActivity.notePosition).getPositive());
