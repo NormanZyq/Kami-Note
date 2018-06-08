@@ -70,6 +70,17 @@ public enum NoteUtils {
     /**
      * 计算每天的积极指数和消极指数并保存到DataClass
      */
+    public double predictEmotion() {
+        double positive = 0;
+        double negative = 0;
+        for (MyNote note : DataClass.mNote) {
+            positive += note.getPositive();
+            negative += note.getNegative();
+        }
+        positive = positive/DataClass.mNote.size();
+        return positive;
+    }
+
     public void calculateEmotion() {
         double positive = 0;    //初始化积极指数
         double negative = 0;    //初始化消极指数

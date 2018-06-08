@@ -27,6 +27,8 @@ import java.util.ArrayList;
 public class DiscoveryFragment extends Fragment {
     private String mfrom;
     private int Color_id;
+    private EmotionStatusFragment emotionStatusFragment = new EmotionStatusFragment();
+    //private StatisticFragment statisticFragment = new StatisticFragment();
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -73,13 +75,10 @@ public class DiscoveryFragment extends Fragment {
         // 创建一个集合,装填Fragment
         ArrayList<Fragment> fragments = new ArrayList<>();
         // 装填
+        fragments.add(emotionStatusFragment);
         fragments.add(new EmotionStatusFragment());
         fragments.add(new StatisticFragment());
-        fragments.add(new EmotionStatusFragment());
 
-//        fragments.add(new TwoFragment());
-//        fragments.add(new ThreeFragment());
-//        fragments.add(new FourFragment());
         // 创建ViewPager适配器
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
         myPagerAdapter.setFragments(fragments);

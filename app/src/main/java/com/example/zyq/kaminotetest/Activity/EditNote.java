@@ -20,8 +20,11 @@ import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.MotionAnalyze;
 import com.example.zyq.kaminotetest.Utils.NoteUtils;
 import com.githang.statusbar.StatusBarCompat;
+
+import org.litepal.crud.DataSupport;
 
 /**
  * 编辑界面
@@ -149,6 +152,14 @@ public class EditNote extends AppCompatActivity {
                     return true;
                 }
                 myNote.setLastEdited(date.toString());
+                //测试文智api调用是否成功
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        MotionAnalyze.getMotionStatistic(myNote);
+                    }
+                };
+                new Thread(runnable).start();
                 NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
                 MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
                 finish();

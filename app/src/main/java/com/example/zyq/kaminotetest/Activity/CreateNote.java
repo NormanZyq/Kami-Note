@@ -15,12 +15,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.zyq.kaminotetest.Class.MyDate;
+import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.MotionAnalyze;
 import com.example.zyq.kaminotetest.Utils.NoteUtils;
 import com.githang.statusbar.StatusBarCompat;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.UUID;
 
@@ -107,16 +110,18 @@ public class CreateNote extends AppCompatActivity {
 
             NoteUtils.INSTANCE.saveNote(title, content, identifier, createdDate);  //保存到数据库
             MyToast.makeText(CreateNote.this, "保存成功", Toast.LENGTH_SHORT).show();
-//            MainActivity.notePosition = DataSupport.count(MyNote.class) - 1;
-
-            //测试文智api调用是否成功
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    MotionAnalyze.getMotionStatistic(DataClass.mNote.get(DataClass.mNote.size()-1));
+            MainActivity.notePosition = DataSupport.count(MyNote.class) - 1;
+                if(!content.equals("")){
+                    //测试文智api调用是否成功
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            MotionAnalyze.getMotionStatistic(DataClass.mNote.get(DataClass.mNote.size()-1));
+                            System.out.println(DataClass.mNote.get(DataClass.mNote.size()-1).getPositive()+">>>>>>>>>>>>>>>>>Create119");
+                        }
+                    };
+                    new Thread(runnable).start();
                 }
-            };
-            new Thread(runnable).start();
             finish();
             return true;
         }
@@ -137,9 +142,6 @@ public class CreateNote extends AppCompatActivity {
                     identifier = UUID.randomUUID().toString();  //设置UUID
                     title = noteTitle.getText().toString();     //设置标题
                     content = noteContent.getText().toString(); //设置内容
-
-
-
                     NoteUtils.INSTANCE.saveNote(title, content, identifier, createdDate);
                     //测试文智api调用是否成功
                     Runnable runnable = new Runnable() {
@@ -149,8 +151,6 @@ public class CreateNote extends AppCompatActivity {
                         }
                     };
                     new Thread(runnable).start();
-
-
                     finish();
                 }
             });

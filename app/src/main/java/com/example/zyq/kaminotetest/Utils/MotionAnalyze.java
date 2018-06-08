@@ -33,6 +33,8 @@ public class MotionAnalyze {
             JSONObject json_result = new JSONObject(result);
             Double positive = json_result.optDouble("positive");    //positive数据
             Double negative = json_result.optDouble("negative");    //negative数据
+            System.out.println(positive+">>>>>>>>>>>>>>motionAnalyze36");
+            System.out.println(negative+">>>>>>>>>>>>>>motionAnalyze37");
             Date time = new Date();        //分析时间
             Emotion emotion = new Emotion(time,positive,negative);      //创建情感数据实例
             if(positive >= negative){

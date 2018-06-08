@@ -8,16 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.zyq.kaminotetest.Activity.MainActivity;
 import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.NoteUtils;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -75,13 +80,16 @@ public class StatisticFragment extends Fragment {
         // 显示百分比
         mPieChart.setUsePercentValues(true);
         // 描述信息
-        // mPieChart.setDescription();
+        Description description = new Description();
+        description.setText("Positive/tNegative");
+         mPieChart.setDescription(description);
         // 设置偏移量
         mPieChart.setExtraOffsets(5, 10, 5, 5);
         // 设置滑动减速摩擦系数
         mPieChart.setDragDecelerationFrictionCoef(0.95f);
 
-        mPieChart.setCenterText("测试饼图，中间文字");
+        mPieChart.setCenterText("今天还未写过日记呢，快去试试吧");
+        mPieChart.setDrawCenterText(false);
         /*
             设置饼图中心是否是空心的
             true 中间是空心的，环形图
@@ -103,8 +111,6 @@ public class StatisticFragment extends Fragment {
         mPieChart.setHoleRadius(58f);
         // 设置空心圆的半径
         mPieChart.setTransparentCircleRadius(61f);
-        // 设置是否显示中间的文字
-        mPieChart.setDrawCenterText(true);
 
 
         // 设置旋转角度   ？？
@@ -117,11 +123,26 @@ public class StatisticFragment extends Fragment {
         // mPieChart.setOnChartValueSelectedListener(this);
 
         TreeMap<String, Float> data = new TreeMap<>();
-        data.put("data1", (float) DataClass.mNote.get(DataClass.mNote.size() - 1).getPositive());
-        data.put("data2", (float)DataClass.mNote.get(DataClass.mNote.size()-1).getNegative());
-        data.put("data3", 0.1f);
-        data.put("data4", 0.1f);
-        setData(data);
+        if(DataClass.mNote.size() != 0){
+            System.out.println(MainActivity.notePosition+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Static129");
+            System.out.println(DataClass.mNote.get(MainActivity.notePosition).getPositive()+">>>>>>>>>>>>>>>>>>>>>>Static130");
+            if(DataClass.mNote.get(MainActivity.notePosition).getPositive() - 0 < 1e-6 && DataClass.mNote.get(MainActivity.notePosition).getNegative()-0<1e-6){
+                data.put("data1", (float)NoteUtils.INSTANCE.predictEmotion());
+                data.put("data2",(float)(1-NoteUtils.INSTANCE.predictEmotion()));
+            }else{
+                data.put("data1", (float)DataClass.mNote.get(MainActivity.notePosition).getPositive());
+                data.put("data2", (float)DataClass.mNote.get(MainActivity.notePosition).getNegative());
+            }
+                /*                mPieChart.setDrawCenterText(true);
+            }else{
+                mPieChart.setDrawCenterText(false);
+            }*/
+            //System.out.println(DataClass.mNote.get(DataClass.mNote.size() - 1).getPositive()+"126>>>>>>>>>>>>>>>>>");
+            //System.out.println(DataClass.mNote.get(DataClass.mNote.size()-1).getNegative()+"127>>>>>>>>>>>>>>>>>>>");
+/*        data.put("data3", 0.1f);
+        data.put("data4", 0.1f);*/
+            setData(data);
+        }
 
         // 设置动画
         mPieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
