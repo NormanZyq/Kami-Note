@@ -14,6 +14,15 @@ public class EmotionData extends DataSupport {
 
     private List<Double> emotionNegativePerWeek = new ArrayList<>();  //每周的消极指数
 
+
+    public EmotionData() {
+    }
+
+    public EmotionData(List<Double> emotionPositivePerWeek, List<Double> emotionNegativePerWeek) {
+        this.emotionPositivePerWeek = emotionPositivePerWeek;
+        this.emotionNegativePerWeek = emotionNegativePerWeek;
+    }
+
     public List<Double> getEmotionPositivePerWeek() {
         return emotionPositivePerWeek;
     }

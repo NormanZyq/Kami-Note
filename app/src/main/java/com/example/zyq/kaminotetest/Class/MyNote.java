@@ -30,8 +30,6 @@ public class MyNote extends DataSupport {
 
     private boolean isPositive = false;
 
-    private Emotion noteEmotion = new Emotion();
-
     private double positive = 0;
 
     private double negative = 0;
@@ -119,10 +117,6 @@ public class MyNote extends DataSupport {
 
     public void setPositive(boolean positive) {
         isPositive = positive;
-    }
-
-    public Emotion getNoteEmotion() {
-        return noteEmotion;
     }
 
     public void setNoteEmotion(Emotion noteEmotion) {

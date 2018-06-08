@@ -10,13 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.zyq.kaminotetest.Adapter.MyPagerAdapter;
 import com.example.zyq.kaminotetest.R;
-import com.example.zyq.kaminotetest.Utils.MotionAnalyze;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,9 @@ public class DiscoveryFragment extends Fragment {
     private String mfrom;
     private int Color_id;
     private EmotionStatusFragment emotionStatusFragment = new EmotionStatusFragment();
-    //private StatisticFragment statisticFragment = new StatisticFragment();
+    private StatisticFragment statisticFragment = new StatisticFragment();
+    private ImageView imageView1;
+    private TextView textView1;
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -40,6 +42,9 @@ public class DiscoveryFragment extends Fragment {
 
         mTabLayout = view.findViewById(R.id.discovery_tab_layout);      //获取tabLayout
         mViewPager = view.findViewById(R.id.discovery_view_pager);      //获取viewPager
+        imageView1 = view.findViewById(R.id.heart_soup_pic_1);
+        textView1 = view.findViewById(R.id.heart_soup_text_1);
+
         //设置Toolbar
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -50,6 +55,10 @@ public class DiscoveryFragment extends Fragment {
         }
 
         initViewPager();    //初始化viewPager
+
+        imageView1.setImageResource(R.drawable.wwdc_iphone);
+        textView1.setText("生活就像海洋，只有意志坚强的人才能到达彼岸");
+
 
         return view;
     }
@@ -70,13 +79,20 @@ public class DiscoveryFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        emotionStatusFragment = new EmotionStatusFragment();
+        statisticFragment = new StatisticFragment();
+    }
+
     //初始化viewPager
     private void initViewPager() {
         // 创建一个集合,装填Fragment
         ArrayList<Fragment> fragments = new ArrayList<>();
         // 装填
-        fragments.add(emotionStatusFragment);
         fragments.add(new EmotionStatusFragment());
+        fragments.add(emotionStatusFragment);
         fragments.add(new StatisticFragment());
 
         // 创建ViewPager适配器
@@ -89,10 +105,7 @@ public class DiscoveryFragment extends Fragment {
         mTabLayout.setupWithViewPager(mViewPager);
 
 
-//        mTabLayout.addTab(mTabLayout.newTab().setText("心情波动"));
-//        mTabLayout.addTab(mTabLayout.newTab().setText("原始数据"));
-//        mTabLayout.addTab(mTabLayout.newTab().setText("小贴士"));
-//
+        // 设置标题
         mTabLayout.getTabAt(0).setText("心情波动");
         mTabLayout.getTabAt(1).setText("原始数据");
         mTabLayout.getTabAt(2).setText("小贴士");
