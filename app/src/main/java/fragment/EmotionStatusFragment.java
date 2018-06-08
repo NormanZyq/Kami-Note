@@ -86,8 +86,10 @@ public class EmotionStatusFragment extends Fragment {
         // 显示最近一周的数据
         for (int i = 0; i < 7; i++) {
             float pos = 0;
+            System.out.println("emotionstatus line 89 " + DataClass.emotionData.getEmotionPositivePerWeek().size());
             try {
                 pos = DataClass.emotionData.getEmotionPositivePerWeek().get(i).floatValue();
+                System.out.println("emotionstatus line 91 >>>>>>>" + pos);
             } catch (IndexOutOfBoundsException ex) {
                 if (DataClass.emotionData.getEmotionPositivePerWeek().size() > i) {
                     ex.printStackTrace();

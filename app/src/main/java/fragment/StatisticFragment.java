@@ -22,8 +22,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import org.litepal.crud.DataSupport;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;

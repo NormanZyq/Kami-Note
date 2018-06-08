@@ -117,7 +117,9 @@ public class CreateNote extends AppCompatActivity {
                         @Override
                         public void run() {
                             MotionAnalyze.getMotionStatistic(DataClass.mNote.get(DataClass.mNote.size()-1));
-                            System.out.println(DataClass.mNote.get(DataClass.mNote.size()-1).getPositive()+">>>>>>>>>>>>>>>>>Create119");
+                            DataClass.mNote.get(DataClass.mNote.size()-1).save();
+                            System.out.println(DataClass.mNote.get(DataClass.mNote.size()-1).getPositive()+">>>>>>>>>>>>>>>>>Create121");
+
                         }
                     };
                     new Thread(runnable).start();
@@ -148,6 +150,8 @@ public class CreateNote extends AppCompatActivity {
                         @Override
                         public void run() {
                             MotionAnalyze.getMotionStatistic(DataClass.mNote.get(DataClass.mNote.size()-1));
+                            DataClass.mNote.get(DataClass.mNote.size()-1).save();
+
                         }
                     };
                     new Thread(runnable).start();

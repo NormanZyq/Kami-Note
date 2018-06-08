@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             DataClass.emotionData = DataSupport.findAll(EmotionData.class, true).get(0);
             System.out.println("mainac line 97 " + DataClass.emotionData.getEmotionNegativePerWeek().get(0));
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println("mainac line 98 gggggggg");
+            System.out.println("mainac line 99 gggggggg");
         }
 
         textAddLabel = findViewById(R.id.text_add_label);
@@ -111,11 +111,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String launchDate = new MyDate().getDate();
         SharedPreferences sharedPreferences = getSharedPreferences("launchLog",Context.MODE_PRIVATE);
         String lastLaunchDate = sharedPreferences.getString("launchDate", "");
+//        System.out.println("mainact line 114 " + DataClass.mNote.get(4).getPositive());
 
 //        System.out.println("mainac line 108" + DataClass.mNote.get(0).getPositive());
 
         // 如果今天首次启动
         if (!launchDate.equals(lastLaunchDate)) {
+
             // 去掉七天以前的用于显示图表的情感数据
             while (DataClass.emotionData.getEmotionPositivePerWeek().size() > 7) {
                 DataClass.emotionData.getEmotionPositivePerWeek().remove(0);

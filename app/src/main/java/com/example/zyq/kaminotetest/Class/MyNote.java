@@ -32,6 +32,10 @@ public class MyNote extends DataSupport {
 
     private Emotion noteEmotion = new Emotion();
 
+    private double positive = 0;
+
+    private double negative = 0;
+
     //构造方法，传入标题、内容、标识、创建日期。（最后编辑的日期另外设置）
     public MyNote(String title, String content, String identifier, String createdDate, Extras extras) {
         this.title = title;
@@ -122,10 +126,22 @@ public class MyNote extends DataSupport {
     }
 
     public void setNoteEmotion(Emotion noteEmotion) {
-        this.noteEmotion = noteEmotion;
+//        this.noteEmotion = noteEmotion;
+        positive = noteEmotion.getPositive();
+        negative = noteEmotion.getNegative();
     }
 
-    public double getPositive(){return this.noteEmotion.getPositive();}
+//    public double getPositive() {
+//        return this.noteEmotion.getPositive();
+//    }
 
-    public double getNegative(){return this.noteEmotion.getNegative();}
+    public double getPositive() {
+        return positive;
+    }
+
+//    public double getNegative(){return this.noteEmotion.getNegative();}
+
+    public double getNegative() {
+        return negative;
+    }
 }
