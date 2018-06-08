@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public RelativeLayout relativeLayout_drawerhead;
     public NavigationView navigationView;
     public View headerlayout;
+    public static boolean isEdit = false;
 
     public static MainActivity mainActivity;
     private DrawerLayout mDrawerLayout;         //滑动菜单
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textAddLabel;
     private ImageView imageAddLabel;
 
-    public static int notePosition;             //记录笔记位置
+    public static int notePosition = -1;             //记录笔记位置
     public ListView labelListView;
     public static int longClickPosition = 0;    //
     private HomeFragment fragment;

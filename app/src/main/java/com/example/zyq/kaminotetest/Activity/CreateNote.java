@@ -110,7 +110,13 @@ public class CreateNote extends AppCompatActivity {
 
             NoteUtils.INSTANCE.saveNote(title, content, identifier, createdDate);  //保存到数据库
             MyToast.makeText(CreateNote.this, "保存成功", Toast.LENGTH_SHORT).show();
+            //储存位置
             MainActivity.notePosition = DataSupport.count(MyNote.class) - 1;
+            SharedPreferences sharedPreferences = getSharedPreferences("notePosition",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("position",MainActivity.notePosition);
+            editor.commit();
+            MainActivity.isEdit = true;
                 if(!content.equals("")){
                     //测试文智api调用是否成功
                     Runnable runnable = new Runnable() {

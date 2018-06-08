@@ -8,11 +8,11 @@ import java.util.List;
  */
 
 public class Extras {
-    public Color color;
+    public ColorForCircle color;
     public Level level;
     public List<Label> labels;
 
-    public Extras(Color color, Level level, List<Label> labels) {
+    public Extras(ColorForCircle color, Level level, List<Label> labels) {
         this.color = color;
         this.level = level;
         this.labels = labels;
