@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textAddLabel;
     private ImageView imageAddLabel;
 
-    public static int notePosition;             //记录笔记位置
+    public static int notePosition = -1;             //记录笔记位置
     public ListView labelListView;
     public static int longClickPosition = 0;    //
     private HomeFragment fragment;

@@ -1,5 +1,7 @@
 package fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.zyq.kaminotetest.Activity.MainActivity;
+import com.example.zyq.kaminotetest.Class.ColorForCircle;
+import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.NoteUtils;
@@ -37,6 +41,7 @@ public class StatisticFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private PieChart mPieChart;
+    private String[] Title = {"POSITIVE","NEGATIVE"};
 
 
     public StatisticFragment() {
@@ -79,15 +84,14 @@ public class StatisticFragment extends Fragment {
         mPieChart.setUsePercentValues(true);
         // 描述信息
         Description description = new Description();
-        description.setText("Positive/tNegative");
+        description.setText("心情指数");
          mPieChart.setDescription(description);
         // 设置偏移量
         mPieChart.setExtraOffsets(5, 10, 5, 5);
         // 设置滑动减速摩擦系数
         mPieChart.setDragDecelerationFrictionCoef(0.95f);
 
-        mPieChart.setCenterText("今天还未写过日记呢，快去试试吧");
-        mPieChart.setDrawCenterText(false);
+        mPieChart.setCenterText("现在还没有添加过日记呢");
         /*
             设置饼图中心是否是空心的
             true 中间是空心的，环形图
@@ -119,29 +123,47 @@ public class StatisticFragment extends Fragment {
 
         // add a selection listener
         // mPieChart.setOnChartValueSelectedListener(this);
+        // 判断今日是否初次启动程序
+        String launchDate = new MyDate().getDate();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("launchLog", Context.MODE_PRIVATE);
+        String lastLaunchDate = sharedPreferences.getString("launchDate", "");
 
-        TreeMap<String, Float> data = new TreeMap<>();
+        ArrayList<PieEntry> data = new ArrayList<>();
         if(DataClass.mNote.size() != 0){
-            System.out.println(MainActivity.notePosition+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Static129");
-            System.out.println(DataClass.mNote.get(MainActivity.notePosition).getPositive()+">>>>>>>>>>>>>>>>>>>>>>Static130");
-            if(DataClass.mNote.get(MainActivity.notePosition).getPositive() - 0 < 1e-6 && DataClass.mNote.get(MainActivity.notePosition).getNegative()-0<1e-6){
-                data.put("data1", (float)NoteUtils.INSTANCE.predictEmotion());
-                data.put("data2",(float)(1-NoteUtils.INSTANCE.predictEmotion()));
-            }else{
-                data.put("data1", (float)DataClass.mNote.get(MainActivity.notePosition).getPositive());
-                data.put("data2", (float)DataClass.mNote.get(MainActivity.notePosition).getNegative());
+            if(!launchDate.equals(lastLaunchDate)){
+                data.add( new PieEntry((float)NoteUtils.INSTANCE.predictEmotion(),"Positive"));
+                data.add(new PieEntry((float)(1-NoteUtils.INSTANCE.predictEmotion()),"Negative"));
+                // 写入今天的日期，表示今天不再是首次登陆
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                // 记录最后启动的日期
+                editor.putString("launchDate", new MyDate().getDate());
+                editor.apply();
             }
-                /*                mPieChart.setDrawCenterText(true);
-            }else{
+            else{
+                SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("notePosition",Context.MODE_PRIVATE);
+                MainActivity.notePosition = sharedPreferences1.getInt("position",-1);
+                if(MainActivity.notePosition == -1){
+                    data.add( new PieEntry((float)NoteUtils.INSTANCE.predictEmotion(),"Positive"));
+                    data.add(new PieEntry((float)(1-NoteUtils.INSTANCE.predictEmotion()),"Negative"));
+                }else if(MainActivity.notePosition >= 0){
+                    data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getPositive(),"Positive"));
+                    data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getNegative(),"Negative"));
+                /*data.put("data1", (float)DataClass.mNote.get(MainActivity.notePosition).getPositive());
+                data.put("data2", (float)DataClass.mNote.get(MainActivity.notePosition).getNegative());*/
+                }
+                else{
+                    System.out.println("error:static133");
+                }
                 mPieChart.setDrawCenterText(false);
-            }*/
-            //System.out.println(DataClass.mNote.get(DataClass.mNote.size() - 1).getPositive()+"126>>>>>>>>>>>>>>>>>");
-            //System.out.println(DataClass.mNote.get(DataClass.mNote.size()-1).getNegative()+"127>>>>>>>>>>>>>>>>>>>");
 /*        data.put("data3", 0.1f);
         data.put("data4", 0.1f);*/
-            setData(data);
+            }
+        }
+        else{
+            mPieChart.setDrawCenterText(true);
         }
 
+        setData(data);
         // 设置动画
         mPieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
 
@@ -153,11 +175,12 @@ public class StatisticFragment extends Fragment {
         l.setYOffset(0f);
     }
 
-    public void setData(TreeMap<String, Float> data) {
-        ArrayList<String> xVals = new ArrayList<String>();
-        ArrayList<PieEntry> yVals1 = new ArrayList<PieEntry>();
+    public void setData(ArrayList<PieEntry> data) {
+        /*ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<PieEntry> yVals1 = new ArrayList<PieEntry>();*/
+        //设置标题
 
-        int i = 0;
+/*        int i = 0;
         Iterator it = data.entrySet().iterator();
         while (it.hasNext()) {
             // entry的输出结果如key0=value0等
@@ -166,25 +189,30 @@ public class StatisticFragment extends Fragment {
             float value = (float) entry.getValue();
             xVals.add(key);
             yVals1.add(new PieEntry(value, i++));
-        }
+        }*/
 
-        PieDataSet dataSet = new PieDataSet(yVals1, "Election Results");
+        PieDataSet dataSet = new PieDataSet(data, "");
         // 设置饼图区块之间的距离
         dataSet.setSliceSpace(2f);
         dataSet.setSelectionShift(5f);
+        //饼图Item被选中时变化的距离
+        dataSet.setSelectionShift(10f);
+        //设置饼图文本
 
         // 添加颜色
         ArrayList<Integer> colors = new ArrayList<Integer>();
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
+/*        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);*/
+/*        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);*/
+/*        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);*/
+/*        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);*/
+/*        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);*/
+            for(int c: ColorForCircle.POSIADNEGA)
+                colors.add(c);
         colors.add(ColorTemplate.getHoloBlue());
         dataSet.setColors(colors);
         // dataSet.setSelectionShift(0f);

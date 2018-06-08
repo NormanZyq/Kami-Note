@@ -61,6 +61,13 @@ public class EditNote extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
         }
 
+        //储存位置
+        MainActivity.notePosition = DataSupport.count(MyNote.class) - 1;
+        SharedPreferences sharedPreference = getSharedPreferences("notePosition",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("position",MainActivity.notePosition);
+        editor.commit();
+
         //从NoteAdapter中获得传输的intent并获取note的position
         Intent intent = getIntent();
 
