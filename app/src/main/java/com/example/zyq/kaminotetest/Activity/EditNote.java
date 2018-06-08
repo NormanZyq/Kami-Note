@@ -68,6 +68,8 @@ public class EditNote extends AppCompatActivity {
         editor.putInt("position",MainActivity.notePosition);
         editor.commit();
 
+        MainActivity.isEdit = true;
+
         //从NoteAdapter中获得传输的intent并获取note的position
         Intent intent = getIntent();
 

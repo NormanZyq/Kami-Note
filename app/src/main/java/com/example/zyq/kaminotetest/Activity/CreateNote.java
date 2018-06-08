@@ -116,6 +116,7 @@ public class CreateNote extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt("position",MainActivity.notePosition);
             editor.commit();
+            MainActivity.isEdit = true;
                 if(!content.equals("")){
                     //测试文智api调用是否成功
                     Runnable runnable = new Runnable() {

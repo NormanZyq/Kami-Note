@@ -126,18 +126,30 @@ public class StatisticFragment extends Fragment {
         // 判断今日是否初次启动程序
         String launchDate = new MyDate().getDate();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("launchLog", Context.MODE_PRIVATE);
-        String lastLaunchDate = sharedPreferences.getString("launchDate", "");
+        String lastLaunchDate = sharedPreferences.getString("launch_Date", "");
 
         ArrayList<PieEntry> data = new ArrayList<>();
         if(DataClass.mNote.size() != 0){
             if(!launchDate.equals(lastLaunchDate)){
-                data.add( new PieEntry((float)NoteUtils.INSTANCE.predictEmotion(),"Positive"));
-                data.add(new PieEntry((float)(1-NoteUtils.INSTANCE.predictEmotion()),"Negative"));
+                if(!MainActivity.isEdit){
+                    data.add(new PieEntry((float)NoteUtils.INSTANCE.predictEmotion(),"Positive"));
+                    data.add(new PieEntry((float)(1-NoteUtils.INSTANCE.predictEmotion()),"Negative"));
+                    SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("notePosition",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor1 = sharedPreferences1.edit();
+                    editor1.clear();
+                    editor1.commit();
+                }
+                else if(MainActivity.isEdit){
+                    data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getPositive(),"Positive"));
+                    data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getNegative(),"Negative"));
+                }
+
                 // 写入今天的日期，表示今天不再是首次登陆
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 // 记录最后启动的日期
-                editor.putString("launchDate", new MyDate().getDate());
+                editor.putString("launch_Date", new MyDate().getDate());
                 editor.apply();
+                mPieChart.setDrawCenterText(false);
             }
             else{
                 SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("notePosition",Context.MODE_PRIVATE);

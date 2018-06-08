@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public RelativeLayout relativeLayout_drawerhead;
     public NavigationView navigationView;
     public View headerlayout;
+    public static boolean isEdit = false;
 
     public static MainActivity mainActivity;
     private DrawerLayout mDrawerLayout;         //滑动菜单
