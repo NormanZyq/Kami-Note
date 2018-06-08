@@ -67,4 +67,13 @@ public enum NoteUtils {
         note.save();
     }
 
+    public void calculateEmotion() {
+        double positive = 0;
+        double negative = 0;
+        for (MyNote note : DataClass.mNote) {
+            positive += note.getPositive();
+            negative += note.getNegative();
+        }
+    }
+
 }

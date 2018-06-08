@@ -33,7 +33,6 @@ import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.ActivityController;
 import com.example.zyq.kaminotetest.Utils.DataGenerator;
 import com.githang.statusbar.StatusBarCompat;
-import com.github.mikephil.charting.charts.PieChart;
 
 import org.litepal.crud.DataSupport;
 
@@ -100,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textAddLabel.setOnClickListener(this);
 
         // 判断今日是否初次启动程序
-//        boolean isFirstLaunchToday;
         String launchDate = new MyDate().getDate();
         SharedPreferences sharedPreferences = getSharedPreferences("launchLog",Context.MODE_PRIVATE);
         String lastLaunchDate = sharedPreferences.getString("launchDate", "");
@@ -117,11 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editor.putString("launchDate", new MyDate().getDate());
             editor.apply();
         }
-        //判断今日是否初次启动程序
-//        sharedPreferences = getSharedPreferences("booleans", Context.MODE_PRIVATE);
-
-
-
     }
 
     @Override

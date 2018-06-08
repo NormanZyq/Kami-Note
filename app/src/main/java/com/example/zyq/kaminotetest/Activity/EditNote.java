@@ -198,12 +198,6 @@ public class EditNote extends AppCompatActivity {
                     if (title.equals(myNote.getTitle()) && content.equals(myNote.getContent())) {
                         finish();
                     }
-//                    if (title.trim().equals("")) {
-//                        title = "";
-//                    }
-//                    if (content.trim().equals("")){
-//                        content = "";
-//                    }
                     NoteUtils.INSTANCE.updateNote(myNote, title.trim(), content.trim(), date);
                     MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
                     finish();

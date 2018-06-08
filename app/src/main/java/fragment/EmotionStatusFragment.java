@@ -80,36 +80,26 @@ public class EmotionStatusFragment extends Fragment {
         // 显示边界
         mLineChart.setDrawBorders(true);
 
-//        //设置数据，数据来源是DC中的积极指数
-
+        // 设置数据，数据来源是DC中的积极指数
         List<Entry> entries = new ArrayList<>();
 
-//
-        //todo: 求解决BUG!!!! 如果用size就会导致第三方库的越界然后崩溃，如果不用size，我自己的就会越界崩溃
-        for (int i = 0; i < DataClass.emotionPositivePerWeek.size(); i++) {
-//            DataClass.emotionPositivePerWeek.
-            entries.add(new Entry(i, DataClass.emotionPositivePerWeek.get(i).floatValue()));
+        // 显示最近一周的数据
+        for (int i = 0; i < 7; i++) {
+            float pos = 0;
+            try {
+                pos = DataClass.emotionPositivePerWeek.get(i).floatValue();
+            } catch (IndexOutOfBoundsException ex) {
+                if (DataClass.emotionPositivePerWeek.size() > i) {
+                    ex.printStackTrace();
+                }
+            }
+            entries.add(new Entry(i + 1, pos));
         }
 
-//        for (int i = 0; i < 10; i++) {
-//            entries.add(new Entry(i, (float) (Math.random()) * 80));
-//        }
-//        一个LineDataSet就是一条线
-//        LineDataSet lineDataSet = new LineDataSet(entries, "积极指数");
-//        LineData data = new LineData(lineDataSet);
-//        mLineChart.setData(data);
-
-//        //设置数据
-//        List<Entry> entries = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            entries.add(new Entry(i, (float) (Math.random()) * 80));
-//        }
 //        //一个LineDataSet就是一条线
         LineDataSet lineDataSet = new LineDataSet(entries, "积极指数");
         LineData data = new LineData(lineDataSet);
         mLineChart.setData(data);
-
-
 
         return view;
     }
