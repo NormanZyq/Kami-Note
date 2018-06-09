@@ -1,34 +1,43 @@
 package com.example.zyq.kaminotetest.Activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
-import android.widget.LinearLayout;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zyq.kaminotetest.Utils.DataGenerator;
-import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Adapter.LabelAdapter;
+import com.example.zyq.kaminotetest.Class.Label;
+import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
+import com.example.zyq.kaminotetest.Data.DataClass;
+import com.example.zyq.kaminotetest.Data.EmotionData;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.ActivityController;
+import com.example.zyq.kaminotetest.Utils.DataGenerator;
+import com.example.zyq.kaminotetest.Utils.NoteUtils;
+import com.githang.statusbar.StatusBarCompat;
 
 import org.litepal.crud.DataSupport;
-
-import java.util.List;
 
 import fragment.HomeFragment;
 
@@ -36,25 +45,25 @@ import fragment.HomeFragment;
  * Created by zyq on 2018/3/6.
  * 项目名称：Kami Note
  * MainActivity
- * Updated on 2018/3/17.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String ACTIVITY_TAG = "MainActivity";  //打印日志的TAG
-    private BottomNavigationView bottomNavigationView;            //底部栏引用
+    public BottomNavigationView bottomNavigationView;            //底部栏引用
     private Fragment[] fragments;                                  //布局管理列表
+    public static int Color_id;
+    public RelativeLayout relativeLayout_drawerhead;
+    public NavigationView navigationView;
+    public View headerlayout;
+    public static boolean isEdit = false;
 
     public static MainActivity mainActivity;
     private DrawerLayout mDrawerLayout;         //滑动菜单
-    private TextView tv_noMore;                 //没有更多内容的文本
     private long mExitTime = 0;                 //记录点击返回按钮的时间
-    private LinearLayout mainView;
-    private LabelAdapter labelListAdapter;
+    private TextView textAddLabel;
+    private ImageView imageAddLabel;
 
-    public static List<MyNote> mNote;           //保存note的列表
-    public static List<Label> mLabel;           //
-    public static int notePosition;             //记录笔记位置
-    public RecyclerView noteListView;           //RecyclerView 的note 列表
+    public static int notePosition = -1;             //记录笔记位置
     public ListView labelListView;
     public static int longClickPosition = 0;    //
     private HomeFragment fragment;
@@ -66,21 +75,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainActivity = this;
+        //将活动加入管理列表
+        ActivityController.addActivity(this);
+
         fragments = DataGenerator.getfragments("KamiNote");  //初始化列表
         initview();
         mDrawerLayout = findViewById(R.id.drawer_layout);   //滑动菜单
-
-/*        fragment = new HomeFragment();
-        fragment.setCallBack(new HomeFragment.CallBack() {
-            @Override
-            public void ShowDrawerlayout() {
-                mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });*/
-        /*//设置toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
 
         labelListView = findViewById(R.id.label_list2);
 
@@ -91,37 +91,76 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
 
-        mLabel = DataSupport.findAll(Label.class);
-
-/*        //从数据库中读取存在的笔记
-//        mNoteTemp = DataSupport.findAll(MyNote.class);
-        mNote = DataSupport.findAll(MyNote.class);
-        mLabel = DataSupport.findAll(Label.class);
-        //判断是否读取到了数据
-        if (mNote.size() != 0) {
-            refreshNoteListView(noteListView);  //刷新
-        } else {
-            //如果读取到的内容为空，就将mNote设置为新的List，以备保存
-            mNote = new ArrayList<>();
-            //将"没有更多内容"从布局显示
-            tv_noMore.setVisibility(View.VISIBLE);
-        }
-        if (mLabel.size() != 0) {
-//            refreshLabelListView(labelListView2);   //刷新
-            refreshLabelListView(labelListView);
-        } else {
-            mLabel = new ArrayList<>();
+        DataClass.mLabel = DataSupport.findAll(Label.class);    //获得标签
+        DataClass.mNote = DataSupport.findAll(MyNote.class, true);    //获得笔记
+        try {
+            DataClass.emotionData = DataSupport.findAll(EmotionData.class, true).get(0);
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("mainac line 99 gggggggg");
         }
 
-        for (Label label : mLabel) {
-            System.out.println(">>>>>" + label.getLabelName());
-        }*/
+        textAddLabel = findViewById(R.id.text_add_label);
+        imageAddLabel = findViewById(R.id.image_add_label);
 
+        refreshLabelListView(labelListView);
+
+        imageAddLabel.setOnClickListener(this);
+        textAddLabel.setOnClickListener(this);
+
+        // 判断今日是否初次启动程序
+        String launchDate = new MyDate().getDate();
+        SharedPreferences sharedPreferences = getSharedPreferences("launchLog",Context.MODE_PRIVATE);
+        String lastLaunchDate = sharedPreferences.getString("launchDate", "");
+//        System.out.println("mainact line 114 " + DataClass.mNote.get(4).getPositive());
+
+//        System.out.println("mainac line 108" + DataClass.mNote.get(0).getPositive());
+
+        // 如果今天首次启动
+        if (!launchDate.equals(lastLaunchDate)) {
+
+            // 去掉七天以前的用于显示图表的情感数据
+            while (DataClass.emotionData.getEmotionPositivePerWeek().size() >= 7) {
+                DataClass.emotionData.getEmotionPositivePerWeek().remove(0);
+                DataClass.emotionData.getEmotionNegativePerWeek().remove(0);
+            }
+            // 计算昨天以前的心情波动
+            NoteUtils.INSTANCE.calculateEmotion();
+            System.out.println("mainac line 127 >>>>>>> boolean = " + DataClass.emotionData.save());
+//            DataClass.emotionData.save();
+            System.out.println("mainac line 128>>>>>>>size = " + DataClass.emotionData.getEmotionPositivePerWeek().size());
+
+            System.out.println("mainan line 129>>>>>>datasupport size = " + DataSupport.findAll(EmotionData.class, true).get(0).getEmotionPositivePerWeek().size());
+
+            // 写入今天的日期，表示今天不再是首次登陆
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            // 记录最后启动的日期
+            editor.putString("launchDate", new MyDate().getDate());
+            editor.apply();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshLabelListView(labelListView);
     }
 
     //初始化view
     private void initview(){
         bottomNavigationView = findViewById(R.id.navigation_view);
+        navigationView = findViewById(R.id.nav_view);
+        headerlayout = navigationView.getHeaderView(0);
+        relativeLayout_drawerhead = headerlayout.findViewById(R.id.drawer_head_relativelayout);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Color_id",Context.MODE_PRIVATE);
+        //设置颜色
+        Color_id = sharedPreferences.getInt("id",0);
+        if(Color_id != 0){
+           //设置系统状态栏颜色
+            StatusBarCompat.setStatusBarColor(this,getResources().getColor(Color_id), true);
+            bottomNavigationView.setItemBackgroundResource(Color_id);   //底部栏颜色设置
+            relativeLayout_drawerhead.setBackgroundResource(Color_id);  //drawerlayout头部颜色设置
+        }
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -134,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onTabItemSelected(int id){
         Fragment fragment = null;
-        switch (id){
+        switch (id) {
             case R.id.tab_menu_home:
                 fragment = fragments[0];
                 break;
@@ -153,9 +192,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 刷新侧滑菜单的笔记列表
+     * ！！！一定要优化！！！
+     *
+     * @param listView
+     */
     public void refreshLabelListView(ListView listView) {
         if (listView != null) {
-            LabelAdapter adapter = new LabelAdapter(this, R.layout.label_item, mLabel);
+            LabelAdapter adapter = new LabelAdapter(this, R.layout.label_item, DataClass.mLabel);
             listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
             listView.setAdapter(adapter);
         }
@@ -197,6 +242,50 @@ public class MainActivity extends AppCompatActivity {
         dialog.setMessage(alertMessage);
         return dialog;
     }
+
+    @Override
+    public void onClick(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("请输入标签");    //设置对话框标题
+
+        final EditText addLabel = new EditText(MainActivity.this);
+        addLabel.setSingleLine(true);
+
+        builder.setView(addLabel);
+        builder.setCancelable(true);
+        builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String labelName = addLabel.getText().toString();
+
+                try {
+                    DataSupport.where("labelName = ?", labelName).find(Label.class).get(0);
+                    MyToast.makeText(MainActivity.this, "该标签已存在", Toast.LENGTH_SHORT).show();
+                    return;
+
+                } catch (Exception ex) {
+                    System.out.println("标签正常");
+                }
+
+                if (labelName.length() > 10) {
+                    MyToast.makeText(MainActivity.this, "标签过长", Toast.LENGTH_SHORT).show();
+                } else {
+                    Label label = new Label(labelName);
+//                    HomeFragment.mLabel.add(label);
+                    label.save();
+                    DataClass.mLabel.add(label);
+
+                    MyToast.makeText(MainActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                }
+                //TODO
+//                        MainActivity.mLabel = mLabel;
+                refreshLabelListView(labelListView);
+            }
+        });
+        builder.setNegativeButton("取消", null);
+        builder.show();
+    }
+
 
     /*//当点击长按菜单时要做的东西
     @Override

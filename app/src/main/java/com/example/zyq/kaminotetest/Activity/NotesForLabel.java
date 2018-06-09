@@ -1,6 +1,8 @@
 package com.example.zyq.kaminotetest.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,11 +15,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zyq.kaminotetest.Adapter.NoteAdapter2;
+import com.example.zyq.kaminotetest.Adapter.NoteAdapter3;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.ActivityController;
+import com.githang.statusbar.StatusBarCompat;
 
 import org.litepal.crud.DataSupport;
 
@@ -31,9 +35,10 @@ public class NotesForLabel extends AppCompatActivity {
     private List<Label> labels = new ArrayList<>();
     private Label label = null;                     //定义标签
     private String labelname = null;               //定义传过来的标签名
-    private List<MyNote> notes = null;
+    public static List<MyNote> notes;
     private RecyclerView noteListView;
     private TextView tv_noMore;
+    private int Color_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +47,24 @@ public class NotesForLabel extends AppCompatActivity {
         //设置Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         this.setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences("Color_id", Context.MODE_PRIVATE);
+        Color_id = sharedPreferences.getInt("id",0);
+        if(Color_id != 0){
+            toolbar.setBackgroundResource(Color_id);
+            StatusBarCompat.setStatusBarColor(this,getResources().getColor(Color_id), true);
+        }
+
+        try {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
 
         //获取到用户点击的label名
         Intent intent = getIntent();
         labelname = intent.getStringExtra("label_name");
         //获取到对应名称的label对象
-        labels = DataSupport.where("labelName = ?",labelname).find(Label.class);
+        labels = DataSupport.where("labelName = ?",labelname).find(Label.class, true);
         label = labels.get(0);
 
         notes = label.getNotes();
@@ -63,14 +80,14 @@ public class NotesForLabel extends AppCompatActivity {
     }
 
     public void refreshNoteListView(RecyclerView recyclerView) {
-        if (recyclerView != null&&this != null) {
+        if (recyclerView != null) {
 //            recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));  //添加分割线
             LinearLayoutManager layoutManager = new LinearLayoutManager(this); //???
             layoutManager.setStackFromEnd(true);//列表再底部开始展示，反转后由上面开始展示
             layoutManager.setReverseLayout(true);//列表翻转
             recyclerView.setLayoutManager(layoutManager);
-            NoteAdapter2 noteAdapter2 = new NoteAdapter2(notes, this);
-            recyclerView.setAdapter(noteAdapter2);
+            NoteAdapter3 noteAdapter3 = new NoteAdapter3(notes, this);
+            recyclerView.setAdapter(noteAdapter3);
             noteListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -105,12 +122,10 @@ public class NotesForLabel extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println(">>>>>>>>>>>>>" + "onResume");
         notes = label.getNotes();
-        System.out.println(notes.size());
         tv_noMore = findViewById(R.id.no_more);
         noteListView = findViewById(R.id.note_list);
-        if(notes.size() != 0){
+        if (notes.size() != 0) {
             if(tv_noMore.getVisibility() == View.VISIBLE){
                 tv_noMore.setVisibility(View.INVISIBLE);
             }
@@ -120,4 +135,6 @@ public class NotesForLabel extends AppCompatActivity {
         }
         refreshNoteListView(noteListView);
     }
+
+
 }

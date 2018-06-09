@@ -64,8 +64,12 @@ public class MyDate {
     public String toString() {
         //        return year + "年" + month + "月" + day + "日 " + hour + ":" + minute + ":" + second;
 //        return String.format("%ty年%tm月%td日 %td %tT %tZ", year, month, day, hour, minute, second);
-        return String.format("最后编辑: %02d年%02d月%02d日 %02d:%02d:%02d", year, month, day, hour, minute, second);
+        return String.format("%02d年%02d月%02d日 %02d:%02d:%02d", year, month, day, hour, minute, second);
 
+    }
+
+    public String getDate() {
+        return String.format("%02d年%02d月%02d日", year, month, day);
     }
 
 

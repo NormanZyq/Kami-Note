@@ -47,10 +47,6 @@
         android:layout_marginStart="6dp"
         android:orientation="horizontal">
 
-        <CheckBox
-            android:layout_width="35dp"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
 
 

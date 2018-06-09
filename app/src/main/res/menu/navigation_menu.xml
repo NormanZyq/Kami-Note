@@ -12,8 +12,8 @@
         />
     <item
         android:id="@+id/tab_menu_attention"
-        android:icon="@drawable/ic_insert_photo_black_24dp"
-        android:title="关注"
+        android:icon="@drawable/ic_settings"
+        android:title="设置"
         />
     <item
         android:id="@+id/tab_menu_profile"

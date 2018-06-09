@@ -1,14 +1,12 @@
 package com.example.zyq.kaminotetest.Utils;
 
-import com.example.zyq.kaminotetest.Activity.MainActivity;
 import com.example.zyq.kaminotetest.Class.Extras;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Class.MyNote;
+import com.example.zyq.kaminotetest.Data.DataClass;
 
 import java.util.List;
-
-import fragment.HomeFragment;
 
 /**
  * Created by zyq on 2018/3/2.
@@ -33,7 +31,7 @@ public enum NoteUtils {
     public void saveNote(String title, String content, String identifier, MyDate createdDate, Extras extras) {
         MyNote note = new MyNote(title, content, identifier, createdDate.toString(), extras);
         note.setLastEdited(createdDate.toString());
-        MainActivity.mNote.add(note);
+        DataClass.mNote.add(note);
         note.save();
     }
 
@@ -41,7 +39,7 @@ public enum NoteUtils {
         MyNote note = new MyNote(title, content, identifier, createdDate.toString());
         note.setLastEdited(createdDate.toString());
 //        note.setLabels(new String[]{});
-        HomeFragment.mNote.add(note);
+        DataClass.mNote.add(note);
         note.save();
     }
 
@@ -65,12 +63,33 @@ public enum NoteUtils {
      * @param labels 待添加的标签列表
      */
     public void setLabels(MyNote note, List<Label> labels) {
-//        note.setLabels(labels);
-        note.save();
-    }
-
-    public void setLabels(MyNote note, String[] labels) {
         note.setLabels(labels);
         note.save();
     }
+
+    /**
+     * 计算每天的积极指数和消极指数并保存到DataClass
+     */
+    public double predictEmotion() {
+        double positive = 0;
+        double negative = 0;
+        for (MyNote note : DataClass.mNote) {
+            positive += note.getPositive();
+            negative += note.getNegative();
+        }
+        positive = positive/DataClass.mNote.size();
+        return positive;
+    }
+
+    public void calculateEmotion() {
+        double positive = 0;    //初始化积极指数
+        double negative = 0;    //初始化消极指数
+        for (MyNote note : DataClass.mNote) {
+            positive += note.getPositive();
+            negative += note.getNegative();
+        }
+        DataClass.emotionData.getEmotionPositivePerWeek().add(positive / DataClass.mNote.size());
+        DataClass.emotionData.getEmotionNegativePerWeek().add(negative / DataClass.mNote.size());
+    }
+
 }

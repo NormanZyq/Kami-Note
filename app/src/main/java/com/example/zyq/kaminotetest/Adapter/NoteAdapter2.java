@@ -19,6 +19,8 @@ import com.example.zyq.kaminotetest.R;
 
 import java.util.List;
 
+import fragment.HomeFragment;
+
 /**
  * Created by zyq on 2018/3/2.
  * 来源：CSDN，作者信息已忘，向原作者致歉
@@ -91,7 +93,7 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
             @Override
             public boolean onLongClick(View v) {
 //                Snackbar.make(view, "长按事件：", Snackbar.LENGTH_SHORT).show();
-                MainActivity.longClickPosition = notesViewHolder.getAdapterPosition();
+                HomeFragment.longClickPosition = notesViewHolder.getAdapterPosition();
                 return false;
             }
         });
@@ -104,7 +106,8 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
         MyNote note = myNotes.get(position);
         holder.noteTitle.setText(note.getTitle().equals("") ? "无标题" : note.getTitle());
         holder.noteContent.setText(note.getContent().equals("") ? "无附加内容" : note.getContent());
-        holder.editedDate.setText(note.getLastEdited());
+        String lastEdited = "最后编辑：" + note.getLastEdited();
+        holder.editedDate.setText(lastEdited);
     }
 
     //获得当前列表笔记数目

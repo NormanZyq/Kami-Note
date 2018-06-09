@@ -1,11 +1,13 @@
 package com.example.zyq.kaminotetest.Activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -16,10 +18,13 @@ import android.widget.Toast;
 import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
-import com.example.zyq.kaminotetest.Utils.NoteUtils;
+import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.MotionAnalyze;
+import com.example.zyq.kaminotetest.Utils.NoteUtils;
+import com.githang.statusbar.StatusBarCompat;
 
-import fragment.HomeFragment;
+import org.litepal.crud.DataSupport;
 
 /**
  * 编辑界面
@@ -33,6 +38,8 @@ public class EditNote extends AppCompatActivity {
     EditText noteTitle;
     EditText noteContent;
     public MyNote myNote;
+    private int Color_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,44 +48,83 @@ public class EditNote extends AppCompatActivity {
 
         //设置和应用Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        this.setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences("Color_id", Context.MODE_PRIVATE);
+        Color_id = sharedPreferences.getInt("id",0);
+        if(Color_id != 0){
+            toolbar.setBackgroundResource(Color_id);
+            StatusBarCompat.setStatusBarColor(this,getResources().getColor(Color_id), true);
+        }
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
         }
 
+        //储存位置
+        MainActivity.notePosition = DataSupport.count(MyNote.class) - 1;
+        SharedPreferences sharedPreference = getSharedPreferences("notePosition",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("position",MainActivity.notePosition);
+        editor.commit();
+
+        MainActivity.isEdit = true;
+
         //从NoteAdapter中获得传输的intent并获取note的position
         Intent intent = getIntent();
-        int notePosition = intent.getIntExtra("note_position", -1);
 
-        if (notePosition != -1) {
-            /*
-            直接从MainActivity中获得位置而没有传值
-            可以优化，使用intent携带
-             */
-            myNote = HomeFragment.mNote.get(notePosition);
+        System.out.println("Editnote 54 " + intent.getIntExtra("note_position2", -1));
 
-            noteTitle = findViewById(R.id.title_editor);    //笔记标题输入框
-            noteContent = findViewById(R.id.content_editor);    //笔记内容输入框
-
-            title = myNote.getTitle();  //笔记标题
-            content = myNote.getContent();  //笔记内容
-
-            //设置标题，如果标题是默认生成的"无标题"，则在编辑时自动去掉
-            if (title.equals("无标题")) {
-                noteTitle.setText("");
-            } else {
-                noteTitle.setText(title);
-            }
-            //设置内容
-            noteContent.setText(myNote.getContent());
-
+        if (intent.getIntExtra("note_position2", -1) != -1) {
+            myNote = NotesForLabel.notes.get(intent.getIntExtra("note_position2", -1));
         } else {
-            //如果position传输错误则进行提示
-            Toast.makeText(EditNote.this, "获取笔记位置失败", Toast.LENGTH_SHORT).show();
-            finish();
+            myNote = DataClass.mNote.get(intent.getIntExtra("note_position", -1));
         }
+
+        noteTitle = findViewById(R.id.title_editor);    //笔记标题输入框
+        noteContent = findViewById(R.id.content_editor);    //笔记内容输入框
+
+        title = myNote.getTitle();  //笔记标题
+        content = myNote.getContent();  //笔记内容
+
+        //设置标题，如果标题是默认生成的"无标题"，则在编辑时自动去掉
+        if (title.equals("无标题")) {
+            noteTitle.setText("");
+        } else {
+            noteTitle.setText(title);
+        }
+        //设置内容
+        noteContent.setText(myNote.getContent());
+
+//        int notePosition = intent.getIntExtra("note_position", -1);
+//
+//        if (notePosition != -1) {
+//            /*
+//            直接从MainActivity中获得位置而没有传值
+//            可以优化，使用intent携带
+//             */
+//            myNote = HomeFragment.mNote.get(notePosition);
+//
+//            noteTitle = findViewById(R.id.title_editor);    //笔记标题输入框
+//            noteContent = findViewById(R.id.content_editor);    //笔记内容输入框
+//
+//            title = myNote.getTitle();  //笔记标题
+//            content = myNote.getContent();  //笔记内容
+//
+//            //设置标题，如果标题是默认生成的"无标题"，则在编辑时自动去掉
+//            if (title.equals("无标题")) {
+//                noteTitle.setText("");
+//            } else {
+//                noteTitle.setText(title);
+//            }
+//            //设置内容
+//            noteContent.setText(myNote.getContent());
+//
+//        } else {
+//            //如果position传输错误则进行提示
+//            Toast.makeText(EditNote.this, "获取笔记位置失败", Toast.LENGTH_SHORT).show();
+//            finish();
+//        }
     }
 
     @Override
@@ -114,16 +160,15 @@ public class EditNote extends AppCompatActivity {
                     finish();
                     return true;
                 }
-                if (title.equals("")) {
-                    //todo
-                }
-//                if (title.trim().equals("")) {
-//                    title = "";
-//                }
-//                if (content.trim().equals("")) {
-//                    content = "";
-//                }
                 myNote.setLastEdited(date.toString());
+                //测试文智api调用是否成功
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        MotionAnalyze.getMotionStatistic(myNote);
+                    }
+                };
+                new Thread(runnable).start();
                 NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
                 MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
                 finish();
@@ -139,9 +184,9 @@ public class EditNote extends AppCompatActivity {
 
     public void backConfirmation() {
         //从NoteAdapter中获得传输的intent并获取note的position
-        Intent intent = getIntent();
-        int notePosition = intent.getIntExtra("note_position", -1);
-        myNote = HomeFragment.mNote.get(notePosition);
+//        Intent intent = getIntent();
+//        int notePosition = intent.getIntExtra("note_position", -1);
+//        myNote = HomeFragment.mNote.get(notePosition);
 
         noteTitle = findViewById(R.id.title_editor);    //笔记标题
         noteContent = findViewById(R.id.content_editor);    //笔记内容
@@ -173,12 +218,6 @@ public class EditNote extends AppCompatActivity {
                     if (title.equals(myNote.getTitle()) && content.equals(myNote.getContent())) {
                         finish();
                     }
-//                    if (title.trim().equals("")) {
-//                        title = "";
-//                    }
-//                    if (content.trim().equals("")){
-//                        content = "";
-//                    }
                     NoteUtils.INSTANCE.updateNote(myNote, title.trim(), content.trim(), date);
                     MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
                     finish();

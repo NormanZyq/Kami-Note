@@ -1,27 +1,33 @@
 package com.example.zyq.kaminotetest.Activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-//import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zyq.kaminotetest.Class.MyDate;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
-import com.example.zyq.kaminotetest.Utils.NoteUtils;
+import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.MotionAnalyze;
+import com.example.zyq.kaminotetest.Utils.NoteUtils;
+import com.githang.statusbar.StatusBarCompat;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.UUID;
+
+//import android.widget.TextView;
 
 /**
  * Created by zyq on 2018/3/6.
@@ -32,6 +38,7 @@ public class CreateNote extends AppCompatActivity {
     private String title;
     private String content;
     private String identifier;
+    private int Color_id;
     public MyDate createdDate;
 
     EditText noteTitle;
@@ -44,6 +51,12 @@ public class CreateNote extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences("Color_id", Context.MODE_PRIVATE);
+        Color_id = sharedPreferences.getInt("id",0);
+        if(Color_id != 0){
+            toolbar.setBackgroundResource(Color_id);
+            StatusBarCompat.setStatusBarColor(this,getResources().getColor(Color_id), true);
+        }
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -94,9 +107,29 @@ public class CreateNote extends AppCompatActivity {
             return false;
         } else {
             identifier = UUID.randomUUID().toString();  //设置UUID
+
             NoteUtils.INSTANCE.saveNote(title, content, identifier, createdDate);  //保存到数据库
             MyToast.makeText(CreateNote.this, "保存成功", Toast.LENGTH_SHORT).show();
+            //储存位置
             MainActivity.notePosition = DataSupport.count(MyNote.class) - 1;
+            SharedPreferences sharedPreferences = getSharedPreferences("notePosition",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("position",MainActivity.notePosition);
+            editor.commit();
+            MainActivity.isEdit = true;
+                if(!content.equals("")){
+                    //测试文智api调用是否成功
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            MotionAnalyze.getMotionStatistic(DataClass.mNote.get(DataClass.mNote.size()-1));
+                            DataClass.mNote.get(DataClass.mNote.size()-1).save();
+                            System.out.println(DataClass.mNote.get(DataClass.mNote.size()-1).getPositive()+">>>>>>>>>>>>>>>>>Create121");
+
+                        }
+                    };
+                    new Thread(runnable).start();
+                }
             finish();
             return true;
         }
@@ -118,6 +151,16 @@ public class CreateNote extends AppCompatActivity {
                     title = noteTitle.getText().toString();     //设置标题
                     content = noteContent.getText().toString(); //设置内容
                     NoteUtils.INSTANCE.saveNote(title, content, identifier, createdDate);
+                    //测试文智api调用是否成功
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            MotionAnalyze.getMotionStatistic(DataClass.mNote.get(DataClass.mNote.size()-1));
+                            DataClass.mNote.get(DataClass.mNote.size()-1).save();
+
+                        }
+                    };
+                    new Thread(runnable).start();
                     finish();
                 }
             });
