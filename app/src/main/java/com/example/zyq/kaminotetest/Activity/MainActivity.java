@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DataClass.mNote = DataSupport.findAll(MyNote.class, true);    //获得笔记
         try {
             DataClass.emotionData = DataSupport.findAll(EmotionData.class, true).get(0);
-            System.out.println("mainac line 97 " + DataClass.emotionData.getEmotionNegativePerWeek().get(0));
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("mainac line 99 gggggggg");
         }
@@ -120,13 +119,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!launchDate.equals(lastLaunchDate)) {
 
             // 去掉七天以前的用于显示图表的情感数据
-            while (DataClass.emotionData.getEmotionPositivePerWeek().size() > 7) {
+            while (DataClass.emotionData.getEmotionPositivePerWeek().size() >= 7) {
                 DataClass.emotionData.getEmotionPositivePerWeek().remove(0);
                 DataClass.emotionData.getEmotionNegativePerWeek().remove(0);
             }
             // 计算昨天以前的心情波动
             NoteUtils.INSTANCE.calculateEmotion();
-            DataClass.emotionData.save();
+            System.out.println("mainac line 127 >>>>>>> boolean = " + DataClass.emotionData.save());
+//            DataClass.emotionData.save();
+            System.out.println("mainac line 128>>>>>>>size = " + DataClass.emotionData.getEmotionPositivePerWeek().size());
+
+            System.out.println("mainan line 129>>>>>>datasupport size = " + DataSupport.findAll(EmotionData.class, true).get(0).getEmotionPositivePerWeek().size());
 
             // 写入今天的日期，表示今天不再是首次登陆
             SharedPreferences.Editor editor = sharedPreferences.edit();

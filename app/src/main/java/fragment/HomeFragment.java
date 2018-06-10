@@ -35,6 +35,7 @@ import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.Data.DataClass;
+import com.example.zyq.kaminotetest.Data.EmotionData;
 import com.example.zyq.kaminotetest.R;
 
 import org.litepal.crud.DataSupport;
@@ -217,6 +218,7 @@ public class HomeFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             DataSupport.deleteAll(MyNote.class);    //删除所有note
                             DataSupport.deleteAll(Label.class);     //删除所有标签
+                            DataSupport.deleteAll(EmotionData.class);       //删除所有情绪
 //                            DataClass.mLabel = mLabel;
 //                            MainActivity.mainActivity.refreshLabelListView(MainActivity.mainActivity.labelListView);
 //                            refreshNoteListView(noteListView);
