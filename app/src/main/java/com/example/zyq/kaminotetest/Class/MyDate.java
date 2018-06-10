@@ -72,6 +72,10 @@ public class MyDate {
         return String.format("%02d年%02d月%02d日", year, month, day);
     }
 
+    public String getYearAndMonth() {
+        return String.format("%02d.%02d", year, month);
+    }
+
 
 //    public void setCalendar() {
 //        calendar = Calendar.getInstance();
