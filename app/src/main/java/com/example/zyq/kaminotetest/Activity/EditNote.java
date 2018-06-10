@@ -62,9 +62,8 @@ public class EditNote extends AppCompatActivity {
         }
 
         //储存位置
-        MainActivity.notePosition = DataSupport.count(MyNote.class) - 1;
         SharedPreferences sharedPreference = getSharedPreferences("notePosition",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = sharedPreference.edit();
         editor.putInt("position",MainActivity.notePosition);
         editor.commit();
 
