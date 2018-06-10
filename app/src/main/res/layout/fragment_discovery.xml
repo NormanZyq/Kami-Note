@@ -19,6 +19,7 @@
 
     <!--ScrollView 用于滑动显示-->
     <ScrollView
+        android:id="@+id/discovery_all_things"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#eaeaea">
@@ -204,6 +205,15 @@
 
     </ScrollView>
 
+    <TextView
+        android:id="@+id/analyze_disabled"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="18sp"
+        android:text="情感分析不可用，请到设置中开启"/>
 
 
 

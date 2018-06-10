@@ -21,4 +21,6 @@ public class DataClass {
 
     public static EmotionData emotionData = new EmotionData();
 
+    public static boolean allowInternet = true;
+
 }

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.zyq.kaminotetest.Data.DataClass;
 import com.example.zyq.kaminotetest.R;
@@ -72,36 +73,46 @@ public class EmotionStatusFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // 获得view
-        View view = inflater.inflate( R.layout.fragment_emotion_status,null);
+        View view = inflater.inflate(R.layout.fragment_emotion_status,null);
 
         // 获得图表
         mLineChart = view.findViewById(R.id.emotion_status);
 
-        // 显示边界
-        mLineChart.setDrawBorders(true);
+        if (DataClass.emotionData.getEmotionPositivePerWeek().size() != 0) {
+            //如果有事情感数据才设置并显示
 
-        // 设置数据，数据来源是DC中的积极指数
-        List<Entry> entries = new ArrayList<>();
+            // 显示边界
+            mLineChart.setDrawBorders(true);
 
-        // 显示最近一周的数据
-        for (int i = 0; i < 7; i++) {
-            float pos = 0;
-            System.out.println("emotionstatus line 89 " + DataClass.emotionData.getEmotionPositivePerWeek().size());
-            try {
-                pos = DataClass.emotionData.getEmotionPositivePerWeek().get(i).floatValue();
-                System.out.println("emotionstatus line 91 >>>>>>>" + pos);
-            } catch (IndexOutOfBoundsException ex) {
-                if (DataClass.emotionData.getEmotionPositivePerWeek().size() > i) {
-                    ex.printStackTrace();
+            // 设置数据，数据来源是DC中的积极指数
+            List<Entry> entries = new ArrayList<>();
+
+            // 显示最近一周的数据
+            for (int i = 0; i < 7; i++) {
+                float pos = 0;
+                System.out.println("emotionstatus line 89 " + DataClass.emotionData.getEmotionPositivePerWeek().size());
+                try {
+                    pos = DataClass.emotionData.getEmotionPositivePerWeek().get(i).floatValue();
+                    System.out.println("emotionstatus line 91 >>>>>>>" + pos);
+                } catch (IndexOutOfBoundsException ex) {
+                    if (DataClass.emotionData.getEmotionPositivePerWeek().size() > i) {
+                        ex.printStackTrace();
+                    }
                 }
+                entries.add(new Entry(i + 1, pos));
             }
-            entries.add(new Entry(i + 1, pos));
-        }
 
 //        //一个LineDataSet就是一条线
-        LineDataSet lineDataSet = new LineDataSet(entries, "积极指数");
-        LineData data = new LineData(lineDataSet);
-        mLineChart.setData(data);
+            LineDataSet lineDataSet = new LineDataSet(entries, "积极指数");
+            LineData data = new LineData(lineDataSet);
+            mLineChart.setData(data);
+        } else {
+            mLineChart.setVisibility(View.GONE);
+            TextView hint = view.findViewById(R.id.emotion_status_hint);
+            hint.setVisibility(View.VISIBLE);
+        }
+
+
 
         return view;
     }

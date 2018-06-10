@@ -111,9 +111,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String launchDate = new MyDate().getDate();
         SharedPreferences sharedPreferences = getSharedPreferences("launchLog",Context.MODE_PRIVATE);
         String lastLaunchDate = sharedPreferences.getString("launchDate", "");
+
+
+
 //        System.out.println("mainact line 114 " + DataClass.mNote.get(4).getPositive());
 
 //        System.out.println("mainac line 108" + DataClass.mNote.get(0).getPositive());
+
+        if (sharedPreferences.getBoolean("firstLaunch", true)) {
+            //todo: 弹窗
+            AlertDialog.Builder builder = buildAlertDialog(this, "是否开启情感分析功能？",
+                    "如果允许，我们可能需要获得网络权限并取得您的数据进行分析，但是不会保存，是否允许");
+            builder.setCancelable(false);
+            builder.setPositiveButton("允许", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //todo：打开开关，允许数据上传
+                    DataClass.allowInternet = true;
+
+                    //写入数据，表示允许上传数据
+                    SharedPreferences sharedPreferences = getSharedPreferences("allowances", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("allowInternet", true);
+                    editor.apply();
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //todo: 关闭开关，不允许上传数据
+                    DataClass.allowInternet = false;
+                    //写入数据，表示不允许上传数据
+                    SharedPreferences sharedPreferences = getSharedPreferences("allowances", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("allowInternet", false);
+                    editor.apply();
+                }
+            });
+            builder.show();
+
+            //写入true，表示程序不是第一次启动
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("firstLaunch", false);
+            editor.apply();
+        } else {
+            //不是第一次启动时获取是否允许伤处数据的boolean
+            DataClass.allowInternet = getSharedPreferences("allowances",
+                    Context.MODE_PRIVATE).getBoolean("allowInternet", true);
+        }
+
+
 
         // 如果今天首次启动
         if (!launchDate.equals(lastLaunchDate)) {
