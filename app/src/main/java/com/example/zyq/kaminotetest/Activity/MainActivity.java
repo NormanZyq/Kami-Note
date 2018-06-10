@@ -119,9 +119,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        System.out.println("mainac line 108" + DataClass.mNote.get(0).getPositive());
 
         if (sharedPreferences.getBoolean("firstLaunch", true)) {
-            //todo: 弹窗
             AlertDialog.Builder builder = buildAlertDialog(this, "是否开启情感分析功能？",
-                    "如果允许，我们可能需要获得网络权限并取得您的数据进行分析，但是不会保存，是否允许");
+                    "如果允许，我们可能需要获得网络权限并取得您的数据进行分析，但是不会保存，是否允许？");
             builder.setCancelable(false);
             builder.setPositiveButton("允许", new DialogInterface.OnClickListener() {
                 @Override
@@ -136,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     editor.apply();
                 }
             });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("不允许", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     //todo: 关闭开关，不允许上传数据

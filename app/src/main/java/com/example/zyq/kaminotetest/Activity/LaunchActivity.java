@@ -17,7 +17,7 @@ public class LaunchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launch);
 
 //        ImageView imageView = findViewById(R.id.img_launch_screen);
-
+//        imageView.setImageResource();
 
         Integer time = 2000;    //设置等待时间，单位为毫秒
         Handler handler = new Handler();

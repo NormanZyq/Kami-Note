@@ -1,50 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
 
         <ImageView
             android:layout_width="30dp"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
             app:srcCompat="@drawable/ic_insert_photo_black_24dp"/>
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="match_parent"/>
+
 
         <TextView
             android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:text="@string/description"
-            android:layout_marginStart="10dp" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="@string/description" />
 
         <Button
             android:id="@+id/button"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="40dp"
-            android:text="测试"/>
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:text="选择" />
     </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="40dp">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
 
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginLeft="190dp"
-                android:text="开启情感分析功能" />
+    <LinearLayout
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:focusable="true">
 
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="关闭"/>
-        </LinearLayout>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            app:srcCompat="@drawable/ic_insert_photo_black_24dp"/>
 
-</RelativeLayout>
+        <View
+            android:layout_width="20dp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:text="开启情感分析功能"/>
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_gravity="center"
+            android:layout_width="70dp"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关闭" />
+    </LinearLayout>
+
+</LinearLayout>

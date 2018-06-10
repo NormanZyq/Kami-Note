@@ -36,8 +36,10 @@ public class SettingsFragment extends Fragment {
         textView = view.findViewById(R.id.text);
         if(DataClass.allowInternet){
             aSwitch.setChecked(true);
+            textView.setText("开启");
         }else{
             aSwitch.setChecked(false);
+            textView.setText("关闭");
         }
         return view;
     }
