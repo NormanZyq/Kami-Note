@@ -29,10 +29,9 @@ import java.util.ArrayList;
 public class DiscoveryFragment extends Fragment {
     private String mfrom;
     private int Color_id;
-    private EmotionStatusFragment emotionStatusFragment = new EmotionStatusFragment();
-    private StatisticFragment statisticFragment = new StatisticFragment();
     private ImageView imageView1;
     private TextView textView1;
+
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -74,6 +73,8 @@ public class DiscoveryFragment extends Fragment {
         return view;
     }
 
+
+
     public static DiscoveryFragment newInstance(String from){
         DiscoveryFragment fragment = new DiscoveryFragment();
         Bundle bundle = new Bundle();
@@ -93,21 +94,23 @@ public class DiscoveryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        emotionStatusFragment = new EmotionStatusFragment();
-        statisticFragment = new StatisticFragment();
+
     }
 
     //初始化viewPager
     private void initViewPager() {
+
         // 创建一个集合,装填Fragment
         ArrayList<Fragment> fragments = new ArrayList<>();
+        // 创建ViewPager适配器
+        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getChildFragmentManager());
+
         // 装填
         fragments.add(new EmotionStatusFragment());
-        fragments.add(emotionStatusFragment);
         fragments.add(new StatisticFragment());
+//        fragments.add(new EmotionStatusFragment());
 
-        // 创建ViewPager适配器
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
+
         myPagerAdapter.setFragments(fragments);
         // 给ViewPager设置适配器
         mViewPager.setAdapter(myPagerAdapter);
@@ -115,11 +118,10 @@ public class DiscoveryFragment extends Fragment {
         // 使用 TabLayout 和 ViewPager 相关联
         mTabLayout.setupWithViewPager(mViewPager);
 
-
         // 设置标题
         mTabLayout.getTabAt(0).setText("心情波动");
-        mTabLayout.getTabAt(1).setText("原始数据");
-        mTabLayout.getTabAt(2).setText("小贴士");
+        mTabLayout.getTabAt(1).setText("实时情绪");
+//        mTabLayout.getTabAt(2).setText("小贴士");
     }
 
 }

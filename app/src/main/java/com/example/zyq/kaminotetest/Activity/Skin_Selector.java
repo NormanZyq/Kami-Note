@@ -1,31 +1,21 @@
 package com.example.zyq.kaminotetest.Activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.zyq.kaminotetest.R;
 import com.example.zyq.kaminotetest.Utils.ActivityController;
-import com.example.zyq.kaminotetest.Utils.DataGenerator;
-import com.example.zyq.kaminotetest.Utils.ToolbarController;
 import com.githang.statusbar.StatusBarCompat;
 
 import java.util.ArrayList;
@@ -56,7 +46,7 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.skin_selector);
         //设置Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         SharedPreferences sharedPreferences = getSharedPreferences("Color_id",Context.MODE_PRIVATE);
         Color_id = sharedPreferences.getInt("id",0);
@@ -64,7 +54,6 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
             toolbar.setBackgroundResource(Color_id);
             StatusBarCompat.setStatusBarColor(this,getResources().getColor(Color_id), true);
         }
-
         bottomNavigationView = ActivityController.activities.get(0).findViewById(R.id.navigation_view);
         navigationView = ActivityController.activities.get(0).findViewById(R.id.nav_view);
         headerlayout = navigationView.getHeaderView(0);
@@ -85,6 +74,7 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
                    bottomNavigationView.setItemBackgroundResource(colors.get(ColorSelector.checked_index).image_color_id);
                    relativeLayout_drawerhead.setBackgroundResource(colors.get(ColorSelector.checked_index).image_color_id);
                     StatusBarCompat.setStatusBarColor(ActivityController.activities.get(0),getResources().getColor(colors.get(ColorSelector.checked_index).image_color_id), true);
+                    SettingsFragment.Color_id = colors.get(ColorSelector.checked_index).image_color_id;
                     //System.out.println(ToolbarController.toolbars.size());
                     //传递颜色数值，方便Toolbar同步颜色
                     HomeFragment.Color_id = colors.get(ColorSelector.checked_index).image_color_id;
@@ -92,7 +82,7 @@ public class Skin_Selector extends AppCompatActivity implements View.OnClickList
                     SharedPreferences sharedPreferences = getSharedPreferences("Color_id", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("id",colors.get(ColorSelector.checked_index).image_color_id);
-                    editor.commit();
+                    editor.apply();
                     finish();
                 }
                 break;

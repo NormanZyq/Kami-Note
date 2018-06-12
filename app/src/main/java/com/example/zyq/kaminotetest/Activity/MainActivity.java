@@ -119,16 +119,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        System.out.println("mainac line 108" + DataClass.mNote.get(0).getPositive());
 
         if (sharedPreferences.getBoolean("firstLaunch", true)) {
-            //todo: 弹窗
             AlertDialog.Builder builder = buildAlertDialog(this, "是否开启情感分析功能？",
-                    "如果允许，我们可能需要获得网络权限并取得您的数据进行分析，但是不会保存，是否允许");
+                    "如果允许，我们可能需要获得网络权限并取得您的数据进行分析，但是不会保存，是否允许？");
             builder.setCancelable(false);
             builder.setPositiveButton("允许", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //todo：打开开关，允许数据上传
                     DataClass.allowInternet = true;
-
                     //写入数据，表示允许上传数据
                     SharedPreferences sharedPreferences = getSharedPreferences("allowances", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -136,10 +133,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     editor.apply();
                 }
             });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("不允许", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //todo: 关闭开关，不允许上传数据
                     DataClass.allowInternet = false;
                     //写入数据，表示不允许上传数据
                     SharedPreferences sharedPreferences = getSharedPreferences("allowances", Context.MODE_PRIVATE);
@@ -170,14 +166,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DataClass.emotionData.getEmotionPositivePerWeek().remove(0);
                 DataClass.emotionData.getEmotionNegativePerWeek().remove(0);
             }
+
+//            //从数据库清空emotionData
+//            DataSupport.deleteAll(EmotionData.class);
+
             // 计算昨天以前的心情波动
             NoteUtils.INSTANCE.calculateEmotion();
             System.out.println("mainac line 127 >>>>>>> boolean = " + DataClass.emotionData.save());
 //            DataClass.emotionData.save();
-            System.out.println("mainac line 128>>>>>>>size = " + DataClass.emotionData.getEmotionPositivePerWeek().size());
-
-            System.out.println("mainan line 129>>>>>>datasupport size = " + DataSupport.findAll(EmotionData.class, true).get(0).getEmotionPositivePerWeek().size());
-
             // 写入今天的日期，表示今天不再是首次登陆
             SharedPreferences.Editor editor = sharedPreferences.edit();
             // 记录最后启动的日期
@@ -230,9 +226,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tab_menu_attention:
                 fragment = fragments[2];
                 break;
-            case R.id.tab_menu_profile:
-                fragment = fragments[3];
-                break;
+//            case R.id.tab_menu_profile:
+//                fragment = fragments[3];
+//                break;
         }
         if(fragment!=null){
             getSupportFragmentManager().beginTransaction().replace(R.id.home_container,fragment).commit();

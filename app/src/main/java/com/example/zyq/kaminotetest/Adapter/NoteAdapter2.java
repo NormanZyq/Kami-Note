@@ -2,6 +2,7 @@ package com.example.zyq.kaminotetest.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.example.zyq.kaminotetest.Activity.LabelSelector;
 import com.example.zyq.kaminotetest.Activity.MainActivity;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.R;
+import com.example.zyq.kaminotetest.Utils.ActivityController;
 
 import java.util.List;
 
@@ -94,6 +96,12 @@ public class NoteAdapter2 extends RecyclerView.Adapter<NoteAdapter2.NotesViewHol
             public boolean onLongClick(View v) {
 //                Snackbar.make(view, "长按事件：", Snackbar.LENGTH_SHORT).show();
                 HomeFragment.longClickPosition = notesViewHolder.getAdapterPosition();
+                MainActivity.notePosition--;
+                //储存位置
+                SharedPreferences sharedPreference = ActivityController.activities.get(0).getSharedPreferences("notePosition",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreference.edit();
+                editor.putInt("position",MainActivity.notePosition);
+                editor.apply();
                 return false;
             }
         });

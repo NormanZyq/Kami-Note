@@ -27,9 +27,6 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class StatisticFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -138,7 +135,7 @@ public class StatisticFragment extends Fragment {
                     SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("notePosition",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor1 = sharedPreferences1.edit();
                     editor1.clear();
-                    editor1.commit();
+                    editor1.apply();
                 }
                 else if(MainActivity.isEdit){
                     //若笔记被编辑，则显示最新数据，保留笔记位置缓存
