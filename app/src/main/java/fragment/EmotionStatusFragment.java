@@ -78,11 +78,13 @@ public class EmotionStatusFragment extends Fragment {
         // 获得图表
         mLineChart = view.findViewById(R.id.emotion_status);
 
-        if (DataClass.emotionData.getEmotionPositivePerWeek().size() != 0) {
+//        if (true) {
+        if (DataClass.emotionData.getEmotionPositivePerWeek().size() > 0) {
             //如果有事情感数据才设置并显示
 
             // 显示边界
             mLineChart.setDrawBorders(true);
+            mLineChart.setTouchEnabled(false);
 
             // 设置数据，数据来源是DC中的积极指数
             List<Entry> entries = new ArrayList<>();
@@ -98,15 +100,24 @@ public class EmotionStatusFragment extends Fragment {
                     if (DataClass.emotionData.getEmotionPositivePerWeek().size() > i) {
                         ex.printStackTrace();
                     }
+//                    break;
                 }
                 entries.add(new Entry(i + 1, pos));
             }
 
-//        //一个LineDataSet就是一条线
+//            //测试用：生成7个数据进行显示
+//            for (int i = 0; i < 7; i++) {
+////                float pos = (float) Math.random() * System.currentTimeMillis() % 1;
+//                float pos = (float) (Math.random() % 0.5 * 2);
+//                entries.add(new Entry(i + 1, pos));
+//            }
+
+            //一个LineDataSet就是一条线
             LineDataSet lineDataSet = new LineDataSet(entries, "积极指数");
             LineData data = new LineData(lineDataSet);
             mLineChart.setData(data);
         } else {
+            //如果情感数据为空，则显示提示语句
             mLineChart.setVisibility(View.GONE);
             TextView hint = view.findViewById(R.id.emotion_status_hint);
             hint.setVisibility(View.VISIBLE);

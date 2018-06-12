@@ -57,19 +57,19 @@
                                 android:id="@+id/tab_emotion_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="心情波动"/>
+                                android:text="实时情绪"/>
 
                             <android.support.design.widget.TabItem
                                 android:id="@+id/tab_raw_data"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="原始数据"/>
+                                android:text="情绪波动"/>
 
-                            <android.support.design.widget.TabItem
-                                android:id="@+id/tab_tips"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="小贴士"/>
+                            <!--<android.support.design.widget.TabItem-->
+                                <!--android:id="@+id/tab_tips"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="小贴士"/>-->
 
 
 

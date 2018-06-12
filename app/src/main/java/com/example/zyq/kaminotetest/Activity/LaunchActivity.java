@@ -28,7 +28,7 @@ public class LaunchActivity extends AppCompatActivity {
         TextView date2 = findViewById(R.id.launch_date2);
         date2.setText(myDate.getYearAndMonth());
 
-        Integer time = 2000;    //设置等待时间，单位为毫秒
+        Integer time = 1500;    //设置等待时间，单位为毫秒
         Handler handler = new Handler();
         //当计时结束时，跳转至主界面
         handler.postDelayed(new Runnable() {

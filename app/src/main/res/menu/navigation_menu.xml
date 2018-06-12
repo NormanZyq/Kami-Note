@@ -3,7 +3,7 @@
     <item
         android:id="@+id/tab_menu_home"
         android:icon="@drawable/ic_play_circle_outline_black_24dp"
-        android:title="首页"
+        android:title="日记"
         />
     <item
         android:id="@+id/tab_menu_discovery"
@@ -12,13 +12,13 @@
         />
     <item
         android:id="@+id/tab_menu_attention"
-        android:icon="@drawable/ic_settings"
+        android:icon="@drawable/ic_settings_bottom"
         android:title="设置"
         />
-    <item
-        android:id="@+id/tab_menu_profile"
-        android:icon="@drawable/ic_clear_all_black_24dp"
-        android:title="我的"
-        />
+    <!--<item-->
+        <!--android:id="@+id/tab_menu_profile"-->
+        <!--android:icon="@drawable/ic_clear_all_black_24dp"-->
+        <!--android:title="我的"-->
+        <!--/>-->
 
 </menu>

@@ -212,7 +212,7 @@ public class HomeFragment extends Fragment {
                     dialog.show();
                 } else {
                     AlertDialog.Builder dialog = buildAlertDialog(getActivity(),
-                            "提示", "这个功能仅供开发者测试\n是否删除所有内容（包括标签）？");
+                            "提示", "这个功能仅供开发者测试，正式版不会保留。\n是否删除所有内容（包括标签）？");
                     dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
