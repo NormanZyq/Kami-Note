@@ -10,7 +10,7 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/label_name"
-            android:layout_width="230dp"
+            android:layout_width="190dp"
             android:layout_height="match_parent"
             android:textStyle="bold"
             android:textSize="20sp"

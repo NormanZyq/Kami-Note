@@ -88,8 +88,11 @@ public enum NoteUtils {
             positive += note.getPositive();
             negative += note.getNegative();
         }
-        DataClass.emotionData.getEmotionPositivePerWeek().add(positive / DataClass.mNote.size());
-        DataClass.emotionData.getEmotionNegativePerWeek().add(negative / DataClass.mNote.size());
+        if (DataClass.mNote.size() != 0) {
+            DataClass.emotionData.getEmotionPositivePerWeek().add(positive / DataClass.mNote.size());
+            DataClass.emotionData.getEmotionNegativePerWeek().add(negative / DataClass.mNote.size());
+        }
+
     }
 
 }

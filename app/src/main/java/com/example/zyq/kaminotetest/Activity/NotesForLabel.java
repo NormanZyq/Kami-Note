@@ -20,7 +20,6 @@ import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
 import com.example.zyq.kaminotetest.Class.MyToast;
 import com.example.zyq.kaminotetest.R;
-import com.example.zyq.kaminotetest.Utils.ActivityController;
 import com.githang.statusbar.StatusBarCompat;
 
 import org.litepal.crud.DataSupport;

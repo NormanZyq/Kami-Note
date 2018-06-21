@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zyq.kaminotetest.Activity.CreateNote;
+import com.example.zyq.kaminotetest.Activity.MainActivity;
 import com.example.zyq.kaminotetest.Adapter.NoteAdapter2;
 import com.example.zyq.kaminotetest.Class.Label;
 import com.example.zyq.kaminotetest.Class.MyNote;
@@ -260,6 +261,8 @@ public class HomeFragment extends Fragment {
                 final MyNote myNoteTemp = DataClass.mNote.get(longClickPosition);
                 DataClass.mNote.get(longClickPosition).delete();    //从数据库删除
                 DataClass.mNote.remove(longClickPosition);          //从笔记列表移除
+                MainActivity.notePosition = DataClass.mNote.size() - 1;    //重置notePosition到最后的笔记
+
                 refreshNoteListView(noteListView);                  //刷新列表
                 Snackbar.make(mainView, "删除成功", Snackbar.LENGTH_SHORT)
                         .setAction("撤销", new View.OnClickListener() {
@@ -268,6 +271,8 @@ public class HomeFragment extends Fragment {
                                 DataClass.mNote.add(myNoteTemp);
                                 myNoteTemp.save();
                                 refreshNoteListView(noteListView);
+                                MainActivity.notePosition = DataClass.mNote.size() - 1;    //重置notePosition到最后的笔记
+
                             }
                         }).show();
                 break;

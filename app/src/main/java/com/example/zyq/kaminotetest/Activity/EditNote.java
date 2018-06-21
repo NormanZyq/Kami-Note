@@ -156,11 +156,11 @@ public class EditNote extends AppCompatActivity {
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
+                        NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
                         MotionAnalyze.getMotionStatistic(myNote);
                     }
                 };
                 new Thread(runnable).start();
-                NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
                 MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
                 //储存位置
                 SharedPreferences sharedPreference = getSharedPreferences("notePosition",Context.MODE_PRIVATE);
@@ -217,7 +217,15 @@ public class EditNote extends AppCompatActivity {
 //                        finish();
 //                        return;
 //                    }
-                    NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
+                    //测试文智api调用是否成功
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
+                            MotionAnalyze.getMotionStatistic(myNote);
+                        }
+                    };
+                    new Thread(runnable).start();
                     MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
                     //储存位置
                     SharedPreferences sharedPreference = getSharedPreferences("notePosition",Context.MODE_PRIVATE);
