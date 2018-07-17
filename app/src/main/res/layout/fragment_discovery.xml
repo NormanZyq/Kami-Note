@@ -19,6 +19,7 @@
 
     <!--ScrollView 用于滑动显示-->
     <ScrollView
+        android:id="@+id/discovery_all_things"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#eaeaea">
@@ -56,19 +57,19 @@
                                 android:id="@+id/tab_emotion_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="心情波动"/>
+                                android:text="实时情绪"/>
 
                             <android.support.design.widget.TabItem
                                 android:id="@+id/tab_raw_data"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="原始数据"/>
+                                android:text="情绪波动"/>
 
-                            <android.support.design.widget.TabItem
-                                android:id="@+id/tab_tips"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="小贴士"/>
+                            <!--<android.support.design.widget.TabItem-->
+                                <!--android:id="@+id/tab_tips"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="小贴士"/>-->
 
 
 
@@ -204,6 +205,15 @@
 
     </ScrollView>
 
+    <TextView
+        android:id="@+id/analyze_disabled"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="18sp"
+        android:text="情感分析不可用，请到设置中开启"/>
 
 
 

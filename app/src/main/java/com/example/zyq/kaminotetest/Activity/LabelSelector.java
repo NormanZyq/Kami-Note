@@ -110,13 +110,13 @@ public class LabelSelector extends AppCompatActivity {
                 labels.add(DataClass.mLabel.get(i));
                 if (!DataClass.mLabel.get(i).hasNote(sourceNote.getIdentifier())) {
                     DataClass.mLabel.get(i).getNotes().add(sourceNote);
-
                 }
 //                notes.add()
             } else {
                 System.out.println("labelselector line 118 " + DataClass.mLabel.get(i).removeNoteIfExist(sourceNote.getIdentifier()));
             }
-            DataClass.mLabel.get(i).save();
+            System.out.println("labelselector line 119 " + DataClass.mLabel.get(i).save());
+
         }
 
         NoteUtils.INSTANCE.setLabels(sourceNote, labels);

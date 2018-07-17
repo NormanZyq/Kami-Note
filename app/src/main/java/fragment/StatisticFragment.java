@@ -27,9 +27,6 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class StatisticFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -138,7 +135,7 @@ public class StatisticFragment extends Fragment {
                     SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("notePosition",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor1 = sharedPreferences1.edit();
                     editor1.clear();
-                    editor1.commit();
+                    editor1.apply();
                 }
                 else if(MainActivity.isEdit){
                     //若笔记被编辑，则显示最新数据，保留笔记位置缓存
@@ -156,21 +153,27 @@ public class StatisticFragment extends Fragment {
             else{//当日第二次打开程序时执行的操作
                 SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("notePosition",Context.MODE_PRIVATE);
                 MainActivity.notePosition = sharedPreferences1.getInt("position",-1);
-                if(MainActivity.notePosition == -1){
-                    //若第一次使用未编辑数据，则显示平均数据
-                    data.add( new PieEntry((float)NoteUtils.INSTANCE.predictEmotion(),"Positive"));
-                    data.add(new PieEntry((float)(1-NoteUtils.INSTANCE.predictEmotion()),"Negative"));
-                }else if(MainActivity.notePosition >= 0){
-                    //若第一次编辑了数据，则显示最新数据
-                    data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getPositive(),"Positive"));
-                    data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getNegative(),"Negative"));
+                if(DataClass.mNote.get(MainActivity.notePosition).getPositive() - 0 < 1e-6){
+                    mPieChart.setDrawCenterText(true);
+                }
+                //todo 解决dataclss数据为0的问题
+                else{
+                    if(MainActivity.notePosition == -1){
+                        //若第一次使用未编辑数据，则显示平均数据
+                        data.add( new PieEntry((float)NoteUtils.INSTANCE.predictEmotion(),"Positive"));
+                        data.add(new PieEntry((float)(1-NoteUtils.INSTANCE.predictEmotion()),"Negative"));
+                    }else if(MainActivity.notePosition >= 0){
+                        //若第一次编辑了数据，则显示最新数据
+                        data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getPositive(),"Positive"));
+                        data.add( new PieEntry((float)DataClass.mNote.get(MainActivity.notePosition).getNegative(),"Negative"));
                 /*data.put("data1", (float)DataClass.mNote.get(MainActivity.notePosition).getPositive());
                 data.put("data2", (float)DataClass.mNote.get(MainActivity.notePosition).getNegative());*/
+                    }
+                    else{
+                        System.out.println("error:static133");
+                    }
+                    mPieChart.setDrawCenterText(false);
                 }
-                else{
-                    System.out.println("error:static133");
-                }
-                mPieChart.setDrawCenterText(false);
 /*        data.put("data3", 0.1f);
         data.put("data4", 0.1f);*/
             }

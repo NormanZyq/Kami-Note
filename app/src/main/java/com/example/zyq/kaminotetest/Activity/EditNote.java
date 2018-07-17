@@ -24,8 +24,6 @@ import com.example.zyq.kaminotetest.Utils.MotionAnalyze;
 import com.example.zyq.kaminotetest.Utils.NoteUtils;
 import com.githang.statusbar.StatusBarCompat;
 
-import org.litepal.crud.DataSupport;
-
 /**
  * 编辑界面
  * 点击note的时候跳转到此Activity
@@ -60,13 +58,6 @@ public class EditNote extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
         }
-
-        //储存位置
-        MainActivity.notePosition = DataSupport.count(MyNote.class) - 1;
-        SharedPreferences sharedPreference = getSharedPreferences("notePosition",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("position",MainActivity.notePosition);
-        editor.commit();
 
         MainActivity.isEdit = true;
 
@@ -165,12 +156,17 @@ public class EditNote extends AppCompatActivity {
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
+                        NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
                         MotionAnalyze.getMotionStatistic(myNote);
                     }
                 };
                 new Thread(runnable).start();
-                NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
                 MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
+                //储存位置
+                SharedPreferences sharedPreference = getSharedPreferences("notePosition",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreference.edit();
+                editor.putInt("position",MainActivity.notePosition);
+                editor.apply();
                 finish();
                 break;
 
@@ -191,11 +187,13 @@ public class EditNote extends AppCompatActivity {
         noteTitle = findViewById(R.id.title_editor);    //笔记标题
         noteContent = findViewById(R.id.content_editor);    //笔记内容
 
-        title = myNote.getTitle();
-        content = myNote.getContent();
+        String str1 = noteTitle.getText().toString().trim();
+//        String content
 
-        if (title.equals(noteTitle.getText().toString().equals("") ? "无标题" : noteTitle.getText().toString()) &&
-                content.equals(noteContent.getText().toString())) {
+        title = noteTitle.getText().toString().trim();
+        content = noteContent.getText().toString().trim();
+
+        if (title.equals(myNote.getTitle()) && content.equals(myNote.getContent())) {
             finish();
         } else {
             AlertDialog.Builder backConfirmation = new AlertDialog.Builder(this);
@@ -205,21 +203,35 @@ public class EditNote extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     final MyDate date = new MyDate();
+//
+//                    title = noteTitle.getText().toString();
+//                    content = noteContent.getText().toString();
 
-                    title = noteTitle.getText().toString();
-                    content = noteContent.getText().toString();
-
-                    if (title.trim().equals("") && content.trim().equals("")) {
+                    if (title.equals("") && content.equals("")) {
                         MyToast.makeText(EditNote.this, "标题和内容不能为空",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    //如果没有修改，则直接finish
-                    if (title.equals(myNote.getTitle()) && content.equals(myNote.getContent())) {
-                        finish();
-                    }
-                    NoteUtils.INSTANCE.updateNote(myNote, title.trim(), content.trim(), date);
+//                    //如果没有修改，则直接finish
+//                    if (title.equals(myNote.getTitle()) && content.equals(myNote.getContent())) {
+//                        finish();
+//                        return;
+//                    }
+                    //测试文智api调用是否成功
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            NoteUtils.INSTANCE.updateNote(myNote, title, content, date);
+                            MotionAnalyze.getMotionStatistic(myNote);
+                        }
+                    };
+                    new Thread(runnable).start();
                     MyToast.makeText(EditNote.this, "保存成功", Toast.LENGTH_SHORT).show();
+                    //储存位置
+                    SharedPreferences sharedPreference = getSharedPreferences("notePosition",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreference.edit();
+                    editor.putInt("position",MainActivity.notePosition);
+                    editor.apply();
                     finish();
                 }
             });

@@ -46,7 +46,11 @@ allprojects {
     repositories {
         jcenter()
         //远程仓库
-        gradle.projectsEvaluated { tasks.withType(JavaCompile) { options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" } }
+        gradle.projectsEvaluated {
+            tasks.withType(JavaCompile) {
+                options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            }
+        }
         maven { url "https://github.com/J2W/mvn-repo-j2w/raw/master/repository" }
         maven { url "https://jitpack.io" }
     }

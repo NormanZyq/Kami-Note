@@ -11,4 +11,14 @@
 
     </com.github.mikephil.charting.charts.LineChart>
 
+    <TextView
+        android:id="@+id/emotion_status_hint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="使用一段时间的Kami Note后，您的情感波动会在这里显示"/>
+
+
 </FrameLayout>
